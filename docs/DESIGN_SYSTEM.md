@@ -10,101 +10,150 @@ UnWind currently supports:
 
 Tablet layouts and dark mode are outside the current milestone.
 
+## Design Authority
+
+The Figma mockup is authoritative for visual intent.
+
+Product documentation is authoritative for application behavior,
+navigation, and content requirements.
+
+Some legacy Figma text styles, paint styles, and individual layers
+contain styling that is not part of the intended UnWind design system.
+
+The following should NOT be considered authoritative:
+
+- Named Figma text styles using Inter
+- Accidental Inter text layers
+- SF Pro text layers
+- Named Figma paint styles
+
+When accidental Inter or SF Pro text is found, reproduce its visual
+hierarchy using the nearest appropriate Area Variable typography token.
+
 ## Typography
 
 Primary font family:
 
-- Inter
+- Area Variable
 
-Required weights:
+The application should use Area Variable exclusively for normal UI text.
 
-- Regular: 400
-- Medium: 500
-- SemiBold: 600
-- Bold: 700
+A small semantic typography scale should be preferred over reproducing
+every one-off font size present in Figma.
 
-Typography must be controlled by centralized tokens. Route files must not
-specify font families directly.
+Initial typography tokens:
+
+- Display: 36px / Bold
+- Heading 1: 30px / Bold
+- Heading 2: 24px / Bold
+- Heading 3: 20px / SemiBold
+- Body: 16px / Regular
+- Body Strong: 16px / SemiBold
+- Body Small: 14px / Regular
+- Body Small Strong: 14px / SemiBold
+- Caption: 12px / Regular
+- Button: 16px / SemiBold
+
+These values may be refined when individual Figma screens are
+implemented.
+
+Do not create a new typography token merely because an individual Figma
+layer differs by one or two pixels.
+
+Unique typography may be implemented locally when the visual design
+clearly requires it.
 
 ## Brand Colors
 
-- Coral: #F26340
-- Aqua: #90D3D0
+The Figma color variables are authoritative.
+
+- Orange: #F26340
+- Light Blue: #90D3D0
 - Yellow: #F5BD21
-- Navy: #122F3A
+- Blue: #122F3A
 - White: #FCFCFC
-- Light Gray: #F0EFEF
-- Black: #000000
+- Gray: #F0EFEF
+- Overlay: #000000
+
+Named Figma paint styles such as Primary, Secondary, Tertiary, and
+Annotations are legacy styles and must not define the application theme.
 
 ## Semantic Colors
 
-- App background: White
+- App Background: White
 - Surface: White
-- Muted surface: Light Gray
-- Primary action: Coral
-- Secondary action: Aqua
+- Muted Surface: Gray
+- Primary Action: Orange
+- Secondary Action: Light Blue
 - Highlight: Yellow
-- Navigation: Navy
-- Primary text: Black
-- Text on dark backgrounds: White
-- Border: Light Gray
-- Destructive action: Coral until a dedicated destructive color is defined
+- Navigation: Blue
+- Primary Text: Blue or Overlay depending on design context
+- Text On Dark: White
+- Border: Gray
+- Overlay: Overlay
 
-## Token Rules
+Additional semantic roles can be introduced when implementation
+demonstrates a repeated need.
 
-- Do not hard-code colors in route or component files.
-- Do not hard-code font families in route or component files.
-- Use the spacing scale instead of arbitrary spacing values.
-- Use the radius scale instead of arbitrary corner radii.
-- Use semantic color names in components.
-- Raw brand colors should only be referenced from the theme definition.
+## Spacing
 
-## Initial Spacing Scale
+Initial spacing scale:
 
 - 0: 0
 - 1: 4
 - 2: 8
-- 3: 12
-- 4: 16
-- 5: 20
+- 3: 10
+- 4: 12
+- 5: 16
 - 6: 24
-- 8: 32
-- 10: 40
-- 12: 48
+- 7: 32
 
-These values are provisional until individual Figma frames are inspected.
+Use the nearest appropriate spacing token instead of reproducing
+incidental one-off Figma values.
 
-## Initial Radius Scale
+## Corner Radii
+
+Initial radius scale:
 
 - Small: 8
-- Medium: 12
-- Large: 16
+- Medium: 10
+- Large: 20
 - Extra Large: 24
+- Extra Extra Large: 30
 - Pill: 999
 
-These values are provisional until individual Figma frames are inspected.
+## Shadows
 
-## Initial Typography Scale
+Shadows will be defined after inspecting the first implemented screens.
 
-- Caption: 12
-- Body Small: 14
-- Body: 16
-- Heading Small: 20
-- Heading: 24
-- Display: 32
+Avoid adding arbitrary shadows that are not present in the design.
 
-These values are provisional until individual Figma frames are inspected.
+## Theme Rules
 
-## Shared Component Requirements
+- Do not hard-code brand colors in route files.
+- Do not hard-code font families in route files.
+- Prefer semantic tokens over raw visual values.
+- Prefer established spacing tokens over arbitrary spacing.
+- Prefer established radius tokens over arbitrary radii.
+- Figma values may be approximated to the nearest token when there is
+  no meaningful visual difference.
 
-Milestone 1 shared components:
+## Shared Components
+
+Initial reusable components:
 
 - Screen
 - AppText
 - AppButton
-- IconButton
 - AppCard
+
+Additional components will be introduced as repeated patterns are
+implemented.
+
+Likely future components include:
+
 - AppHeader
+- IconButton
 - SearchInput
 - SegmentedTabs
 - EmptyState
@@ -112,25 +161,38 @@ Milestone 1 shared components:
 - FloatingActionButton
 - ConfirmationDialog
 
-Components must:
+## Screen
 
-- Be typed with explicit TypeScript interfaces
-- Not use the any type
-- Support accessibility labels where appropriate
-- Use centralized design tokens
-- Avoid application-specific data fetching
-- Avoid route navigation unless navigation is part of the component's purpose
+Screen should:
 
-## Screen Behavior
+- Respect device safe areas
+- Support optional scrolling
+- Apply consistent screen padding
+- Use application background tokens
+- Support custom content styles
 
-- Screen must respect device safe areas.
-- Screen must support optional scrolling.
-- Screen must provide consistent horizontal padding.
-- Screen must use the application background token.
+## AppText
 
-## Button Variants
+AppText should support:
 
-AppButton should support:
+- Display
+- Heading 1
+- Heading 2
+- Heading 3
+- Body
+- Body Strong
+- Body Small
+- Body Small Strong
+- Caption
+- Button
+
+AppText should use Area Variable.
+
+Route files should not specify font-family or raw font weights.
+
+## AppButton
+
+AppButton should initially support:
 
 - Primary
 - Secondary
@@ -138,46 +200,34 @@ AppButton should support:
 - Ghost
 - Destructive
 
-AppButton should support:
+And:
 
 - Loading state
 - Disabled state
 - Full-width mode
 - Accessibility label
 
-## Text Variants
+Exact button appearance will be refined from Figma.
 
-AppText should support:
-
-- Display
-- Heading
-- Heading Small
-- Body
-- Body Small
-- Caption
-- Button
-
-AppText should support weight and semantic color without requiring route files
-to specify raw font values.
-
-## Card Behavior
+## AppCard
 
 AppCard should support:
 
 - Optional press behavior
 - Optional accessibility label
-- Default surface, padding, radius, and border
+- Default surface
+- Default radius
+- Default padding
 - Custom children
 
-## Figma Precedence
+Exact card appearance will be refined from Figma.
 
-The Figma mockup is authoritative for visual presentation.
+## Accessibility
 
-Product documentation is authoritative for application behavior, navigation,
-and content requirements.
+Interactive components should provide:
 
-If Figma and product documentation conflict:
+- Appropriate accessibility roles
+- Accessibility labels when visible text is insufficient
+- Disabled-state semantics where applicable
 
-- Follow product documentation for behavior.
-- Follow Figma for visual styling when doing so does not conflict with product
-  requirements.
+Color must not be the sole indicator of application state.
