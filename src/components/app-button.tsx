@@ -13,6 +13,7 @@ export interface AppButtonProps {
   disabled?: boolean;
   fullWidth?: boolean;
   accessibilityLabel?: string;
+  textColor?: SemanticColor;
   style?: StyleProp<ViewStyle>;
 }
 
@@ -40,10 +41,11 @@ export function AppButton({
   disabled = false,
   fullWidth = false,
   accessibilityLabel,
+  textColor: textColorOverride,
   style,
 }: AppButtonProps) {
   const isDisabled = disabled || loading;
-  const textColor = textColors[variant];
+  const textColor = textColorOverride ?? textColors[variant];
 
   return (
     <Pressable
