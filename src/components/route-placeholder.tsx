@@ -1,4 +1,7 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+
+import { AppText } from '@/components/app-text';
+import { Screen } from '@/components/screen';
 
 type RoutePlaceholderProps = {
   name: string;
@@ -6,15 +9,14 @@ type RoutePlaceholderProps = {
 
 export function RoutePlaceholder({ name }: RoutePlaceholderProps) {
   return (
-    <View style={styles.container}>
-      <Text>{name}</Text>
-    </View>
+    <Screen contentContainerStyle={styles.centered}>
+      <AppText>{name}</AppText>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  centered: {
     alignItems: 'center',
     justifyContent: 'center',
   },
