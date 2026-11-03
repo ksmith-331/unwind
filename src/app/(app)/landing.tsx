@@ -1,40 +1,21 @@
-import { Image, Pressable, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { Image, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { router } from 'expo-router';
-import { SymbolView } from 'expo-symbols';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { AppButton } from '@/components/app-button';
 import { AppCard } from '@/components/app-card';
 import { AppText } from '@/components/app-text';
+import { getMainNavigationBarHeight, MainNavigationBar } from '@/components/main-navigation-bar';
 import { Screen } from '@/components/screen';
 import { theme } from '@/theme';
 
 const MOCK_DAILY_STREAK = 15;
 const MOCK_RESUME_DESTINATION = '/projects';
 
-// TODO: Replace the mock streak and resume destination with authenticated stats and recent-project data.
-const LANDING_NAVIGATION_ITEMS = [
-  {
-    label: 'Projects',
-    destination: '/projects',
-    icon: { ios: 'folder', android: 'folder', web: 'folder' },
-  },
-  {
-    label: 'Discover',
-    destination: '/discover',
-    icon: { ios: 'magnifyingglass', android: 'search', web: 'search' },
-  },
-  {
-    label: 'Profile',
-    destination: '/profile',
-    icon: { ios: 'person', android: 'person', web: 'person' },
-  },
-] as const;
-
 export default function LandingRoute() {
   const { height, width } = useWindowDimensions();
   const insets = useSafeAreaInsets();
-  const navigationHeight = 61 + insets.bottom;
+  const navigationHeight = getMainNavigationBarHeight(insets.bottom);
   const availableContentHeight = height - insets.top - navigationHeight;
   const compact = availableContentHeight < 680;
   const illustrationHeight = Math.min(
@@ -107,26 +88,14 @@ export default function LandingRoute() {
           />
         </View>
 
-        <View
-          accessibilityRole="toolbar"
-          style={[styles.navigation, { height: navigationHeight, paddingBottom: insets.bottom }]}>
-          {LANDING_NAVIGATION_ITEMS.map((item) => (
-            <Pressable
-              accessibilityLabel={item.label}
-              accessibilityRole="button"
-              key={item.label}
-              onPress={() => router.push(item.destination)}
-              style={({ pressed }) => [styles.navigationButton, pressed && styles.pressed]}>
-              <SymbolView
-                accessibilityElementsHidden
-                importantForAccessibility="no-hide-descendants"
-                name={item.icon}
-                size={26}
-                tintColor={theme.colors.textOnDark}
-              />
-            </Pressable>
-          ))}
-        </View>
+        <MainNavigationBar
+          activeTab={null}
+          bottomInset={insets.bottom}
+          onDiscoverPress={() => router.push('/discover')}
+          onProfilePress={() => router.push('/profile')}
+          onProjectsPress={() => router.push('/projects')}
+          style={styles.navigation}
+        />
       </View>
     </Screen>
   );
@@ -219,23 +188,9 @@ const styles = StyleSheet.create({
     marginTop: theme.spacing[5],
   },
   navigation: {
-    alignItems: 'center',
-    backgroundColor: theme.colors.navigation,
     bottom: 0,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
     left: 0,
-    paddingHorizontal: theme.spacing[2],
     position: 'absolute',
     right: 0,
-  },
-  navigationButton: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-    minHeight: 48,
-  },
-  pressed: {
-    opacity: 0.7,
   },
 });

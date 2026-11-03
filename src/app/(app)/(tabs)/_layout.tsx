@@ -1,11 +1,75 @@
 import { Tabs } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import {
+  getMainNavigationBarHeight,
+  MainNavigationBar,
+  type MainTab,
+} from '@/components/main-navigation-bar';
+
+function getMainTab(routeName: string | undefined): MainTab | null {
+  switch (routeName) {
+    case 'projects':
+    case 'discover':
+    case 'profile':
+      return routeName;
+    default:
+      return null;
+  }
+}
 
 export default function TabsLayout() {
+  const insets = useSafeAreaInsets();
+  const navigationBarHeight = getMainNavigationBarHeight(insets.bottom);
+
   return (
-    <Tabs screenOptions={{ headerShown: false }}>
-      <Tabs.Screen name="projects" options={{ title: 'Projects' }} />
-      <Tabs.Screen name="discover" options={{ title: 'Discover' }} />
-      <Tabs.Screen name="profile" options={{ title: 'Profile' }} />
+    <Tabs
+      tabBar={({ state, navigateToTab, insets: tabBarInsets }) => {
+        const activeTab = getMainTab(state.routes[state.index]?.name);
+        const navigateTo = (tab: MainTab) => {
+          const route = state.routes.find((candidate) => candidate.name === tab);
+          if (route) {
+            navigateToTab(route.key);
+          }
+        };
+
+        return (
+          <MainNavigationBar
+            accessibilityRole="tab"
+            activeTab={activeTab}
+            bottomInset={tabBarInsets.bottom}
+            onDiscoverPress={() => navigateTo('discover')}
+            onProfilePress={() => navigateTo('profile')}
+            onProjectsPress={() => navigateTo('projects')}
+          />
+        );
+      }}
+      screenOptions={{
+        headerShown: false,
+        tabBarShowLabel: false,
+        tabBarStyle: { height: navigationBarHeight },
+      }}>
+      <Tabs.Screen
+        name="projects"
+        options={{
+          title: 'Projects',
+          tabBarAccessibilityLabel: 'Projects',
+        }}
+      />
+      <Tabs.Screen
+        name="discover"
+        options={{
+          title: 'Discover',
+          tabBarAccessibilityLabel: 'Discover',
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          tabBarAccessibilityLabel: 'Profile',
+        }}
+      />
     </Tabs>
   );
 }
