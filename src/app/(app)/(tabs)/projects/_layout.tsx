@@ -1,10 +1,5 @@
-import { Stack } from 'expo-router';
+import { ProjectsShell } from '@/components/projects-shell';
 
 export default function ProjectsLayout() {
-  return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="index" options={{ title: 'In Progress' }} />
-      <Stack.Screen name="todo" options={{ title: 'To Do' }} />
-    </Stack>
-  );
+  return <ProjectsShell />;
 }

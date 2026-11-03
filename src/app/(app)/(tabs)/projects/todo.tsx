@@ -1,5 +1,6 @@
-import { RoutePlaceholder } from '@/components/route-placeholder';
+import { ProjectItemGrid } from '@/components/project-item-grid';
+import { todoProjectItems } from '@/mocks/todo-project-items';
 
 export default function ProjectsTodoRoute() {
-  return <RoutePlaceholder name="Projects - To Do" />;
+  return <ProjectItemGrid items={todoProjectItems} />;
 }

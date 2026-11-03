@@ -1,5 +1,6 @@
-import { RoutePlaceholder } from '@/components/route-placeholder';
+import { ProjectItemGrid } from '@/components/project-item-grid';
+import { projectItems } from '@/mocks/project-items';
 
 export default function ProjectsInProgressRoute() {
-  return <RoutePlaceholder name="Projects - In Progress" />;
+  return <ProjectItemGrid items={projectItems} />;
 }
