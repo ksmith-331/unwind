@@ -1,9 +1,8 @@
 import { useCallback, useRef, useState } from 'react';
-import { Animated, Easing, Image, Pressable, StyleSheet, View } from 'react-native';
+import { Animated, Easing, Image, StyleSheet, View } from 'react-native';
 import { router, Stack, useFocusEffect, usePathname, type Href } from 'expo-router';
 
-import { AppCard } from '@/components/app-card';
-import { AppText } from '@/components/app-text';
+import { FloatingActionTray } from '@/components/floating-action-tray';
 import { Screen } from '@/components/screen';
 import { SubTabs, type SubTabDefinition } from '@/components/sub-tabs';
 import { useReducedMotion } from '@/hooks/use-reduced-motion';
@@ -124,39 +123,17 @@ export function ProjectsShell() {
               />
             </Stack>
           </Animated.View>
-          {isActionTrayOpen && (
-            <Pressable
-              accessibilityLabel="Dismiss project actions"
-              accessibilityRole="button"
-              onPress={() => setIsActionTrayOpen(false)}
-              style={styles.dismissLayer}
-            />
-          )}
-          <View pointerEvents="box-none" style={styles.floatingControls}>
-            {isActionTrayOpen && (
-              <AppCard accessibilityLabel="Project actions, coming soon" style={styles.actionTray}>
-                <AppText style={styles.trayHeading} variant="bodySmallStrong">
-                  Coming soon
-                </AppText>
-                <View style={styles.trayAction}>
-                  <AppText variant="bodySmall">Create a pattern</AppText>
-                </View>
-                <View style={styles.trayAction}>
-                  <AppText variant="bodySmall">Upload a pattern</AppText>
-                </View>
-              </AppCard>
-            )}
-            <Pressable
-              accessibilityLabel={isActionTrayOpen ? 'Close project actions' : 'Add a project'}
-              accessibilityRole="button"
-              accessibilityState={{ expanded: isActionTrayOpen }}
-              onPress={() => setIsActionTrayOpen((open) => !open)}
-              style={({ pressed }) => [styles.fab, pressed && styles.pressed]}>
-              <AppText style={styles.fabLabel} variant="heading2">
-                +
-              </AppText>
-            </Pressable>
-          </View>
+          <FloatingActionTray
+            actions={['Create a pattern', 'Upload a pattern']}
+            buttonLabel="Add a project"
+            closeButtonLabel="Close project actions"
+            dismissButtonLabel="Dismiss project actions"
+            isOpen={isActionTrayOpen}
+            onDismiss={() => setIsActionTrayOpen(false)}
+            onToggle={() => setIsActionTrayOpen((open) => !open)}
+            trayAccessibilityLabel="Project actions, coming soon"
+            trayTitle="Coming soon"
+          />
         </View>
       </View>
     </Screen>
@@ -182,52 +159,5 @@ const styles = StyleSheet.create({
   },
   collectionStack: {
     flex: 1,
-  },
-  dismissLayer: {
-    ...StyleSheet.absoluteFill,
-    elevation: 10,
-    zIndex: 10,
-  },
-  floatingControls: {
-    ...StyleSheet.absoluteFill,
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end',
-    paddingBottom: theme.spacing[5],
-    paddingRight: theme.spacing[5],
-    elevation: 20,
-    zIndex: 20,
-  },
-  fab: {
-    alignItems: 'center',
-    backgroundColor: theme.colors.secondaryAction,
-    borderRadius: theme.radii.pill,
-    elevation: 3,
-    height: 52,
-    justifyContent: 'center',
-    shadowColor: theme.colors.overlay,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    width: 52,
-  },
-  fabLabel: {
-    lineHeight: 36,
-  },
-  actionTray: {
-    alignSelf: 'flex-end',
-    marginBottom: theme.spacing[2],
-    minWidth: 192,
-    padding: theme.spacing[2],
-  },
-  trayHeading: {
-    marginBottom: theme.spacing[1],
-  },
-  trayAction: {
-    justifyContent: 'center',
-    minHeight: 44,
-    paddingHorizontal: theme.spacing[2],
-  },
-  pressed: {
-    opacity: 0.8,
   },
 });

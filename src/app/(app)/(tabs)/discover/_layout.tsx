@@ -1,10 +1,5 @@
-import { Stack } from 'expo-router';
+import { DiscoverShell } from '@/components/discover-shell';
 
 export default function DiscoverLayout() {
-  return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="index" options={{ title: 'Create' }} />
-      <Stack.Screen name="learn" options={{ title: 'Learn' }} />
-    </Stack>
-  );
+  return <DiscoverShell />;
 }
