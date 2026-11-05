@@ -1,5 +1,5 @@
-import { RoutePlaceholder } from '@/components/route-placeholder';
+import { Redirect } from 'expo-router';
 
 export default function ProfileLibraryRoute() {
-  return <RoutePlaceholder name="Profile Library" />;
+  return <Redirect href="/profile/library/inventory" />;
 }
