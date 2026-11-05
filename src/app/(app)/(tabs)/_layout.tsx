@@ -1,4 +1,4 @@
-import { Tabs } from 'expo-router';
+import { router, Tabs, type Href } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import {
@@ -6,6 +6,12 @@ import {
   MainNavigationBar,
   type MainTab,
 } from '@/components/main-navigation-bar';
+
+const MAIN_TAB_ROOTS: Record<MainTab, Href> = {
+  projects: '/projects',
+  discover: '/discover',
+  profile: '/profile',
+};
 
 function getMainTab(routeName: string | undefined): MainTab | null {
   switch (routeName) {
@@ -28,7 +34,13 @@ export default function TabsLayout() {
         const activeTab = getMainTab(state.routes[state.index]?.name);
         const navigateTo = (tab: MainTab) => {
           const route = state.routes.find((candidate) => candidate.name === tab);
-          if (route) {
+          if (!route) {
+            return;
+          }
+
+          if (route.key === state.routes[state.index]?.key) {
+            router.dismissTo(MAIN_TAB_ROOTS[tab]);
+          } else {
             navigateToTab(route.key);
           }
         };
