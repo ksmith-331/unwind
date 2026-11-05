@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 
 import { AppCard } from '@/components/app-card';
 import { AppText } from '@/components/app-text';
-import { SearchInput, type SearchInputAction } from '@/components/search-input';
+import { SEARCH_FILTER_ICON, SearchInput, type SearchInputAction } from '@/components/search-input';
 import { TutorialPreviewCard } from '@/components/tutorial-preview-card';
 import { TutorialThumbnail } from '@/components/tutorial-thumbnail';
 import {
@@ -17,11 +17,7 @@ import { theme } from '@/theme';
 const SEARCH_ACTIONS: readonly SearchInputAction[] = [
   {
     accessibilityLabel: 'Filter tutorials',
-    icon: {
-      ios: 'line.3.horizontal.decrease',
-      android: 'filter_list',
-      web: 'filter_list',
-    },
+    icon: SEARCH_FILTER_ICON,
   },
 ];
 

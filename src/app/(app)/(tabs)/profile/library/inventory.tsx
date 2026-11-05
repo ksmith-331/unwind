@@ -4,15 +4,9 @@ import { router } from 'expo-router';
 
 import { AppText } from '@/components/app-text';
 import { InventoryTile } from '@/components/inventory-tile';
-import { SearchInput } from '@/components/search-input';
+import { SEARCH_FILTER_ICON, SearchInput } from '@/components/search-input';
 import { inventoryItems } from '@/mocks/inventory-items';
 import { theme } from '@/theme';
-
-const FILTER_ICON = {
-  ios: 'line.3.horizontal.decrease',
-  android: 'tune',
-  web: 'tune',
-} as const;
 
 export default function LibraryInventoryRoute() {
   const [searchText, setSearchText] = useState('');
@@ -50,7 +44,7 @@ export default function LibraryInventoryRoute() {
               trailingActions={[
                 {
                   accessibilityLabel: 'Filter inventory',
-                  icon: FILTER_ICON,
+                  icon: SEARCH_FILTER_ICON,
                 },
               ]}
               value={searchText}

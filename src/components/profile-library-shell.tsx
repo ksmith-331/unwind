@@ -1,8 +1,9 @@
-import { useCallback, useState } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { useCallback, useRef, useState } from 'react';
+import { Animated, Easing, Image, StyleSheet, View } from 'react-native';
 import { router, Stack, useFocusEffect, usePathname, type Href } from 'expo-router';
 
 import { FloatingActionTray } from '@/components/floating-action-tray';
+import { useReducedMotion } from '@/hooks/use-reduced-motion';
 import { Screen } from '@/components/screen';
 import { SubTabs, type SubTabDefinition } from '@/components/sub-tabs';
 import { theme } from '@/theme';
@@ -23,7 +24,11 @@ const ACTIONS_BY_SECTION: Record<LibrarySection, readonly string[]> = {
 
 export function ProfileLibraryShell() {
   const pathname = usePathname();
+  const reduceMotion = useReducedMotion();
   const [isActionTrayOpen, setIsActionTrayOpen] = useState(false);
+  const isNavigatingBetweenTabs = useRef(false);
+  const contentOpacity = useRef(new Animated.Value(1)).current;
+  const contentAnimation = useRef<Animated.CompositeAnimation | null>(null);
   const activeSection =
     LIBRARY_TABS.find((tab) => tab.route === pathname)?.label ?? 'Inventory';
   const tabs: readonly [
@@ -40,15 +45,63 @@ export function ProfileLibraryShell() {
     useCallback(
       () => () => {
         setIsActionTrayOpen(false);
+        isNavigatingBetweenTabs.current = false;
+        contentAnimation.current?.stop();
+        contentOpacity.setValue(1);
       },
-      [],
+      [contentOpacity],
     ),
   );
 
-  const navigateToTab = (route: Href) => {
-    setIsActionTrayOpen(false);
-    router.navigate(route);
-  };
+  const navigateToTab = useCallback(
+    (route: Href) => {
+      if (isNavigatingBetweenTabs.current) {
+        return;
+      }
+
+      isNavigatingBetweenTabs.current = true;
+      setIsActionTrayOpen(false);
+
+      if (reduceMotion) {
+        contentOpacity.setValue(0);
+        router.navigate(route);
+        return;
+      }
+
+      contentAnimation.current = Animated.timing(contentOpacity, {
+        toValue: 0,
+        duration: 100,
+        easing: Easing.inOut(Easing.cubic),
+        useNativeDriver: true,
+      });
+      contentAnimation.current.start(({ finished }) => {
+        if (finished) {
+          router.navigate(route);
+        } else {
+          isNavigatingBetweenTabs.current = false;
+        }
+      });
+    },
+    [contentOpacity, reduceMotion],
+  );
+
+  const showActiveContent = useCallback(() => {
+    if (reduceMotion) {
+      contentOpacity.setValue(1);
+      isNavigatingBetweenTabs.current = false;
+      return;
+    }
+
+    contentAnimation.current = Animated.timing(contentOpacity, {
+      toValue: 1,
+      duration: 140,
+      easing: Easing.out(Easing.cubic),
+      useNativeDriver: true,
+    });
+    contentAnimation.current.start(() => {
+      isNavigatingBetweenTabs.current = false;
+    });
+  }, [contentOpacity, reduceMotion]);
 
   return (
     <Screen edges={['top']} contentContainerStyle={styles.screenContent}>
@@ -64,17 +117,44 @@ export function ProfileLibraryShell() {
         />
         <SubTabs onNavigate={navigateToTab} tabs={tabs} />
         <View style={styles.contentRegion}>
-          <Stack
-            screenOptions={{
-              animation: 'none',
-              contentStyle: { backgroundColor: 'transparent' },
-              headerShown: false,
-            }}>
-            <Stack.Screen name="index" options={{ title: 'Inventory' }} />
-            <Stack.Screen name="inventory" options={{ title: 'Inventory' }} />
-            <Stack.Screen name="patterns" options={{ title: 'Patterns' }} />
-            <Stack.Screen name="tutorials" options={{ title: 'Tutorials' }} />
-          </Stack>
+          <Animated.View style={[styles.contentStack, { opacity: contentOpacity }]}>
+            <Stack
+              screenOptions={{
+                animation: reduceMotion ? 'none' : 'simple_push',
+                animationDuration: 230,
+                contentStyle: { backgroundColor: 'transparent' },
+                headerShown: false,
+              }}>
+              <Stack.Screen
+                name="index"
+                listeners={{
+                  transitionEnd: (event) => !event.data.closing && showActiveContent(),
+                }}
+                options={{ title: 'Inventory' }}
+              />
+              <Stack.Screen
+                name="inventory"
+                listeners={{
+                  transitionEnd: (event) => !event.data.closing && showActiveContent(),
+                }}
+                options={{ title: 'Inventory' }}
+              />
+              <Stack.Screen
+                name="patterns"
+                listeners={{
+                  transitionEnd: (event) => !event.data.closing && showActiveContent(),
+                }}
+                options={{ title: 'Patterns' }}
+              />
+              <Stack.Screen
+                name="tutorials"
+                listeners={{
+                  transitionEnd: (event) => !event.data.closing && showActiveContent(),
+                }}
+                options={{ title: 'Tutorials' }}
+              />
+            </Stack>
+          </Animated.View>
           <FloatingActionTray
             actions={ACTIONS_BY_SECTION[activeSection]}
             buttonLabel={`${activeSection} actions`}
@@ -108,5 +188,8 @@ const styles = StyleSheet.create({
   contentRegion: {
     flex: 1,
     position: 'relative',
+  },
+  contentStack: {
+    flex: 1,
   },
 });

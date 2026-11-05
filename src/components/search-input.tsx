@@ -33,6 +33,12 @@ const CLEAR_ICON = {
   web: 'cancel',
 } as const;
 
+export const SEARCH_FILTER_ICON = {
+  ios: 'line.3.horizontal.decrease',
+  android: 'tune',
+  web: 'tune',
+} as const;
+
 export function SearchInput({
   value,
   onChangeText,

@@ -5,18 +5,14 @@ import { AppCard } from '@/components/app-card';
 import { AppText } from '@/components/app-text';
 import { PatternPreviewCard } from '@/components/pattern-preview-card';
 import { PatternThumbnail } from '@/components/pattern-thumbnail';
-import { SearchInput, type SearchInputAction } from '@/components/search-input';
+import { SEARCH_FILTER_ICON, SearchInput, type SearchInputAction } from '@/components/search-input';
 import { communityPatterns, myPatterns } from '@/mocks/discover-patterns';
 import { theme } from '@/theme';
 
 const SEARCH_ACTIONS: readonly SearchInputAction[] = [
   {
     accessibilityLabel: 'Filter patterns',
-    icon: {
-      ios: 'line.3.horizontal.decrease',
-      android: 'filter_list',
-      web: 'filter_list',
-    },
+    icon: SEARCH_FILTER_ICON,
   },
 ];
 
