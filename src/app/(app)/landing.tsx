@@ -3,13 +3,13 @@ import { router } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { AppButton } from '@/components/app-button';
-import { AppCard } from '@/components/app-card';
-import { AppText } from '@/components/app-text';
 import { getMainNavigationBarHeight, MainNavigationBar } from '@/components/main-navigation-bar';
 import { Screen } from '@/components/screen';
+import { StreakCard } from '@/components/streak-card';
+import { userStatsPreview } from '@/mocks/user-stats-preview';
+import { getStreakMessage } from '@/utils/streak-message';
 import { theme } from '@/theme';
 
-const MOCK_DAILY_STREAK = 15;
 const MOCK_RESUME_DESTINATION = '/projects';
 
 export default function LandingRoute() {
@@ -65,19 +65,13 @@ export default function LandingRoute() {
             style={[styles.knittingIllustration, { height: illustrationHeight, width: illustrationWidth }]}
           />
 
-          <AppCard style={[styles.streakCard, compact && styles.compactStreakCard]}>
-            <View style={styles.streakContent}>
-              <AppText color="textOnDark" variant="display">
-                daily streak:
-              </AppText>
-              <AppText color="secondaryAction" style={styles.streakNumber} variant="display">
-                {MOCK_DAILY_STREAK}
-              </AppText>
-              <AppText color="textOnDark" variant="body">
-                keep it up!
-              </AppText>
-            </View>
-          </AppCard>
+          <StreakCard
+            accessibilityLabel={`Daily streak: ${userStatsPreview.dailyStreak} days. ${getStreakMessage(userStatsPreview.dailyStreak)}`}
+            compact={compact}
+            message={getStreakMessage(userStatsPreview.dailyStreak)}
+            streakCount={userStatsPreview.dailyStreak}
+            style={[styles.streakCard, compact && styles.compactStreakCard]}
+          />
 
           <AppButton
             accessibilityLabel="Pick up where you left off and open Projects"
@@ -149,31 +143,11 @@ const styles = StyleSheet.create({
     aspectRatio: 750 / 666,
   },
   streakCard: {
-    alignItems: 'center',
-    backgroundColor: theme.colors.navigation,
-    borderRadius: theme.radii.large,
-    borderWidth: 0,
-    elevation: 4,
     marginTop: theme.spacing[7],
-    maxWidth: 303,
-    padding: theme.spacing[5],
-    shadowColor: theme.colors.overlay,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
     width: '81%',
   },
   compactStreakCard: {
     marginTop: theme.spacing[4],
-    padding: theme.spacing[4],
-  },
-  streakContent: {
-    alignItems: 'center',
-    gap: theme.spacing[1],
-  },
-  streakNumber: {
-    fontSize: 64,
-    lineHeight: 76,
   },
   resumeButton: {
     alignSelf: 'center',
