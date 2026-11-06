@@ -6,6 +6,7 @@ import { PatternPreviewCard } from '@/components/pattern-preview-card';
 import { SEARCH_FILTER_ICON, SearchInput, type SearchInputAction } from '@/components/search-input';
 import { profilePatterns } from '@/mocks/profile-patterns';
 import { theme } from '@/theme';
+import { getPreviewAccent } from '@/utils/preview-accent';
 
 const SEARCH_ACTIONS: readonly SearchInputAction[] = [
   {
@@ -41,8 +42,12 @@ export default function LibraryPatternsRoute() {
       />
       {filteredPatterns.length > 0 ? (
         <View style={styles.patternList}>
-          {filteredPatterns.map((pattern) => (
-            <PatternPreviewCard key={pattern.id} pattern={pattern} />
+          {filteredPatterns.map((pattern, index) => (
+            <PatternPreviewCard
+              accent={getPreviewAccent(index)}
+              key={pattern.id}
+              pattern={pattern}
+            />
           ))}
         </View>
       ) : (

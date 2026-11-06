@@ -4,9 +4,11 @@ import type { Href } from 'expo-router';
 import { ContentPreviewCard } from '@/components/content-preview-card';
 import type { HistoryItemPreview } from '@/types/history-item-preview';
 import { theme } from '@/theme';
+import type { PreviewAccent } from '@/utils/preview-accent';
 
 type HistoryPreviewCardProps = {
   item: HistoryItemPreview;
+  accent: PreviewAccent;
 };
 
 const COMPLETION_ICON = {
@@ -15,7 +17,7 @@ const COMPLETION_ICON = {
   web: 'check_circle',
 } as const;
 
-export function HistoryPreviewCard({ item }: HistoryPreviewCardProps) {
+export function HistoryPreviewCard({ item, accent }: HistoryPreviewCardProps) {
   const href: Href =
     item.kind === 'pattern'
       ? {
@@ -30,7 +32,7 @@ export function HistoryPreviewCard({ item }: HistoryPreviewCardProps) {
   return (
     <ContentPreviewCard
       accessibilityLabel={`${item.title}, difficulty ${item.difficulty} out of 4${item.isComplete ? ', completed' : ''}`}
-      accent={item.accent}
+      accent={accent}
       accessory={
         item.isComplete ? (
           <SymbolView

@@ -8,6 +8,7 @@ import { PatternThumbnail } from '@/components/pattern-thumbnail';
 import { SEARCH_FILTER_ICON, SearchInput, type SearchInputAction } from '@/components/search-input';
 import { communityPatterns, myPatterns } from '@/mocks/discover-patterns';
 import { theme } from '@/theme';
+import { getPreviewAccent } from '@/utils/preview-accent';
 
 const SEARCH_ACTIONS: readonly SearchInputAction[] = [
   {
@@ -58,8 +59,12 @@ export default function DiscoverCreateRoute() {
           contentContainerStyle={styles.thumbnailList}
           horizontal
           showsHorizontalScrollIndicator={false}>
-          {myPatterns.map((pattern) => (
-            <PatternThumbnail key={pattern.id} pattern={pattern} />
+          {myPatterns.map((pattern, index) => (
+            <PatternThumbnail
+              accent={getPreviewAccent(index + 1)}
+              key={pattern.id}
+              pattern={pattern}
+            />
           ))}
         </ScrollView>
       </AppCard>
@@ -70,8 +75,12 @@ export default function DiscoverCreateRoute() {
         </AppText>
         {filteredCommunityPatterns.length > 0 ? (
           <View style={styles.communityList}>
-            {filteredCommunityPatterns.map((pattern) => (
-              <PatternPreviewCard key={pattern.id} pattern={pattern} />
+            {filteredCommunityPatterns.map((pattern, index) => (
+              <PatternPreviewCard
+                accent={getPreviewAccent(index)}
+                key={pattern.id}
+                pattern={pattern}
+              />
             ))}
           </View>
         ) : (

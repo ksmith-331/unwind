@@ -13,6 +13,7 @@ import {
 } from '@/mocks/discover-tutorials';
 import type { TutorialPreview } from '@/types/tutorial-preview';
 import { theme } from '@/theme';
+import { getPreviewAccent } from '@/utils/preview-accent';
 
 const SEARCH_ACTIONS: readonly SearchInputAction[] = [
   {
@@ -24,9 +25,10 @@ const SEARCH_ACTIONS: readonly SearchInputAction[] = [
 type TutorialStripProps = {
   title: string;
   tutorials: readonly TutorialPreview[];
+  accentOffset: number;
 };
 
-function TutorialStrip({ title, tutorials }: TutorialStripProps) {
+function TutorialStrip({ title, tutorials, accentOffset }: TutorialStripProps) {
   return (
     <AppCard style={styles.tutorialSection}>
       <View style={styles.sectionHeader}>
@@ -44,8 +46,12 @@ function TutorialStrip({ title, tutorials }: TutorialStripProps) {
         contentContainerStyle={styles.thumbnailList}
         horizontal
         showsHorizontalScrollIndicator={false}>
-        {tutorials.map((tutorial) => (
-          <TutorialThumbnail key={tutorial.id} tutorial={tutorial} />
+        {tutorials.map((tutorial, index) => (
+          <TutorialThumbnail
+            accent={getPreviewAccent(index + accentOffset)}
+            key={tutorial.id}
+            tutorial={tutorial}
+          />
         ))}
       </ScrollView>
     </AppCard>
@@ -78,8 +84,16 @@ export default function DiscoverLearnRoute() {
         value={query}
       />
 
-      <TutorialStrip title="Continue . . ." tutorials={continueTutorials} />
-      <TutorialStrip title="My Tutorials" tutorials={myTutorials} />
+      <TutorialStrip
+        accentOffset={0}
+        title="Continue . . ."
+        tutorials={continueTutorials}
+      />
+      <TutorialStrip
+        accentOffset={1}
+        title="My Tutorials"
+        tutorials={myTutorials}
+      />
 
       <View style={styles.communitySection}>
         <AppText style={styles.sectionTitle} variant="bodyStrong">
@@ -87,8 +101,12 @@ export default function DiscoverLearnRoute() {
         </AppText>
         {filteredCommunityTutorials.length > 0 ? (
           <View style={styles.communityList}>
-            {filteredCommunityTutorials.map((tutorial) => (
-              <TutorialPreviewCard key={tutorial.id} tutorial={tutorial} />
+            {filteredCommunityTutorials.map((tutorial, index) => (
+              <TutorialPreviewCard
+                accent={getPreviewAccent(index)}
+                key={tutorial.id}
+                tutorial={tutorial}
+              />
             ))}
           </View>
         ) : (

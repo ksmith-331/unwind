@@ -3,13 +3,14 @@ import { router, type Href } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { AppText } from '@/components/app-text';
-import type { DifficultyLevel, PatternAccent } from '@/types/pattern-preview';
+import type { DifficultyLevel } from '@/types/pattern-preview';
 import { theme } from '@/theme';
+import type { PreviewAccent } from '@/utils/preview-accent';
 
 type ContentPreviewCardProps = {
   title: string;
   difficulty: DifficultyLevel;
-  accent: PatternAccent;
+  accent: PreviewAccent;
   href: Href;
   accessibilityLabel?: string;
   accessory?: ReactNode;

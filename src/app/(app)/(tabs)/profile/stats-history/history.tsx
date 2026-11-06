@@ -9,6 +9,7 @@ import {
 } from '@/components/search-input';
 import { historyItems } from '@/mocks/history-items';
 import { theme } from '@/theme';
+import { getPreviewAccent } from '@/utils/preview-accent';
 
 export default function ProfileHistoryRoute() {
   const [searchText, setSearchText] = useState('');
@@ -43,8 +44,12 @@ export default function ProfileHistoryRoute() {
           contentContainerStyle={styles.list}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}>
-          {filteredHistory.map((item) => (
-            <HistoryPreviewCard item={item} key={item.historyId} />
+          {filteredHistory.map((item, index) => (
+            <HistoryPreviewCard
+              accent={getPreviewAccent(index)}
+              item={item}
+              key={item.historyId}
+            />
           ))}
         </ScrollView>
       ) : (

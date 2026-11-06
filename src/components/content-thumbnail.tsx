@@ -1,12 +1,12 @@
 import { router, type Href } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
 
-import type { PatternAccent } from '@/types/pattern-preview';
 import { theme } from '@/theme';
+import type { PreviewAccent } from '@/utils/preview-accent';
 
 type ContentThumbnailProps = {
   title: string;
-  accent: PatternAccent;
+  accent: PreviewAccent;
   href: Href;
 };
 

@@ -6,6 +6,7 @@ import { TutorialPreviewCard } from '@/components/tutorial-preview-card';
 import { SEARCH_FILTER_ICON, SearchInput, type SearchInputAction } from '@/components/search-input';
 import { profileTutorials } from '@/mocks/profile-tutorials';
 import { theme } from '@/theme';
+import { getPreviewAccent } from '@/utils/preview-accent';
 
 const SEARCH_ACTIONS: readonly SearchInputAction[] = [
   {
@@ -41,8 +42,12 @@ export default function LibraryTutorialsRoute() {
       />
       {filteredTutorials.length > 0 ? (
         <View style={styles.tutorialList}>
-          {filteredTutorials.map((tutorial) => (
-            <TutorialPreviewCard key={tutorial.id} tutorial={tutorial} />
+          {filteredTutorials.map((tutorial, index) => (
+            <TutorialPreviewCard
+              accent={getPreviewAccent(index)}
+              key={tutorial.id}
+              tutorial={tutorial}
+            />
           ))}
         </View>
       ) : (

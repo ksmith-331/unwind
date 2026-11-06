@@ -1,4 +1,4 @@
-import type { DifficultyLevel, PatternAccent, PatternPreview } from '@/types/pattern-preview';
+import type { DifficultyLevel, PatternPreview } from '@/types/pattern-preview';
 
 export type HistoryItemKind = 'pattern' | 'tutorial';
 
@@ -10,5 +10,4 @@ export type HistoryItemPreview = {
   difficulty: DifficultyLevel;
   isComplete: boolean;
   thumbnail: PatternPreview['thumbnail'];
-  accent: PatternAccent;
 };

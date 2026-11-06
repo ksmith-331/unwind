@@ -10,7 +10,6 @@ export const historyItems = [
     difficulty: 4,
     isComplete: true,
     thumbnail: 'placeholder',
-    accent: 'primaryAction',
   },
   {
     historyId: 'history-bird-alpha-001',
@@ -20,7 +19,6 @@ export const historyItems = [
     difficulty: 3,
     isComplete: false,
     thumbnail: 'placeholder',
-    accent: 'secondaryAction',
   },
   {
     historyId: 'history-mushroom-plush-001',
@@ -30,7 +28,6 @@ export const historyItems = [
     difficulty: 2,
     isComplete: true,
     thumbnail: 'placeholder',
-    accent: 'highlight',
   },
   {
     historyId: 'history-wave-diagonal-001',
@@ -40,7 +37,6 @@ export const historyItems = [
     difficulty: 1,
     isComplete: true,
     thumbnail: 'placeholder',
-    accent: 'primaryAction',
   },
   {
     historyId: 'history-crochet-leaf-border-001',
@@ -50,7 +46,6 @@ export const historyItems = [
     difficulty: 2,
     isComplete: false,
     thumbnail: 'placeholder',
-    accent: 'secondaryAction',
   },
   {
     historyId: 'history-stuffed-bunny-002',
@@ -60,7 +55,6 @@ export const historyItems = [
     difficulty: 4,
     isComplete: false,
     thumbnail: 'placeholder',
-    accent: 'primaryAction',
   },
   {
     historyId: 'history-colorwork-pouch-001',
@@ -70,7 +64,6 @@ export const historyItems = [
     difficulty: 3,
     isComplete: false,
     thumbnail: 'placeholder',
-    accent: 'highlight',
   },
   {
     historyId: 'history-stuffed-bunny-003',
@@ -80,7 +73,6 @@ export const historyItems = [
     difficulty: 4,
     isComplete: true,
     thumbnail: 'placeholder',
-    accent: 'primaryAction',
   },
   {
     historyId: 'history-mini-macrame-planter-001',
@@ -90,7 +82,6 @@ export const historyItems = [
     difficulty: 1,
     isComplete: true,
     thumbnail: 'placeholder',
-    accent: 'secondaryAction',
   },
   {
     historyId: 'history-wave-diagonal-002',
@@ -100,7 +91,6 @@ export const historyItems = [
     difficulty: 1,
     isComplete: false,
     thumbnail: 'placeholder',
-    accent: 'primaryAction',
   },
   {
     historyId: 'history-tapestry-basics-001',
@@ -110,7 +100,6 @@ export const historyItems = [
     difficulty: 2,
     isComplete: false,
     thumbnail: 'placeholder',
-    accent: 'highlight',
   },
   {
     historyId: 'history-winter-house-001',
@@ -120,6 +109,5 @@ export const historyItems = [
     difficulty: 2,
     isComplete: true,
     thumbnail: 'placeholder',
-    accent: 'secondaryAction',
   },
 ] satisfies readonly HistoryItemPreview[];
