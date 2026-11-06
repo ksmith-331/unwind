@@ -4,6 +4,7 @@ export type UserStatsPreview = {
   projectsCompleted: number;
   projectsCreated: number;
   reviewsCreated: number;
+  tutorialsCreated: number;
   tutorialsCompleted: number;
   projectTypesMade: number;
   materialsLogged: number;

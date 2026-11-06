@@ -124,7 +124,12 @@ export function ProjectsShell() {
             </Stack>
           </Animated.View>
           <FloatingActionTray
-            actions={['Create a pattern', 'Upload a pattern']}
+            actions={[
+              'Search projects',
+              'Upload pattern',
+              'Personal patterns',
+              'Create pattern',
+            ]}
             buttonLabel="Add a project"
             closeButtonLabel="Close project actions"
             dismissButtonLabel="Dismiss project actions"

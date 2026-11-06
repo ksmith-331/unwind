@@ -48,7 +48,13 @@ tutorials.
 
 - Shows community patterns and a separate **My Patterns** subsection for
   patterns created by the current user.
-- Search results include community and personal patterns by default.
+- With an empty search query, shows My Patterns, a neutral **Patterns**
+  heading, and the combined community and personal pattern results.
+- During active search, hides My Patterns and the Patterns heading and shows
+  only matching combined pattern results or the **No patterns found** empty
+  state.
+- Clearing the search with the SearchInput X restores the normal browse
+  sections and complete combined result list.
 - A future filter may exclude personal patterns.
 - Patterns can be viewed, started or continued in tracking, edited when
   user-owned, and added to or removed from To Do.
@@ -59,8 +65,15 @@ tutorials.
 - **Continue** means tutorials currently in progress.
 - **My Tutorials** means tutorials created by the current user; it is not an
   in-progress list.
-- Search results include community and personal tutorials by default. A future
-  filter may exclude personal tutorials.
+- With an empty search query, shows Continue, My Tutorials, a neutral
+  **Tutorials** heading, and the combined community and personal tutorial
+  results. Continue tutorials are not included in the search result dataset.
+- During active search, hides Continue, My Tutorials, and the Tutorials
+  heading and shows only matching combined tutorial results or the
+  **No tutorials found** empty state.
+- Clearing the search with the SearchInput X restores the normal browse
+  sections and complete combined result list.
+- A future filter may exclude personal tutorials.
 - Tutorials can be viewed, started or continued, and added to or removed from
   To Do. User-owned tutorials can be edited.
 

@@ -7,6 +7,7 @@ export const userStatsPreview = {
   projectsCompleted: 123,
   projectsCreated: 15,
   reviewsCreated: 89,
+  tutorialsCreated: 7,
   tutorialsCompleted: 18,
   projectTypesMade: 4,
   materialsLogged: 212,

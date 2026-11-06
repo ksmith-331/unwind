@@ -17,6 +17,7 @@ export default function ProfileStatsRoute() {
     { label: 'Projects Completed', value: userStatsPreview.projectsCompleted },
     { label: 'Projects Created', value: userStatsPreview.projectsCreated },
     { label: 'Reviews Created', value: userStatsPreview.reviewsCreated },
+    { label: 'Tutorials Created', value: userStatsPreview.tutorialsCreated },
     { label: 'Tutorials Completed', value: userStatsPreview.tutorialsCompleted },
     { label: 'Project Types Made', value: userStatsPreview.projectTypesMade },
     { label: 'Materials Logged', value: userStatsPreview.materialsLogged },

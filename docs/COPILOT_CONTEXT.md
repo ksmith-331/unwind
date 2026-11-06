@@ -13,7 +13,7 @@
 When documents conflict, follow the authoritative document for that category.
 `app-architecture.md` does not override product behavior. Figma visual intent
 does not override finalized production requirements.
-`App Documents v2.1.docx` is a human-oriented planning/source artifact;
+`App Documents v2.2.docx` is a human-oriented planning/source artifact;
 normal implementation work should use the synchronized Markdown documents.
 
 ## Current application context
@@ -32,6 +32,8 @@ normal implementation work should use the synchronized Markdown documents.
   dynamic shared `StreakCard`.
 - Wide preview-card accent colors are positional presentation state and are
   recalculated from the visible list after search/filtering.
+- Discover active search hides browse-only subsections and headings; see
+  `PRODUCT_SPEC.md`.
 - History records occurrences separately from current content state;
   historical completion is distinct from current completion.
 - Use typed mock data that preserves conceptual relationships. Backend

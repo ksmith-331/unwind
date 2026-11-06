@@ -22,8 +22,8 @@ export function DiscoverShell() {
   const contentAnimation = useRef<Animated.CompositeAnimation | null>(null);
   const isLearnActive = pathname === '/discover/learn';
   const actions = isLearnActive
-    ? ['Create a tutorial', 'Upload a tutorial']
-    : ['Create a pattern', 'Upload a pattern'];
+    ? ['Create tutorial', 'Upload tutorial']
+    : ['Upload pattern', 'Create pattern'];
   const tabs: readonly [SubTabDefinition, SubTabDefinition] = [
     { ...DISCOVER_TABS[0], active: !isLearnActive },
     { ...DISCOVER_TABS[1], active: isLearnActive },

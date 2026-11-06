@@ -87,10 +87,11 @@ Groups:
 
 ## SearchInput
 
-The common search presentation has a search icon, text input, and canonical
-filter icon. There is no microphone or production voice-search feature.
-Search text is case-insensitive where implemented; filters may be added in a
-future capability.
+The common search presentation has a search icon, text input, a conditional
+clear X when the query is non-empty, and the canonical filter icon. The X is
+an accessible **Clear search** control. There is no microphone or production
+voice-search feature. Search text is case-insensitive where implemented;
+filters may be added in a future capability.
 
 ## Wide preview cards and positional accents
 

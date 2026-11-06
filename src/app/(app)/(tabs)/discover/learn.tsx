@@ -60,16 +60,24 @@ function TutorialStrip({ title, tutorials, accentOffset }: TutorialStripProps) {
 
 export default function DiscoverLearnRoute() {
   const [query, setQuery] = useState('');
-  const filteredCommunityTutorials = useMemo(() => {
+  const isSearching = query.trim().length > 0;
+  const tutorials = useMemo(() => {
+    const seenIds = new Set<string>();
+    return [...communityTutorials, ...myTutorials].filter((tutorial) => {
+      if (seenIds.has(tutorial.id)) {
+        return false;
+      }
+      seenIds.add(tutorial.id);
+      return true;
+    });
+  }, []);
+  const visibleTutorials = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
-    if (!normalizedQuery) {
-      return communityTutorials;
-    }
-
-    return communityTutorials.filter((tutorial) =>
+    return tutorials.filter((tutorial) =>
+      !normalizedQuery ||
       tutorial.title.toLowerCase().includes(normalizedQuery),
     );
-  }, [query]);
+  }, [query, tutorials]);
 
   return (
     <ScrollView
@@ -84,24 +92,30 @@ export default function DiscoverLearnRoute() {
         value={query}
       />
 
-      <TutorialStrip
-        accentOffset={0}
-        title="Continue . . ."
-        tutorials={continueTutorials}
-      />
-      <TutorialStrip
-        accentOffset={1}
-        title="My Tutorials"
-        tutorials={myTutorials}
-      />
+      {!isSearching && (
+        <>
+          <TutorialStrip
+            accentOffset={0}
+            title="Continue . . ."
+            tutorials={continueTutorials}
+          />
+          <TutorialStrip
+            accentOffset={1}
+            title="My Tutorials"
+            tutorials={myTutorials}
+          />
+        </>
+      )}
 
       <View style={styles.communitySection}>
-        <AppText style={styles.sectionTitle} variant="bodyStrong">
-          Community Tutorials
-        </AppText>
-        {filteredCommunityTutorials.length > 0 ? (
+        {!isSearching && (
+          <AppText style={styles.sectionTitle} variant="bodyStrong">
+            Tutorials
+          </AppText>
+        )}
+        {visibleTutorials.length > 0 ? (
           <View style={styles.communityList}>
-            {filteredCommunityTutorials.map((tutorial, index) => (
+            {visibleTutorials.map((tutorial, index) => (
               <TutorialPreviewCard
                 accent={getPreviewAccent(index)}
                 key={tutorial.id}

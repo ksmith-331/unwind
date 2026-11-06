@@ -19,16 +19,24 @@ const SEARCH_ACTIONS: readonly SearchInputAction[] = [
 
 export default function DiscoverCreateRoute() {
   const [query, setQuery] = useState('');
-  const filteredCommunityPatterns = useMemo(() => {
+  const isSearching = query.trim().length > 0;
+  const patterns = useMemo(() => {
+    const seenIds = new Set<string>();
+    return [...communityPatterns, ...myPatterns].filter((pattern) => {
+      if (seenIds.has(pattern.id)) {
+        return false;
+      }
+      seenIds.add(pattern.id);
+      return true;
+    });
+  }, []);
+  const visiblePatterns = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
-    if (!normalizedQuery) {
-      return communityPatterns;
-    }
-
-    return communityPatterns.filter((pattern) =>
+    return patterns.filter((pattern) =>
+      !normalizedQuery ||
       pattern.title.toLowerCase().includes(normalizedQuery),
     );
-  }, [query]);
+  }, [patterns, query]);
 
   return (
     <ScrollView
@@ -43,39 +51,43 @@ export default function DiscoverCreateRoute() {
         value={query}
       />
 
-      <AppCard style={styles.myPatternsCard}>
-        <View style={styles.myPatternsHeader}>
-          <AppText variant="bodySmallStrong">My Patterns</AppText>
-          <View
-            accessibilityElementsHidden
-            importantForAccessibility="no-hide-descendants"
-            style={styles.chevron}>
-            <AppText color="primaryText" variant="heading3">
-              ›
-            </AppText>
+      {!isSearching && (
+        <AppCard style={styles.myPatternsCard}>
+          <View style={styles.myPatternsHeader}>
+            <AppText variant="bodySmallStrong">My Patterns</AppText>
+            <View
+              accessibilityElementsHidden
+              importantForAccessibility="no-hide-descendants"
+              style={styles.chevron}>
+              <AppText color="primaryText" variant="heading3">
+                ›
+              </AppText>
+            </View>
           </View>
-        </View>
-        <ScrollView
-          contentContainerStyle={styles.thumbnailList}
-          horizontal
-          showsHorizontalScrollIndicator={false}>
-          {myPatterns.map((pattern, index) => (
-            <PatternThumbnail
-              accent={getPreviewAccent(index + 1)}
-              key={pattern.id}
-              pattern={pattern}
-            />
-          ))}
-        </ScrollView>
-      </AppCard>
+          <ScrollView
+            contentContainerStyle={styles.thumbnailList}
+            horizontal
+            showsHorizontalScrollIndicator={false}>
+            {myPatterns.map((pattern, index) => (
+              <PatternThumbnail
+                accent={getPreviewAccent(index + 1)}
+                key={pattern.id}
+                pattern={pattern}
+              />
+            ))}
+          </ScrollView>
+        </AppCard>
+      )}
 
       <View style={styles.communitySection}>
-        <AppText style={styles.sectionTitle} variant="bodyStrong">
-          Community Patterns
-        </AppText>
-        {filteredCommunityPatterns.length > 0 ? (
+        {!isSearching && (
+          <AppText style={styles.sectionTitle} variant="bodyStrong">
+            Patterns
+          </AppText>
+        )}
+        {visiblePatterns.length > 0 ? (
           <View style={styles.communityList}>
-            {filteredCommunityPatterns.map((pattern, index) => (
+            {visiblePatterns.map((pattern, index) => (
               <PatternPreviewCard
                 accent={getPreviewAccent(index)}
                 key={pattern.id}
