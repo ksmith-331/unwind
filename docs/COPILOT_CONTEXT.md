@@ -1,133 +1,41 @@
 # UnWind Copilot Context
 
-## Source of truth
+## Documentation authority
 
-The product documentation is authoritative.
+- `PRODUCT_SPEC.md` -> product behavior and feature requirements
+- `NAVIGATION.md` -> route hierarchy and navigation behavior
+- `DESIGN_SYSTEM.md` -> production visual/design requirements
+- `DATA_MODEL.md` -> conceptual data structures
+- `ENGINEERING.md` -> implementation, platform, development, and tooling
+  constraints
+- `app-architecture.md` -> Figma frame/node inventory and visual reference
 
-If the product documentation and Figma disagree, follow the product
-documentation.
+When documents conflict, follow the authoritative document for that category.
+`app-architecture.md` does not override product behavior. Figma visual intent
+does not override finalized production requirements.
+`App Documents v2.1.docx` is a human-oriented planning/source artifact;
+normal implementation work should use the synchronized Markdown documents.
 
-## Technology
+## Current application context
 
-- React Native
-- Expo
-- TypeScript
-- Expo Router
-- Zustand
-- TanStack Query
-- React Hook Form
-- Zod
-- Supabase
+- React Native, Expo, Expo Router, TypeScript; production typography is
+  Manrope.
+- Authenticated Landing is outside the selectable main tabs.
+- Main navigation: Projects, Discover, Profile.
+- Main-tab state is remembered when switching tabs; reselecting the active tab
+  returns to its root.
+- Subtab groups: Projects (In Progress / To Do), Discover (Create / Learn),
+  Profile Library (Inventory / Patterns / Tutorials), Stats + History
+  (Stats / History).
+- Shared UI concepts include `MainNavigationBar`, persistent `SubTabs`
+  shells, `SearchInput` (no microphone), `FloatingActionTray`, and the
+  dynamic shared `StreakCard`.
+- Wide preview-card accent colors are positional presentation state and are
+  recalculated from the visible list after search/filtering.
+- History records occurrences separately from current content state;
+  historical completion is distinct from current completion.
+- Use typed mock data that preserves conceptual relationships. Backend
+  integration and live persistence are deferred; see `ENGINEERING.md`.
 
-## Current milestone
-
-Milestone 1 focuses on:
-
-- Route structure
-- Navigation
-- Shared UI components
-- Design tokens
-- Typed mock data
-- Screen layouts
-
-## Do not implement yet
-
-- Supabase
-- Real authentication
-- Image uploads
-- Craft-specific pattern tracking
-- Craft-specific pattern editing
-- Offline synchronization
-
-## Route structure
-
-Expo Router routes are stored in:
-
-src/app
-
-Do not create a second app directory at the repository root.
-
-## Application entry
-
-The application always displays its native splash screen while loading.
-
-If there is no valid session:
-
-Splash -> Welcome -> Sign In or Register
-
-If there is a valid session:
-
-Splash -> Authenticated Landing
-
-Registration flow:
-
-Welcome -> Register -> Verify Email -> New User Setup -> Landing
-
-## Authenticated Landing
-
-Landing is the first authenticated screen.
-
-Landing is not the Projects screen.
-
-Landing provides:
-
-- Pick up where you left off
-- Projects navigation
-- Discover navigation
-- Profile navigation
-
-## Main tabs
-
-The persistent tabs appear in this order:
-
-1. Projects
-2. Discover
-3. Profile
-
-Projects subtabs:
-
-- In Progress
-- To Do
-
-Discover subtabs:
-
-- Create
-- Learn
-
-Profile library subtabs:
-
-- Inventory
-- Patterns
-- Tutorials
-
-## Presentation behavior
-
-Pattern, tutorial, inventory, and creator detail screens are outside
-the tab group and appear above it.
-
-Tracking and editing workspaces are outside the tab group and occupy
-the full screen.
-
-Do not create separate detail routes for each source location.
-
-One reusable pattern detail route must account for:
-
-- Ownership
-- Bookmark state
-- Progress status
-- Source screen
-
-The same rule applies to tutorial details.
-
-## Engineering rules
-
-- Use TypeScript.
-- Do not use the any type.
-- Do not duplicate screen components.
-- Do not hard-code colors inside route files.
-- Use centralized theme tokens.
-- Use typed route parameters.
-- Use mock data before database integration.
-- Keep route files thin.
-- Place reusable UI in src/components.
-- Place data types in src/types.
+Expo Router routes live under `src/app`. Do not create a second root app
+directory. Consult the authority documents above before implementation.

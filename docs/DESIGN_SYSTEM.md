@@ -1,373 +1,141 @@
 # UnWind Design System
 
-## Scope
+This document is authoritative for production visual and design rules.
+Figma provides visual reference, but finalized production requirements in
+this document and `PRODUCT_SPEC.md` take precedence.
 
-UnWind currently supports:
+## Scope and visual authority
 
-- Portrait phone layouts
-- iOS and Android
-- Light theme only
-
-Tablet layouts and dark mode are outside the current milestone.
-
----
-
-## Design Authority
-
-The Figma mockup is authoritative for visual intent.
-
-Product documentation is authoritative for:
-
-- Application behavior
-- Navigation
-- Content requirements
-- Feature requirements
-
-Some legacy Figma text styles, paint styles, and individual layers contain
-styling that is not part of the intended UnWind design system.
-
-The following Figma elements should NOT be considered authoritative:
-
-- Named Figma text styles
-- Area Variable font references
-- Inter font references
-- SF Pro font references
-- Named Figma paint styles
-
-When implementing text from Figma, reproduce its visual hierarchy using the
-nearest appropriate Manrope typography token.
-
-The Figma color variables ARE authoritative.
-
----
+Current product target: portrait phones on iOS and Android, light theme.
+Manrope is the production font. Figma color variables inform the palette;
+legacy named styles, Area Variable, Inter, and SF Pro references do not
+override production tokens.
 
 ## Typography
 
-Primary application font:
+Use Manrope through the shared typography system. Prefer this semantic scale
+instead of reproducing incidental Figma font sizes:
+
+| Variant | Size | Weight |
+| --- | ---: | --- |
+| Display | 36 | Bold / 700 |
+| Heading 1 | 30 | Bold / 700 |
+| Heading 2 | 24 | Bold / 700 |
+| Heading 3 | 20 | SemiBold / 600 |
+| Body | 16 | Regular / 400 |
+| Body Strong | 16 | SemiBold / 600 |
+| Body Small | 14 | Regular / 400 |
+| Body Small Strong | 14 | SemiBold / 600 |
+| Caption | 12 | Regular / 400 |
+| Button | 16 | SemiBold / 600 |
 
-- Manrope
-
-Manrope replaces Area Variable throughout the production application.
-
-The application should use a small semantic typography scale rather than
-reproducing every one-off font size found in Figma.
-
-### Typography Tokens
-
-Display
-- Size: 36
-- Weight: Bold / 700
-
-Heading 1
-- Size: 30
-- Weight: Bold / 700
-
-Heading 2
-- Size: 24
-- Weight: Bold / 700
-
-Heading 3
-- Size: 20
-- Weight: SemiBold / 600
-
-Body
-- Size: 16
-- Weight: Regular / 400
-
-Body Strong
-- Size: 16
-- Weight: SemiBold / 600
-
-Body Small
-- Size: 14
-- Weight: Regular / 400
-
-Body Small Strong
-- Size: 14
-- Weight: SemiBold / 600
-
-Caption
-- Size: 12
-- Weight: Regular / 400
-
-Button
-- Size: 16
-- Weight: SemiBold / 600
-
-These values may be refined as individual screens are implemented.
-
-Do not create a new typography token simply because an individual Figma
-element differs by one or two pixels.
-
-Unique typography may be implemented locally only when the design clearly
-requires a meaningful visual distinction.
-
----
-
-## Brand Colors
-
-The Figma color variables are authoritative.
-
-Orange
-- #F26340
-
-Light Blue
-- #90D3D0
-
-Yellow
-- #F5BD21
-
-Blue
-- #122F3A
-
-White
-- #FCFCFC
-
-Gray
-- #F0EFEF
-
-Overlay
-- #000000
-
-Named Figma paint styles such as Primary, Secondary, Tertiary, and
-Annotations are legacy styles and must not define the application theme.
-
----
-
-## Semantic Colors
-
-App Background
-- White
-
-Surface
-- White
-
-Muted Surface
-- Gray
-
-Primary Action
-- Orange
-
-Secondary Action
-- Light Blue
-
-Highlight
-- Yellow
-
-Navigation
-- Blue
-
-Primary Text
-- Blue
-
-Dark Text
-- Overlay
-
-Text On Dark
-- White
-
-Border
-- Gray
-
-Overlay
-- Overlay
-
-Additional semantic roles may be introduced when repeated implementation
-needs demonstrate that they are necessary.
-
----
-
-## Spacing
-
-Use a normalized spacing scale instead of reproducing incidental Figma
-measurements.
-
-Spacing 0
-- 0
-
-Spacing 1
-- 4
-
-Spacing 2
-- 8
-
-Spacing 3
-- 10
-
-Spacing 4
-- 12
-
-Spacing 5
-- 16
-
-Spacing 6
-- 24
-
-Spacing 7
-- 32
-
-Use the nearest appropriate spacing token unless the visual design clearly
-requires a unique value.
-
----
-
-## Corner Radii
-
-Small
-- 8
-
-Medium
-- 10
-
-Large
-- 20
-
-Extra Large
-- 24
-
-Extra Extra Large
-- 30
-
-Pill
-- 999
-
-Use the nearest appropriate radius token instead of reproducing incidental
-one-off values.
-
----
-
-## Shadows
-
-Shadows will be defined as screens requiring them are implemented.
-
-Do not add arbitrary shadows that are not supported by the intended visual
-design.
-
----
-
-## Theme Rules
-
-- Do not hard-code brand colors in route files.
-- Do not hard-code font families in route files.
-- Do not hard-code recurring typography values in route files.
-- Prefer semantic color tokens over raw brand colors.
-- Prefer established spacing tokens over arbitrary spacing.
-- Prefer established radius tokens over arbitrary radii.
-- Figma values may be approximated to the nearest design token when there
-  is no meaningful visual difference.
-
----
-
-## Initial Shared Components
-
-The initial design-system implementation will provide:
-
-- Screen
-- AppText
-- AppButton
-- AppCard
-
-Additional components will be introduced after repeated visual patterns
-are encountered during screen implementation.
-
-Likely future components include:
-
-- AppHeader
-- IconButton
-- SearchInput
-- SegmentedTabs
-- EmptyState
-- ContentImage
-- FloatingActionButton
-- ConfirmationDialog
-
----
-
-## Screen
-
-Screen should:
-
-- Respect device safe areas
-- Support optional scrolling
-- Apply consistent screen padding
-- Use application background tokens
-- Support custom content styles
-- Support screens that intentionally extend content into particular safe
-  areas when required later
-
----
-
-## AppText
-
-AppText should support these semantic variants:
-
-- Display
-- Heading 1
-- Heading 2
-- Heading 3
-- Body
-- Body Strong
-- Body Small
-- Body Small Strong
-- Caption
-- Button
-
-AppText should use Manrope.
-
-Normal route components should not specify:
-
-- Font family
-- Raw font weight
-- Repeated font sizes
-
-These should come from AppText variants.
-
----
-
-## AppButton
-
-AppButton should initially support:
-
-- Primary
-- Secondary
-- Outline
-- Ghost
-- Destructive
-
-AppButton should support:
-
-- Loading state
-- Disabled state
-- Full-width mode
-- Accessibility label
-
-Exact visual details may be refined as the corresponding Figma components
-are implemented.
-
----
-
-## AppCard
-
-AppCard should support:
-
-- Custom children
-- Optional press behavior
-- Optional accessibility label
-- Default surface
-- Default radius
-- Default padding
-
-Exact visual details may be refined as repeated card designs are implemented.
-
----
+## Colors
+
+| Color | Value | Semantic use |
+| --- | --- | --- |
+| Orange | `#F26340` | Primary action |
+| Light Blue | `#90D3D0` | Secondary action |
+| Yellow | `#F5BD21` | Highlight |
+| Blue | `#122F3A` | Navigation and primary text |
+| White | `#FCFCFC` | App background and surfaces |
+| Gray | `#F0EFEF` | Muted surface and borders |
+| Black / Overlay | `#000000` | Overlay and dark text |
+
+Use semantic theme tokens rather than raw brand colors in route styles.
+
+## Spacing, radii, and surfaces
+
+Use the established spacing scale: 0, 4, 8, 10, 12, 16, 24, 32.
+Established corner radii are 8, 10, 20, 24, 30, and pill (999). Prefer these
+tokens unless a design needs a meaningful exception. Add shadows only where
+the screen design supports them.
+
+## Background texture
+
+Ordinary textured app screens use
+`assets/images/brand/background-texture.png` at 20% opacity, tiled/repeated,
+never stretched. Opacity belongs only to the texture layer and must not fade
+foreground content.
+
+Do not use the texture on Pattern detail, Tutorial detail, Inventory detail,
+tracking workspaces, or editing workspaces unless a future specific design
+explicitly overrides this rule.
+
+## MainNavigationBar
+
+The bar has three equal-width sections in Projects, Discover, Profile order.
+
+- Inactive section: Blue fill and white icon.
+- Active Projects: Light Blue fill and black icon.
+- Active Discover: Orange fill and black icon.
+- Active Profile: Yellow fill and black icon.
+- Landing uses the same bar with no active section.
+
+## SubTabs and persistent shells
+
+SubTabs use a navy background, white labels, and a yellow active indicator
+that slides between tabs. The section shell, background, and SubTabs remain
+mounted while sibling child content changes; child content fades out before
+navigation and fades in afterward. Shells support two or three tabs.
+
+Groups:
+
+- Projects: In Progress / To Do
+- Discover: Create / Learn
+- Profile Library: Inventory / Patterns / Tutorials
+- Profile Stats + History: Stats / History
+
+## SearchInput
+
+The common search presentation has a search icon, text input, and canonical
+filter icon. There is no microphone or production voice-search feature.
+Search text is case-insensitive where implemented; filters may be added in a
+future capability.
+
+## Wide preview cards and positional accents
+
+Wide Pattern, Tutorial, and History preview cards use a thumbnail on the
+left and a navy information region with a title and difficulty indicator.
+Show a completion checkmark only when appropriate to the content's semantics.
+
+The colored bottom accent is presentation state, not content data. Assign it
+by current visible list position, starting at index zero:
+
+1. Orange (`primaryAction`)
+2. Light Blue (`secondaryAction`)
+3. Yellow (`highlight`)
+4. Repeat
+
+Recalculate the sequence after search or filtering so the first visible result
+always uses Orange. Never store this accent on Pattern, Tutorial, HistoryItem,
+or other domain data.
+
+## Completion indicators
+
+Current-content completion is derived from the current UserPattern or
+UserTutorial state and may disappear when content is restarted. Historical
+completion belongs to an individual History occurrence and remains recorded
+after a restart. These are separate concepts; one shared completion boolean
+must not drive both.
+
+## Shared StreakCard
+
+The same visual StreakCard is used on Landing and Stats. Its streak value is
+dynamic user progress; encouragement text is derived from that streak and may
+be refined as product behavior evolves.
+
+## Floating action button
+
+Where a FAB/action tray is specified, it is fixed within its section shell.
+Tapping the FAB toggles the tray; tapping outside dismisses it without
+activating content underneath. It closes when navigating away or changing the
+relevant subtab, while its shell persists across sibling subviews where
+applicable. Planned tray actions do not imply those actions are currently
+functional. Stats and History have no FAB.
 
 ## Accessibility
 
-Interactive components should provide:
-
-- Appropriate accessibility roles
-- Accessibility labels where visible text is insufficient
-- Disabled-state semantics where applicable
-- Adequate touch targets
-
-Color must not be the sole indicator of application state.
+Interactive controls need useful labels, semantic state, and adequate touch
+targets. Difficulty and completion should be understandable without relying
+on color alone. Decorative graphics and textures are excluded from
+accessibility.

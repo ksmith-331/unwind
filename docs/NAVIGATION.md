@@ -1,65 +1,64 @@
 # UnWind Navigation
 
-## Public routes
+This document is authoritative for route hierarchy and navigation behavior.
 
-- Welcome
-- Sign In
-- Register
-- Forgot Password
-- Verify Email
-- New User Setup
+## Public flow
 
-## Authenticated entry
+- The splash screen is shown while the application loads.
+- Unauthenticated users continue to Welcome, Sign In, or Register.
+- Registration may continue through Verify Email and New User Setup.
+- Successful authentication enters Landing.
 
-- Landing
+## Authenticated entry and main tabs
 
-## Bottom tabs
+Landing is the authenticated entry screen and is **not** a selectable main
+tab. Its bottom navigation is visible with no active tab. After entering the
+main application, Landing is not normally reachable through tab navigation.
 
-### Projects
+The selectable main tabs appear in this order:
 
-- In Progress
-- To Do
+1. **Projects** — root: In Progress
+2. **Discover** — root: Create
+3. **Profile** — root: Profile Home
 
-### Discover
+### Remembered state and reselect
 
-- Create
-- Learn
+Switching to a different main tab preserves that destination tab's previously
+visited nested/subtab state. For example, returning to Projects after visiting
+Discover restores Projects / To Do if that was the last Projects subtab.
 
-### Profile
+Pressing the already-active main tab returns to that tab's root:
 
-- Profile Home
-- Inventory and Patterns
-  - Inventory
-  - Patterns
-  - Tutorials
-- Stats and History
-  - Stats
-  - History
-- Settings
+- Projects -> In Progress
+- Discover -> Create
+- Profile -> Profile Home
 
-## Detail routes
+## Subtab groups
 
-These routes display above the tab navigator:
+- **Projects:** In Progress, To Do
+- **Discover:** Create, Learn
+- **Profile Library:** Inventory, Patterns, Tutorials
+- **Profile Stats + History:** Stats, History
 
-- Pattern Detail
-- Tutorial Detail
-- Inventory Detail
-- Creator Profile
+Subtabs are sibling views within their persistent main-section shell.
 
-## Workspace routes
+## Profile destinations
 
-These routes occupy the full screen and hide the tab navigator:
+Profile Home links to the Profile Library, Stats + History, and Settings.
+Account management is part of Settings; there is no separate My Account
+destination.
 
-- Pattern Tracking
-- Pattern Editing
-- Tutorial Viewing
-- Tutorial Editing
+## Detail and workspace exceptions
 
-## Navigation precedence
+Ordinary nested screens remain within their main tab and retain the main
+navigation bar. These presentations are exceptions:
 
-The product specification is authoritative when it conflicts with the
-Figma-derived architecture inventory.
+- Pattern, Tutorial, and Inventory details are presented above the tab
+  navigator.
+- Pattern tracking/editing and tutorial tracking/viewing/editing workspaces
+  occupy the full screen and hide the main navigation bar.
+- Unauthenticated screens do not show the authenticated main navigation.
 
-The authenticated Landing screen is the initial authenticated route.
-Projects/In Progress is the default Projects screen, but is not the
-application Landing screen.
+Pattern and Tutorial detail routes are reusable across their originating
+screens; source location and current ownership/progress affect the available
+actions, not the identity of the route.
