@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { router, type Href } from 'expo-router';
 import { Pressable, StyleSheet, View } from 'react-native';
 
@@ -10,6 +11,8 @@ type ContentPreviewCardProps = {
   difficulty: DifficultyLevel;
   accent: PatternAccent;
   href: Href;
+  accessibilityLabel?: string;
+  accessory?: ReactNode;
 };
 
 export function ContentPreviewCard({
@@ -17,10 +20,14 @@ export function ContentPreviewCard({
   difficulty,
   accent,
   href,
+  accessibilityLabel,
+  accessory,
 }: ContentPreviewCardProps) {
   return (
     <Pressable
-      accessibilityLabel={`Open ${title}. Difficulty ${difficulty} out of 4`}
+      accessibilityLabel={
+        accessibilityLabel ?? `Open ${title}. Difficulty ${difficulty} out of 4`
+      }
       accessibilityRole="button"
       onPress={() => router.push(href)}
       style={({ pressed }) => [styles.card, pressed && styles.pressed]}>
@@ -36,7 +43,11 @@ export function ContentPreviewCard({
         </View>
       </View>
       <View style={styles.information}>
-        <AppText color="textOnDark" numberOfLines={1} variant="bodyStrong">
+        <AppText
+          color="textOnDark"
+          numberOfLines={1}
+          style={accessory ? styles.titleWithAccessory : undefined}
+          variant="bodyStrong">
           {title}
         </AppText>
         <View style={styles.difficultyRow}>
@@ -52,6 +63,15 @@ export function ContentPreviewCard({
             ))}
           </View>
         </View>
+        {accessory ? (
+          <View
+            accessibilityElementsHidden
+            importantForAccessibility="no-hide-descendants"
+            pointerEvents="none"
+            style={styles.accessory}>
+            {accessory}
+          </View>
+        ) : null}
       </View>
       <View
         accessibilityElementsHidden
@@ -104,6 +124,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: theme.spacing[3],
     paddingBottom: theme.spacing[1],
+    position: 'relative',
+  },
+  titleWithAccessory: {
+    paddingRight: theme.spacing[6],
+  },
+  accessory: {
+    position: 'absolute',
+    right: theme.spacing[3],
+    top: theme.spacing[2],
   },
   difficultyRow: {
     alignItems: 'center',

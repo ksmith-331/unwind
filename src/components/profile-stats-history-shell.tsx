@@ -1,6 +1,14 @@
-import { Image, StyleSheet, View } from 'react-native';
-import { Stack, usePathname, type Href } from 'expo-router';
+import { useCallback, useRef } from 'react';
+import { Animated, Easing, Image, StyleSheet, View } from 'react-native';
+import {
+  router,
+  Stack,
+  useFocusEffect,
+  usePathname,
+  type Href,
+} from 'expo-router';
 
+import { useReducedMotion } from '@/hooks/use-reduced-motion';
 import { Screen } from '@/components/screen';
 import { SubTabs, type SubTabDefinition } from '@/components/sub-tabs';
 import { theme } from '@/theme';
@@ -12,11 +20,75 @@ const STATS_HISTORY_TABS = [
 
 export function ProfileStatsHistoryShell() {
   const pathname = usePathname();
+  const reduceMotion = useReducedMotion();
+  const isNavigatingBetweenTabs = useRef(false);
+  const contentOpacity = useRef(new Animated.Value(1)).current;
+  const contentAnimation = useRef<Animated.CompositeAnimation | null>(null);
   const isHistoryActive = pathname === '/profile/stats-history/history';
   const tabs: readonly [SubTabDefinition, SubTabDefinition] = [
     { ...STATS_HISTORY_TABS[0], active: !isHistoryActive },
     { ...STATS_HISTORY_TABS[1], active: isHistoryActive },
   ];
+
+  useFocusEffect(
+    useCallback(
+      () => () => {
+        isNavigatingBetweenTabs.current = false;
+        contentAnimation.current?.stop();
+        contentOpacity.setValue(1);
+      },
+      [contentOpacity],
+    ),
+  );
+
+  const navigateToTab = useCallback(
+    (route: Href) => {
+      if (isNavigatingBetweenTabs.current) {
+        return;
+      }
+
+      isNavigatingBetweenTabs.current = true;
+
+      if (reduceMotion) {
+        contentOpacity.setValue(0);
+        router.navigate(route);
+        return;
+      }
+
+      contentAnimation.current = Animated.timing(contentOpacity, {
+        toValue: 0,
+        duration: 100,
+        easing: Easing.inOut(Easing.cubic),
+        useNativeDriver: true,
+      });
+      contentAnimation.current.start(({ finished }) => {
+        if (finished) {
+          router.navigate(route);
+        } else {
+          isNavigatingBetweenTabs.current = false;
+        }
+      });
+    },
+    [contentOpacity, reduceMotion],
+  );
+
+  const showActiveContent = useCallback(() => {
+    if (reduceMotion) {
+      contentOpacity.setValue(1);
+      isNavigatingBetweenTabs.current = false;
+      return;
+    }
+
+    contentAnimation.current = Animated.timing(contentOpacity, {
+      toValue: 1,
+      duration: 140,
+      easing: Easing.out(Easing.cubic),
+      useNativeDriver: true,
+    });
+    contentAnimation.current.start(() => {
+      isNavigatingBetweenTabs.current = false;
+    });
+  }, [contentOpacity, reduceMotion]);
 
   return (
     <Screen edges={['top']} contentContainerStyle={styles.screenContent}>
@@ -30,17 +102,32 @@ export function ProfileStatsHistoryShell() {
           source={require('../../assets/images/brand/background-texture.png')}
           style={styles.backgroundTexture}
         />
-        <SubTabs tabs={tabs} />
+        <SubTabs onNavigate={navigateToTab} tabs={tabs} />
         <View style={styles.contentRegion}>
-          <Stack
-            screenOptions={{
-              animation: 'none',
-              contentStyle: { backgroundColor: 'transparent' },
-              headerShown: false,
-            }}>
-            <Stack.Screen name="index" options={{ title: 'Stats' }} />
-            <Stack.Screen name="history" options={{ title: 'History' }} />
-          </Stack>
+          <Animated.View style={[styles.contentStack, { opacity: contentOpacity }]}>
+            <Stack
+              screenOptions={{
+                animation: reduceMotion ? 'none' : 'simple_push',
+                animationDuration: 230,
+                contentStyle: { backgroundColor: 'transparent' },
+                headerShown: false,
+              }}>
+              <Stack.Screen
+                name="index"
+                listeners={{
+                  transitionEnd: (event) => !event.data.closing && showActiveContent(),
+                }}
+                options={{ title: 'Stats' }}
+              />
+              <Stack.Screen
+                name="history"
+                listeners={{
+                  transitionEnd: (event) => !event.data.closing && showActiveContent(),
+                }}
+                options={{ title: 'History' }}
+              />
+            </Stack>
+          </Animated.View>
         </View>
       </View>
     </Screen>
@@ -61,6 +148,9 @@ const styles = StyleSheet.create({
     opacity: 0.2,
   },
   contentRegion: {
+    flex: 1,
+  },
+  contentStack: {
     flex: 1,
   },
 });
