@@ -24,6 +24,8 @@ normal implementation work should use the synchronized Markdown documents.
 - Main navigation: Projects, Discover, Profile.
 - Main-tab state is remembered when switching tabs; reselecting the active tab
   returns to its root.
+- Settings is an app-level/full-screen presentation entered from Profile; it
+  hides the main navigation and returns directly to Profile Home.
 - Subtab groups: Projects (In Progress / To Do), Discover (Create / Learn),
   Profile Library (Inventory / Patterns / Tutorials), Stats + History
   (Stats / History).

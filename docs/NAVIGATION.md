@@ -48,6 +48,13 @@ Profile Home links to the Profile Library, Stats + History, and Settings.
 Account management is part of Settings; there is no separate My Account
 destination.
 
+Settings retains the conceptual `/profile/settings` destination but is
+presented by the app-level stack above the main Tabs navigator. The
+MainNavigationBar is hidden while Settings is visible, and the underlying
+Tabs navigator remains mounted to preserve tab state. Settings' back control
+returns explicitly to `/profile` (Profile Home), not to a nested Profile
+destination.
+
 ## Detail and workspace exceptions
 
 Ordinary nested screens remain within their main tab and retain the main

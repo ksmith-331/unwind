@@ -5,6 +5,7 @@ export default function AppLayout() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="landing" />
       <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="profile/settings" />
     </Stack>
   );
 }

@@ -92,8 +92,18 @@ the original Figma Profile Library omitted that tab.
 - Stats displays the user's dynamic progress statistics.
 - History is an occurrence log of patterns and tutorials the user has worked
   on.
-- Settings provides account management, user preferences, and related
-  application settings.
+- Settings is one grouped surface with **Account** (Profile, Security, Log
+  Out), **Notifications** (Project & tutorial reminders, Community activity,
+  App updates), **Appearance & Accessibility** (system Reduce Motion and a
+  Theme/System placeholder), **Privacy & Data** (Privacy settings, Cookie use,
+  Delete account), and **About** (About UnWind, Terms of Service, Privacy
+  Policy, Open-source licenses, and app version).
+- Notification controls currently demonstrate local-only UI state. Account
+  management, authentication actions, theme selection, privacy/data actions,
+  and legal/about destinations are future functionality; they do not mutate
+  accounts, persist preferences, or navigate to placeholder destinations.
+- Delete account is a non-functional destructive-action placeholder and must
+  eventually require confirmation before any deletion capability exists.
 
 ## Stats
 

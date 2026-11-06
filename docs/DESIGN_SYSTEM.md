@@ -125,6 +125,16 @@ The same visual StreakCard is used on Landing and Stats. Its streak value is
 dynamic user progress; encouragement text is derived from that streak and may
 be refined as product behavior evolves.
 
+## Settings
+
+Settings uses a conventional, vertically scrolling grouped-list presentation
+on a plain light background. Do not use the ordinary screen texture,
+decorative ellipses, FAB, SubTabs, or MainNavigationBar. Use Manrope, restrained
+navy text, muted secondary text, and subtle row separators with minimal
+brand-color accents. Rows may use chevrons, value text, or standard native
+Switch controls. A focused top back header provides a comfortable accessible
+back target and a clear screen title.
+
 ## Floating action button
 
 Where a FAB/action tray is specified, it is fixed within its section shell.

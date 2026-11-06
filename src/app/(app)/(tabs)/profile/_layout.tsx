@@ -6,7 +6,6 @@ export default function ProfileLayout() {
       <Stack.Screen name="index" options={{ title: 'Profile Home' }} />
       <Stack.Screen name="library" options={{ title: 'Library' }} />
       <Stack.Screen name="stats-history" options={{ title: 'Stats & History' }} />
-      <Stack.Screen name="settings" options={{ title: 'Settings' }} />
     </Stack>
   );
 }
