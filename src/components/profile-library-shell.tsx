@@ -1,9 +1,10 @@
 import { useCallback, useRef, useState } from 'react';
 import { Animated, Easing, Image, StyleSheet, View } from 'react-native';
-import { router, Stack, useFocusEffect, usePathname, type Href } from 'expo-router';
+import { router, Stack, useFocusEffect, type Href } from 'expo-router';
 
 import { FloatingActionTray } from '@/components/floating-action-tray';
 import { useReducedMotion } from '@/hooks/use-reduced-motion';
+import { useActiveSubTab } from '@/hooks/use-active-subtab';
 import { Screen } from '@/components/screen';
 import { SubTabs, type SubTabDefinition } from '@/components/sub-tabs';
 import { theme } from '@/theme';
@@ -23,14 +24,24 @@ const ACTIONS_BY_SECTION: Record<LibrarySection, readonly string[]> = {
 };
 
 export function ProfileLibraryShell() {
-  const pathname = usePathname();
   const reduceMotion = useReducedMotion();
   const [isActionTrayOpen, setIsActionTrayOpen] = useState(false);
   const isNavigatingBetweenTabs = useRef(false);
   const contentOpacity = useRef(new Animated.Value(1)).current;
   const contentAnimation = useRef<Animated.CompositeAnimation | null>(null);
+  const activeSubTab = useActiveSubTab(
+    LIBRARY_TABS.map((tab) => ({
+      key: tab.label,
+      routes:
+        tab.label === 'Inventory'
+          ? ['/profile/library', tab.route]
+          : [tab.route],
+    })),
+    'Inventory',
+  );
   const activeSection =
-    LIBRARY_TABS.find((tab) => tab.route === pathname)?.label ?? 'Inventory';
+    LIBRARY_TABS.find((tab) => tab.label === activeSubTab)?.label ??
+    'Inventory';
   const tabs: readonly [
     SubTabDefinition,
     SubTabDefinition,

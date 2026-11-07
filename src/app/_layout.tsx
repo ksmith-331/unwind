@@ -42,7 +42,15 @@ export default function RootLayout() {
           <Stack.Screen name="index" />
           <Stack.Screen name="(public)" />
           <Stack.Screen name="(app)" />
-          <Stack.Screen name="pattern/[patternId]" />
+          <Stack.Screen
+            name="pattern/[patternId]"
+            options={{
+              animation: 'none',
+              contentStyle: { backgroundColor: 'transparent' },
+              gestureEnabled: false,
+              presentation: 'transparentModal',
+            }}
+          />
           <Stack.Screen name="tutorial/[tutorialId]" />
           <Stack.Screen name="inventory/[inventoryItemId]" />
           <Stack.Screen name="creator/[userId]" />

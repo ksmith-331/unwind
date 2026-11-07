@@ -1,11 +1,12 @@
 import { useCallback, useRef, useState } from 'react';
 import { Animated, Easing, Image, StyleSheet, View } from 'react-native';
-import { router, Stack, useFocusEffect, usePathname, type Href } from 'expo-router';
+import { router, Stack, useFocusEffect, type Href } from 'expo-router';
 
 import { FloatingActionTray } from '@/components/floating-action-tray';
 import { Screen } from '@/components/screen';
 import { SubTabs, type SubTabDefinition } from '@/components/sub-tabs';
 import { useReducedMotion } from '@/hooks/use-reduced-motion';
+import { useActiveSubTab } from '@/hooks/use-active-subtab';
 import { theme } from '@/theme';
 
 const DISCOVER_TABS: readonly [SubTabDefinition, SubTabDefinition] = [
@@ -14,13 +15,19 @@ const DISCOVER_TABS: readonly [SubTabDefinition, SubTabDefinition] = [
 ];
 
 export function DiscoverShell() {
-  const pathname = usePathname();
   const reduceMotion = useReducedMotion();
+  const isLearnActive =
+    useActiveSubTab(
+      [
+        { key: 'create', routes: ['/discover'] },
+        { key: 'learn', routes: ['/discover/learn'] },
+      ],
+      'create',
+    ) === 'learn';
   const [isActionTrayOpen, setIsActionTrayOpen] = useState(false);
   const isNavigatingBetweenTabs = useRef(false);
   const contentOpacity = useRef(new Animated.Value(1)).current;
   const contentAnimation = useRef<Animated.CompositeAnimation | null>(null);
-  const isLearnActive = pathname === '/discover/learn';
   const actions = isLearnActive
     ? ['Create tutorial', 'Upload tutorial']
     : ['Upload pattern', 'Create pattern'];

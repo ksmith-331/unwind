@@ -4,10 +4,10 @@ import {
   router,
   Stack,
   useFocusEffect,
-  usePathname,
   type Href,
 } from 'expo-router';
 
+import { useActiveSubTab } from '@/hooks/use-active-subtab';
 import { useReducedMotion } from '@/hooks/use-reduced-motion';
 import { Screen } from '@/components/screen';
 import { SubTabs, type SubTabDefinition } from '@/components/sub-tabs';
@@ -19,12 +19,18 @@ const STATS_HISTORY_TABS = [
 ] as const satisfies readonly Omit<SubTabDefinition, 'active'>[];
 
 export function ProfileStatsHistoryShell() {
-  const pathname = usePathname();
   const reduceMotion = useReducedMotion();
   const isNavigatingBetweenTabs = useRef(false);
   const contentOpacity = useRef(new Animated.Value(1)).current;
   const contentAnimation = useRef<Animated.CompositeAnimation | null>(null);
-  const isHistoryActive = pathname === '/profile/stats-history/history';
+  const isHistoryActive =
+    useActiveSubTab(
+      [
+        { key: 'stats', routes: ['/profile/stats-history'] },
+        { key: 'history', routes: ['/profile/stats-history/history'] },
+      ],
+      'stats',
+    ) === 'history';
   const tabs: readonly [SubTabDefinition, SubTabDefinition] = [
     { ...STATS_HISTORY_TABS[0], active: !isHistoryActive },
     { ...STATS_HISTORY_TABS[1], active: isHistoryActive },

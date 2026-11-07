@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Animated, Easing, Image, StyleSheet, View } from 'react-native';
 import { router, Stack, useFocusEffect, usePathname, type Href } from 'expo-router';
 
@@ -6,6 +6,7 @@ import { FloatingActionTray } from '@/components/floating-action-tray';
 import { Screen } from '@/components/screen';
 import { SubTabs, type SubTabDefinition } from '@/components/sub-tabs';
 import { useReducedMotion } from '@/hooks/use-reduced-motion';
+import { useActiveSubTab } from '@/hooks/use-active-subtab';
 import { theme } from '@/theme';
 
 const PROJECT_TABS: readonly [SubTabDefinition, SubTabDefinition] = [
@@ -18,18 +19,35 @@ export function ProjectsShell() {
   const reduceMotion = useReducedMotion();
   const [isActionTrayOpen, setIsActionTrayOpen] = useState(false);
   const isNavigatingBetweenTabs = useRef(false);
+  const currentPathname = useRef(pathname);
+  currentPathname.current = pathname;
   const collectionOpacity = useRef(new Animated.Value(1)).current;
   const collectionAnimation = useRef<Animated.CompositeAnimation | null>(null);
-  const isTodoActive = pathname === '/projects/todo';
+  const activeSubTab = useActiveSubTab(
+    [
+      { key: 'progress', routes: ['/projects'] },
+      { key: 'todo', routes: ['/projects/todo'] },
+    ],
+    'progress',
+  );
+  const isTodoActive = activeSubTab === 'todo';
   const tabs: readonly [SubTabDefinition, SubTabDefinition] = [
     { ...PROJECT_TABS[0], active: !isTodoActive },
     { ...PROJECT_TABS[1], active: isTodoActive },
   ];
 
+  useEffect(() => {
+    if (pathname.startsWith('/workspace/')) {
+      setIsActionTrayOpen(false);
+    }
+  }, [pathname]);
+
   useFocusEffect(
     useCallback(
       () => () => {
-        setIsActionTrayOpen(false);
+        if (!currentPathname.current.startsWith('/pattern/')) {
+          setIsActionTrayOpen(false);
+        }
         isNavigatingBetweenTabs.current = false;
         collectionAnimation.current?.stop();
         collectionOpacity.setValue(1);

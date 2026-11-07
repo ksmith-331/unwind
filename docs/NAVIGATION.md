@@ -60,8 +60,18 @@ destination.
 Ordinary nested screens remain within their main tab and retain the main
 navigation bar. These presentations are exceptions:
 
-- Pattern, Tutorial, and Inventory details are presented above the tab
-  navigator.
+- `/pattern/[patternId]`, `/tutorial/[tutorialId]`, and
+  `/inventory/[inventoryItemId]` are canonical modal detail routes presented
+  above the current app route.
+- The exact originating screen and its state remain mounted beneath a
+  full-window scrim. The navbar, SubTabs, FAB, and origin content are covered,
+  not removed; they are non-interactive while the modal is open.
+- Dismissing a detail returns to the exact origin without resetting its tab,
+  subtab, search, or other retained state.
+- Description, Reviews, Notes, and Restock are local pages within the detail
+  overlay. Back from an internal page returns to the main detail; Back from
+  the main detail dismisses the overlay. Outside-tap dismissal closes the
+  entire overlay.
 - Pattern tracking/editing and tutorial tracking/viewing/editing workspaces
   occupy the full screen and hide the main navigation bar.
 - Unauthenticated screens do not show the authenticated main navigation.

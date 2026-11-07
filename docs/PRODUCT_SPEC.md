@@ -34,13 +34,41 @@ Projects contains the user's patterns and tutorials in two views:
 
 Pattern actions depend on ownership and current state. A pattern can be viewed
 with its description and reviews, started or continued in tracking, edited
-when the user owns it, marked complete while in progress, bookmarked or
-removed from To Do, or removed from In Progress.
+in supported contexts, marked complete while in progress, bookmarked or
+removed from To Do, or removed from In Progress. Pattern Edit is not limited
+to user-created patterns.
 
 Tutorials can be viewed with their description and reviews, started or
 continued, marked complete while in progress, bookmarked or removed from To
 Do, or removed from In Progress. Editing is available for user-owned
 tutorials.
+
+## Content detail overlays
+
+Pattern, Tutorial, and Inventory details use canonical content routes presented
+as modal overlays above the exact originating screen. The origin remains
+mounted with its tab, subtab, content, search, scroll position where practical,
+navbar, and FAB state. A full-window black scrim at 40% opacity covers the
+origin and blocks its interaction and accessibility traversal while the detail
+is open. The detail card rises from the bottom; tapping outside it or using
+Back on the main detail closes the overlay and restores the existing origin.
+
+Description, Reviews, and Inventory Notes/Restock are internal pages of the
+detail overlay, not separate global destinations. Back from an internal page
+returns to the main detail; Back from the main detail closes the overlay.
+Outside-tap dismissal closes the entire overlay from any internal page.
+
+Main Pattern/Tutorial detail normally keeps a fixed header and action bar
+around a bounded, non-scrolling body. Titles and Description/Reviews previews
+are bounded and truncated. Full descriptions and reviews appear on internal
+pages, which may scroll. Reviews require a username, rating, and date; written
+text and an image are optional. The full Reviews view supports rating-only
+reviews without placeholder text.
+
+Detail actions derive from typed current content/user state rather than only
+from the originating screen. Patterns may offer Edit for community and
+user-created content where the applicable action set allows it. Tutorial
+Edit is available only for user-created tutorials.
 
 ## Discover
 

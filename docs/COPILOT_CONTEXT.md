@@ -40,6 +40,9 @@ normal implementation work should use the synchronized Markdown documents.
   historical completion is distinct from current completion.
 - Use typed mock data that preserves conceptual relationships. Backend
   integration and live persistence are deferred; see `ENGINEERING.md`.
+- Pattern, Tutorial, and Inventory details use transparent modal overlays over
+  the exact originating screen; see `PRODUCT_SPEC.md`, `NAVIGATION.md`, and
+  `DESIGN_SYSTEM.md`.
 
 Expo Router routes live under `src/app`. Do not create a second root app
 directory. Consult the authority documents above before implementation.

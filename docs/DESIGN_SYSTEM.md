@@ -144,6 +144,51 @@ relevant subtab, while its shell persists across sibling subviews where
 applicable. Planned tray actions do not imply those actions are currently
 functional. Stats and History have no FAB.
 
+## Content detail overlays
+
+Pattern, Tutorial, and Inventory details use a full-window black scrim at 40%
+opacity over the still-mounted origin. The scrim covers the app content,
+SubTabs, FAB, MainNavigationBar, and bottom safe area; nothing beneath it is
+interactive while the overlay is open.
+
+The detail card rises from the bottom and uses a plain/light surface, rounded
+top corners, and an appropriate shadow/elevation. Do not use the ordinary
+textile background texture inside the popup. Keep the header and contextual
+action bar fixed around the body. Main detail prefers a bounded, non-scrolling
+body; use bounded media, up to two title lines with ellipsis, and truncated
+Description/Reviews previews. On small screens or with larger text, only the
+body may scroll while the header and action bar remain fixed. Internal
+informational pages may scroll.
+
+Detail popups are horizontally centered with a modest external inset that
+leaves the scrim visible on both sides. Inside the popup, use one consistent
+horizontal content column for the header, primary media, metadata, and preview
+rows. Primary media fills that usable width, remains centered, and preserves
+its aspect ratio. Space the preview, metadata, Description, and Reviews as
+distinct body sections with deliberate rhythm. Popup height follows its
+content where practical and is capped by the available safe screen height,
+leaving visible scrim above the card.
+
+The main detail popup clamps its preferred content height between a reusable
+minimum and the available safe maximum. Its body does not scroll when measured
+content fits; scrolling activates only for genuine overflow. Internal
+informational pages retain independent scrolling.
+
+Internal pages of one detail overlay share the same outer card height and body
+region. Switching between Main, Description, and Reviews does not resize or
+reposition the card; the fixed header and reserved footer remain in place,
+while each page scrolls only within the shared body region when its content
+overflows.
+
+Numeric ratings remain unchanged as source data. Render full, half, and empty
+stars by rounding only the visual value to the nearest half star. Full stars
+are solid filled, half stars are visibly half-filled, and empty stars are
+unfilled or muted. Expose a rating row as one accessible value that
+communicates the unrounded rating.
+Detail action bars are compact, centered, single-row groups whose width grows
+with their action count without exceeding the available content width. Keep
+touch targets comfortable while compacting visual spacing.
+
 ## Accessibility
 
 Interactive controls need useful labels, semantic state, and adequate touch

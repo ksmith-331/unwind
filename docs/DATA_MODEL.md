@@ -15,19 +15,26 @@ in words to avoid prescribing a storage technology.
 - **ProjectType:** `projectType`, `projectTypeName`.
 - **ProjectSubType:** `projectSubType`, its parent project type, and subtype
   name.
-- **Review:** `reviewID`, author/user ID, rating (1–5), review text, and
-  review date; associated with a Pattern or Tutorial.
+- **Review:** `reviewID`, author/user ID, required rating (1–5), optional
+  review text, review date, and optional review image/media when represented;
+  associated with a Pattern or Tutorial.
 
 ## User relationships to content
 
 - **UserPattern:** `userPatternID`, user ID, `patternID`, current status
-  (`NOT_STARTED`, `IN_PROGRESS`, or `COMPLETED`), percent progress, and
-  created/started/completed dates. This describes the user's current
-  relationship to the pattern.
+  (`NOT_STARTED`, `IN_PROGRESS`, or `COMPLETED`), whether the pattern is in
+  the user's To Do list, percent progress, and created/started/completed
+  dates. The To Do relationship is distinct from `NOT_STARTED`: it
+  distinguishes saved, not-started content from not-started content that is
+  not bookmarked. This describes the user's current relationship to the
+  pattern.
 - **UserTutorial:** `userTutorialID`, `tutorialID`, current status
-  (`NOT_STARTED`, `IN_PROGRESS`, or `COMPLETED`), percent progress, and
-  created/started/completed dates. This describes the user's current
-  relationship to the tutorial.
+  (`NOT_STARTED`, `IN_PROGRESS`, or `COMPLETED`), whether the tutorial is in
+  the user's To Do list, percent progress, and created/started/completed
+  dates. The To Do relationship is distinct from `NOT_STARTED`: it
+  distinguishes saved, not-started content from not-started content that is
+  not bookmarked. This describes the user's current relationship to the
+  tutorial.
 - Current completion can change when a user restarts content. It is not the
   same as historical completion recorded by a HistoryItem.
 
