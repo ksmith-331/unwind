@@ -51,7 +51,15 @@ export default function RootLayout() {
               presentation: 'transparentModal',
             }}
           />
-          <Stack.Screen name="tutorial/[tutorialId]" />
+          <Stack.Screen
+            name="tutorial/[tutorialId]"
+            options={{
+              animation: 'none',
+              contentStyle: { backgroundColor: 'transparent' },
+              gestureEnabled: false,
+              presentation: 'transparentModal',
+            }}
+          />
           <Stack.Screen name="inventory/[inventoryItemId]" />
           <Stack.Screen name="creator/[userId]" />
           <Stack.Screen name="workspace" options={{ presentation: 'fullScreenModal' }} />

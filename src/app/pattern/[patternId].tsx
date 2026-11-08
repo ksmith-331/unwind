@@ -1,6 +1,4 @@
 import { router, useLocalSearchParams } from 'expo-router';
-import { SymbolView } from 'expo-symbols';
-import type { ComponentProps } from 'react';
 import { useCallback, useMemo, useState } from 'react';
 import {
   ScrollView,
@@ -13,24 +11,18 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AppText } from '@/components/app-text';
 import { ContentDetailPresentation } from '@/components/content-detail-presentation';
 import { DetailActionBar } from '@/components/detail-action-bar';
+import { DetailReviewList } from '@/components/detail-review-list';
 import {
   DetailOverlayShell,
   type CloseAfterAnimation,
 } from '@/components/detail-overlay-shell';
-import { RatingStars } from '@/components/rating-stars';
-import { patternDetails } from '@/mocks/pattern-details';
 import type { DetailAction } from '@/types/detail-action';
 import { theme } from '@/theme';
+import { patternDetails } from '@/mocks/pattern-details';
 import { useReducedMotion } from '@/hooks/use-reduced-motion';
 import { resolvePatternDetailActions } from '@/utils/pattern-detail-actions';
 
 type InternalPage = 'main' | 'description' | 'reviews';
-
-const REVIEW_IMAGE_FALLBACK = {
-  ios: 'photo',
-  android: 'image',
-  web: 'image',
-} as const;
 
 export default function PatternDetailRoute() {
   const { width, height } = useWindowDimensions();
@@ -145,9 +137,10 @@ export default function PatternDetailRoute() {
         </View>
       ) : page === 'main' ? (
         <ContentDetailPresentation
+          contentType="Pattern"
+          detail={pattern}
           onOpenDescription={() => setPage('description')}
           onOpenReviews={() => setPage('reviews')}
-          pattern={pattern}
         />
       ) : page === 'description' ? (
         <ScrollView
@@ -156,48 +149,7 @@ export default function PatternDetailRoute() {
           <AppText variant="body">{pattern.description}</AppText>
         </ScrollView>
       ) : (
-        <ScrollView
-          contentContainerStyle={styles.reviewList}
-          showsVerticalScrollIndicator={false}>
-          {pattern.reviews.map((review) => (
-            <View key={review.reviewId} style={styles.reviewCard}>
-              <View style={styles.reviewHeader}>
-                <AppText style={styles.username} variant="bodySmallStrong">
-                  {review.username}
-                </AppText>
-                <AppText color="primaryText" variant="caption">
-                  {review.date}
-                </AppText>
-              </View>
-              <RatingStars
-                accessibilityLabel={`Rated ${review.rating} out of 5 stars`}
-                rating={review.rating}
-              />
-              {review.text ? (
-                <AppText style={styles.reviewText} variant="bodySmall">
-                  {review.text}
-                </AppText>
-              ) : null}
-              {review.image ? (
-                <View
-                  accessibilityLabel={review.image.accessibilityLabel}
-                  accessibilityRole="image"
-                  style={styles.reviewImageFallback}>
-                  <SymbolView
-                    accessibilityElementsHidden
-                    importantForAccessibility="no-hide-descendants"
-                    name={REVIEW_IMAGE_FALLBACK}
-                    size={24}
-                    tintColor={theme.colors.navigation}
-                  />
-                  <AppText color="primaryText" variant="caption">
-                    Photo preview unavailable
-                  </AppText>
-                </View>
-              ) : null}
-            </View>
-          ))}
-        </ScrollView>
+        <DetailReviewList reviews={pattern.reviews} />
       )}
     </DetailOverlayShell>
   );
@@ -212,39 +164,5 @@ const styles = StyleSheet.create({
   internalContent: {
     paddingBottom: theme.spacing[5],
     paddingTop: theme.spacing[3],
-  },
-  reviewList: {
-    gap: theme.spacing[4],
-    paddingBottom: theme.spacing[5],
-    paddingTop: theme.spacing[3],
-  },
-  reviewCard: {
-    backgroundColor: theme.colors.surface,
-    borderColor: theme.colors.border,
-    borderRadius: theme.radii.medium,
-    borderWidth: 1,
-    gap: theme.spacing[2],
-    padding: theme.spacing[4],
-  },
-  reviewHeader: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  username: {
-    flexShrink: 1,
-    marginRight: theme.spacing[2],
-  },
-  reviewText: {
-    lineHeight: 21,
-  },
-  reviewImageFallback: {
-    alignItems: 'center',
-    backgroundColor: theme.colors.mutedSurface,
-    borderRadius: theme.radii.small,
-    flexDirection: 'row',
-    gap: theme.spacing[2],
-    minHeight: 64,
-    paddingHorizontal: theme.spacing[3],
   },
 });

@@ -11,11 +11,24 @@ import {
 
 import { AppText } from '@/components/app-text';
 import { RatingStars } from '@/components/rating-stars';
-import type { PatternDetail } from '@/types/pattern-detail';
+import type { DifficultyLevel } from '@/types/pattern-preview';
+import type { Review } from '@/types/review';
 import { theme } from '@/theme';
+import { getProgressColor } from '@/utils/progress-color';
 
 type ContentDetailPresentationProps = {
-  pattern: PatternDetail;
+  detail: {
+    creator: string;
+    difficulty: DifficultyLevel;
+    description: string;
+    reviews: readonly Review[];
+    aggregateRating: number;
+    reviewCount: number;
+    media: 'placeholder';
+    type?: string;
+    percentProgress?: number;
+  };
+  contentType: 'Pattern' | 'Tutorial';
   onOpenDescription: () => void;
   onOpenReviews: () => void;
 };
@@ -27,7 +40,8 @@ const CHEVRON_ICON: ComponentProps<typeof SymbolView>['name'] = {
 };
 
 export function ContentDetailPresentation({
-  pattern,
+  detail,
+  contentType,
   onOpenDescription,
   onOpenReviews,
 }: ContentDetailPresentationProps) {
@@ -49,13 +63,12 @@ export function ContentDetailPresentation({
       scrollEnabled={contentHeight > bodyHeight + theme.spacing[2]}
       showsVerticalScrollIndicator={false}>
       <View
-        accessibilityLabel={
-          pattern.media === 'placeholder'
-            ? 'Pattern preview placeholder'
-            : 'Pattern preview'
-        }
+        accessibilityLabel={`${contentType} preview placeholder`}
         accessibilityRole="image"
-        style={styles.preview}>
+        style={[
+          styles.preview,
+          contentType === 'Tutorial' && styles.tutorialPreview,
+        ]}>
         <View
           accessibilityElementsHidden
           importantForAccessibility="no-hide-descendants"
@@ -64,40 +77,84 @@ export function ContentDetailPresentation({
           <View style={[styles.thread, styles.yellowThread]} />
           <View style={[styles.thread, styles.blueThread]} />
         </View>
+        {contentType === 'Pattern' &&
+        detail.percentProgress !== undefined ? (
+          <View
+            accessible
+            accessibilityLabel={`Progress: ${detail.percentProgress}%`}
+            style={[
+              styles.progressBadge,
+              {
+                backgroundColor:
+                  theme.colors[getProgressColor(detail.percentProgress)],
+              },
+            ]}>
+            <AppText variant="bodySmallStrong">
+              {detail.percentProgress}%
+            </AppText>
+          </View>
+        ) : null}
       </View>
 
-      <View style={styles.metadata}>
-        <AppText variant="body">
-          Pattern By: <AppText color="primaryText">{pattern.creator}</AppText>
-        </AppText>
-        <AppText variant="body">
-          Type: <AppText color="primaryText">{pattern.type}</AppText>
-        </AppText>
-        <View
-          accessible
-          accessibilityLabel={`Difficulty: ${pattern.difficulty} out of 4`}
-          style={styles.difficultyRow}>
-          <AppText variant="body">Difficulty:</AppText>
+      <View style={styles.metadataRow}>
+        <View style={styles.metadata}>
+          <AppText variant="body">
+            {contentType} By:{' '}
+            <AppText color="primaryText">{detail.creator}</AppText>
+          </AppText>
+          {detail.type ? (
+            <AppText variant="body">
+              Type: <AppText color="primaryText">{detail.type}</AppText>
+            </AppText>
+          ) : null}
           <View
-            accessibilityElementsHidden
-            importantForAccessibility="no-hide-descendants"
-            style={styles.difficultyDots}>
-            {Array.from({ length: pattern.difficulty }, (_, index) => (
-              <View key={index} style={styles.difficultyDot} />
-            ))}
+            accessible
+            accessibilityLabel={`Difficulty: ${detail.difficulty} out of 4`}
+            style={styles.difficultyRow}>
+            <AppText variant="body">Difficulty:</AppText>
+            <View
+              accessibilityElementsHidden
+              importantForAccessibility="no-hide-descendants"
+              style={styles.difficultyDots}>
+              {Array.from({ length: detail.difficulty }, (_, index) => (
+                <View key={index} style={styles.difficultyDot} />
+              ))}
+            </View>
           </View>
         </View>
+        {contentType === 'Tutorial' &&
+        detail.percentProgress !== undefined ? (
+          <View
+            accessible
+            accessibilityLabel={`Progress: ${detail.percentProgress}%`}
+            style={[
+              styles.progressBadge,
+              styles.tutorialProgressBadge,
+              {
+                backgroundColor:
+                  theme.colors[getProgressColor(detail.percentProgress)],
+              },
+            ]}>
+            <AppText variant="bodySmallStrong">
+              {detail.percentProgress}%
+            </AppText>
+          </View>
+        ) : null}
       </View>
 
       <Pressable
         accessibilityLabel="Description"
         accessibilityRole="button"
         onPress={onOpenDescription}
-        style={({ pressed }) => [styles.previewRow, pressed && styles.pressed]}>
+        style={({ pressed }) => [
+          styles.previewRow,
+          contentType === 'Tutorial' && styles.tutorialDescriptionRow,
+          pressed && styles.pressed,
+        ]}>
         <View style={styles.rowCopy}>
           <AppText variant="bodySmallStrong">Description</AppText>
           <AppText numberOfLines={2} style={styles.descriptionPreview} variant="caption">
-            {pattern.description}
+            {detail.description}
           </AppText>
         </View>
         <SymbolView
@@ -110,19 +167,29 @@ export function ContentDetailPresentation({
       </Pressable>
 
       <Pressable
-        accessibilityLabel={`Rated ${pattern.aggregateRating} out of 5 stars. Reviews, ${pattern.reviewCount} reviews`}
+        accessibilityLabel={`Rated ${detail.aggregateRating} out of 5 stars. Reviews, ${detail.reviewCount} reviews`}
         accessibilityRole="button"
         onPress={onOpenReviews}
-        style={({ pressed }) => [styles.previewRow, pressed && styles.pressed]}>
+        style={({ pressed }) => [
+          styles.previewRow,
+          contentType === 'Tutorial' && styles.tutorialReviewsRow,
+          contentType === 'Tutorial' && styles.tutorialReviewsGap,
+          pressed && styles.pressed,
+        ]}>
         <View style={styles.rowCopy}>
           <AppText variant="bodySmallStrong">Reviews</AppText>
           <View
             accessibilityElementsHidden
             importantForAccessibility="no-hide-descendants"
             style={styles.ratingSummary}>
-            <RatingStars rating={pattern.aggregateRating} size={15} />
+            <RatingStars
+              rating={detail.aggregateRating}
+              size={contentType === 'Tutorial' ? 17.5 : 15}
+            />
             <AppText style={styles.reviewCount} variant="caption">
-              {pattern.aggregateRating.toFixed(1)} ({pattern.reviewCount})
+              {contentType === 'Tutorial'
+                ? `(${detail.reviewCount})`
+                : `${detail.aggregateRating.toFixed(1)} (${detail.reviewCount})`}
             </AppText>
           </View>
         </View>
@@ -152,7 +219,29 @@ const styles = StyleSheet.create({
     borderRadius: theme.radii.medium,
     justifyContent: 'center',
     overflow: 'hidden',
+    position: 'relative',
     width: '100%',
+  },
+  tutorialPreview: {
+    aspectRatio: 294 / 230.588,
+  },
+  metadataRow: {
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+  },
+  progressBadge: {
+    borderRadius: theme.radii.pill,
+    left: theme.spacing[2],
+    paddingHorizontal: theme.spacing[2],
+    paddingVertical: theme.spacing[1],
+    position: 'absolute',
+    top: theme.spacing[2],
+  },
+  tutorialProgressBadge: {
+    left: undefined,
+    marginLeft: theme.spacing[2],
+    position: 'relative',
+    top: 0,
   },
   motif: {
     alignItems: 'center',
@@ -178,6 +267,7 @@ const styles = StyleSheet.create({
     width: '82%',
   },
   metadata: {
+    flex: 1,
     gap: theme.spacing[1],
   },
   difficultyRow: {
@@ -209,6 +299,16 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
+  },
+  tutorialDescriptionRow: {
+    minHeight: 72,
+  },
+  tutorialReviewsRow: {
+    minHeight: 49,
+    paddingVertical: 5,
+  },
+  tutorialReviewsGap: {
+    marginTop: theme.spacing[5],
   },
   rowCopy: {
     flex: 1,

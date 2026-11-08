@@ -42,6 +42,9 @@ Tutorials can be viewed with their description and reviews, started or
 continued, marked complete while in progress, bookmarked or removed from To
 Do, or removed from In Progress. Editing is available for user-owned
 tutorials.
+In-progress Tutorial detail offers Continue, Restart, Complete, and Remove.
+Until shared persistence is implemented, only Continue navigates; Restart,
+Complete, and Remove are non-mutating placeholders.
 
 ## Content detail overlays
 

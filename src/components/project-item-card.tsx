@@ -4,7 +4,8 @@ import { StyleSheet, View } from 'react-native';
 import { AppCard } from '@/components/app-card';
 import { AppText } from '@/components/app-text';
 import type { ProjectItem } from '@/types/project-item';
-import { theme, type SemanticColor } from '@/theme';
+import { theme } from '@/theme';
+import { getProgressColor } from '@/utils/progress-color';
 
 type ProjectItemCardProps = {
   item: ProjectItem;
@@ -26,15 +27,6 @@ export function ProjectItemCard({ item }: ProjectItemCardProps) {
     });
   };
 
-  const progressColor: SemanticColor | undefined =
-    item.status === 'inProgress'
-      ? item.progress >= 75
-        ? 'secondaryAction'
-        : item.progress >= 40
-          ? 'highlight'
-          : 'primaryAction'
-      : undefined;
-
   return (
     <AppCard
       accessibilityLabel={
@@ -54,8 +46,8 @@ export function ProjectItemCard({ item }: ProjectItemCardProps) {
           <View style={[styles.thread, styles.orangeThread]} />
           <View style={[styles.thread, styles.yellowThread]} />
         </View>
-        {item.status === 'inProgress' && progressColor && (
-          <View style={[styles.progressBadge, { backgroundColor: theme.colors[progressColor] }]}>
+        {item.status === 'inProgress' && (
+          <View style={[styles.progressBadge, { backgroundColor: theme.colors[getProgressColor(item.progress)] }]}>
             <AppText variant="bodySmallStrong">{item.progress}%</AppText>
           </View>
         )}
