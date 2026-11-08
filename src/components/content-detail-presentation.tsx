@@ -2,6 +2,7 @@ import { SymbolView } from 'expo-symbols';
 import type { ComponentProps } from 'react';
 import { useState } from 'react';
 import {
+  Image,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -24,11 +25,12 @@ type ContentDetailPresentationProps = {
     reviews: readonly Review[];
     aggregateRating: number;
     reviewCount: number;
-    media: 'placeholder';
+    media: 'placeholder' | number;
     type?: string;
     percentProgress?: number;
   };
   contentType: 'Pattern' | 'Tutorial';
+  layoutVariant?: 'standard' | 'in-progress';
   onOpenDescription: () => void;
   onOpenReviews: () => void;
 };
@@ -42,6 +44,7 @@ const CHEVRON_ICON: ComponentProps<typeof SymbolView>['name'] = {
 export function ContentDetailPresentation({
   detail,
   contentType,
+  layoutVariant = 'standard',
   onOpenDescription,
   onOpenReviews,
 }: ContentDetailPresentationProps) {
@@ -56,7 +59,10 @@ export function ContentDetailPresentation({
     <ScrollView
       alwaysBounceVertical={false}
       bounces={false}
-      contentContainerStyle={styles.content}
+      contentContainerStyle={[
+        styles.content,
+        layoutVariant === 'in-progress' && styles.inProgressContent,
+      ]}
       onContentSizeChange={(_, height) => setContentHeight(height)}
       onLayout={handleBodyLayout}
       overScrollMode="never"
@@ -68,17 +74,29 @@ export function ContentDetailPresentation({
         style={[
           styles.preview,
           contentType === 'Tutorial' && styles.tutorialPreview,
+          layoutVariant === 'in-progress' && styles.inProgressPreview,
         ]}>
-        <View
-          accessibilityElementsHidden
-          importantForAccessibility="no-hide-descendants"
-          style={styles.motif}>
-          <View style={[styles.thread, styles.pinkThread]} />
-          <View style={[styles.thread, styles.yellowThread]} />
-          <View style={[styles.thread, styles.blueThread]} />
-        </View>
+        {detail.media === 'placeholder' ? (
+          <View
+            accessibilityElementsHidden
+            importantForAccessibility="no-hide-descendants"
+            style={styles.motif}>
+            <View style={[styles.thread, styles.pinkThread]} />
+            <View style={[styles.thread, styles.yellowThread]} />
+            <View style={[styles.thread, styles.blueThread]} />
+          </View>
+        ) : (
+          <Image
+            accessibilityElementsHidden
+            importantForAccessibility="no-hide-descendants"
+            resizeMode="cover"
+            source={detail.media}
+            style={styles.previewImage}
+          />
+        )}
         {contentType === 'Pattern' &&
-        detail.percentProgress !== undefined ? (
+        detail.percentProgress !== undefined &&
+        layoutVariant !== 'in-progress' ? (
           <View
             accessible
             accessibilityLabel={`Progress: ${detail.percentProgress}%`}
@@ -96,7 +114,11 @@ export function ContentDetailPresentation({
         ) : null}
       </View>
 
-      <View style={styles.metadataRow}>
+      <View
+        style={[
+          styles.metadataRow,
+          layoutVariant === 'in-progress' && styles.inProgressMetadataRow,
+        ]}>
         <View style={styles.metadata}>
           <AppText variant="body">
             {contentType} By:{' '}
@@ -122,14 +144,16 @@ export function ContentDetailPresentation({
             </View>
           </View>
         </View>
-        {contentType === 'Tutorial' &&
+        {(contentType === 'Tutorial' || layoutVariant === 'in-progress') &&
         detail.percentProgress !== undefined ? (
           <View
             accessible
             accessibilityLabel={`Progress: ${detail.percentProgress}%`}
             style={[
               styles.progressBadge,
-              styles.tutorialProgressBadge,
+              contentType === 'Tutorial'
+                ? styles.tutorialProgressBadge
+                : styles.inProgressProgressBadge,
               {
                 backgroundColor:
                   theme.colors[getProgressColor(detail.percentProgress)],
@@ -149,6 +173,7 @@ export function ContentDetailPresentation({
         style={({ pressed }) => [
           styles.previewRow,
           contentType === 'Tutorial' && styles.tutorialDescriptionRow,
+          layoutVariant === 'in-progress' && styles.inProgressDescriptionRow,
           pressed && styles.pressed,
         ]}>
         <View style={styles.rowCopy}>
@@ -174,6 +199,7 @@ export function ContentDetailPresentation({
           styles.previewRow,
           contentType === 'Tutorial' && styles.tutorialReviewsRow,
           contentType === 'Tutorial' && styles.tutorialReviewsGap,
+          layoutVariant === 'in-progress' && styles.inProgressReviewsRow,
           pressed && styles.pressed,
         ]}>
         <View style={styles.rowCopy}>
@@ -184,10 +210,14 @@ export function ContentDetailPresentation({
             style={styles.ratingSummary}>
             <RatingStars
               rating={detail.aggregateRating}
-              size={contentType === 'Tutorial' ? 17.5 : 15}
+              size={
+                contentType === 'Tutorial' || layoutVariant === 'in-progress'
+                  ? 17.5
+                  : 15
+              }
             />
             <AppText style={styles.reviewCount} variant="caption">
-              {contentType === 'Tutorial'
+              {contentType === 'Tutorial' || layoutVariant === 'in-progress'
                 ? `(${detail.reviewCount})`
                 : `${detail.aggregateRating.toFixed(1)} (${detail.reviewCount})`}
             </AppText>
@@ -212,6 +242,9 @@ const styles = StyleSheet.create({
     paddingBottom: theme.spacing[5],
     paddingTop: theme.spacing[1],
   },
+  inProgressContent: {
+    gap: 0,
+  },
   preview: {
     alignItems: 'center',
     aspectRatio: 294 / 220,
@@ -224,6 +257,14 @@ const styles = StyleSheet.create({
   },
   tutorialPreview: {
     aspectRatio: 294 / 230.588,
+  },
+  inProgressPreview: {
+    aspectRatio: 294 / 230.588,
+    marginBottom: theme.spacing[4],
+  },
+  previewImage: {
+    height: '100%',
+    width: '100%',
   },
   metadataRow: {
     alignItems: 'flex-start',
@@ -240,6 +281,16 @@ const styles = StyleSheet.create({
   tutorialProgressBadge: {
     left: undefined,
     marginLeft: theme.spacing[2],
+    position: 'relative',
+    top: 0,
+  },
+  inProgressMetadataRow: {
+    marginBottom: theme.spacing[4],
+  },
+  inProgressProgressBadge: {
+    left: undefined,
+    marginLeft: theme.spacing[2],
+    marginTop: theme.spacing[2],
     position: 'relative',
     top: 0,
   },
@@ -303,12 +354,20 @@ const styles = StyleSheet.create({
   tutorialDescriptionRow: {
     minHeight: 72,
   },
+  inProgressDescriptionRow: {
+    marginBottom: theme.spacing[6],
+    minHeight: 72,
+  },
   tutorialReviewsRow: {
     minHeight: 49,
     paddingVertical: 5,
   },
   tutorialReviewsGap: {
     marginTop: theme.spacing[5],
+  },
+  inProgressReviewsRow: {
+    minHeight: 49,
+    paddingVertical: 5,
   },
   rowCopy: {
     flex: 1,

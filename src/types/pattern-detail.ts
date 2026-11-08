@@ -14,7 +14,7 @@ export type PatternDetail = {
   reviews: readonly Review[];
   aggregateRating: number;
   reviewCount: number;
-  media: PatternPreview['thumbnail'];
+  media: PatternPreview['thumbnail'] | number;
   status: PatternDetailStatus;
   isInToDo: boolean;
   isOwnedByCurrentUser: boolean;

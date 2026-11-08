@@ -1,5 +1,6 @@
 import type { PatternDetail } from '@/types/pattern-detail';
 import { patternHeartsReviews } from '@/mocks/pattern-hearts-reviews';
+import { patternChevronReviews } from '@/mocks/pattern-chevron-reviews';
 
 // Development-only detail data; this is not fetched or persisted.
 export const patternDetails: Record<string, PatternDetail> = {
@@ -18,5 +19,22 @@ export const patternDetails: Record<string, PatternDetail> = {
     status: 'not-started',
     isInToDo: true,
     isOwnedByCurrentUser: false,
+  },
+  'pattern-harbor-chevron': {
+    patternId: 'pattern-harbor-chevron',
+    title: 'Chevron',
+    creator: 'clothes33',
+    type: 'Regular Friendship Bracelet',
+    difficulty: 2,
+    description:
+      'A simple friendship bracelet pattern for beginners. Practice clean chevrons and color changes.',
+    reviews: patternChevronReviews,
+    aggregateRating: 4,
+    reviewCount: 200,
+    media: require('../../assets/images/chevron-pattern-preview.png'),
+    status: 'in-progress',
+    isInToDo: false,
+    isOwnedByCurrentUser: false,
+    percentProgress: 12,
   },
 };

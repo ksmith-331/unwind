@@ -36,15 +36,17 @@ export default function PatternDetailRoute() {
     0,
     width - 2 * (theme.spacing[2] + theme.spacing[5]),
   );
-  const previewHeight = popupInternalWidth * (220 / 294);
+  const isInProgress = pattern?.status === 'in-progress';
+  const previewHeight =
+    popupInternalWidth * ((isInProgress ? 230.588 : 220) / 294);
   const preferredHeight =
     56 +
     theme.spacing[1] +
     previewHeight +
     3 * theme.spacing[5] +
     80 +
-    68 +
-    68 +
+    (isInProgress ? 72 : 68) +
+    (isInProgress ? 49 : 68) +
     theme.spacing[4] +
     theme.spacing[3] +
     64 +
@@ -78,7 +80,7 @@ export default function PatternDetailRoute() {
         return;
       }
 
-      if (action.id === 'start') {
+      if (action.id === 'start' || action.id === 'continue') {
         closeAfterAnimation(() =>
           router.replace({
             pathname: '/workspace/pattern/[patternId]/track',
@@ -139,6 +141,7 @@ export default function PatternDetailRoute() {
         <ContentDetailPresentation
           contentType="Pattern"
           detail={pattern}
+          layoutVariant={isInProgress ? 'in-progress' : 'standard'}
           onOpenDescription={() => setPage('description')}
           onOpenReviews={() => setPage('reviews')}
         />

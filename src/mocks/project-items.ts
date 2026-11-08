@@ -6,7 +6,7 @@ export const projectItems = [
     id: 'pattern-harbor-chevron',
     kind: 'pattern',
     status: 'inProgress',
-    title: 'Harbor Chevron',
+    title: 'Chevron',
     progress: 12,
   },
   {
