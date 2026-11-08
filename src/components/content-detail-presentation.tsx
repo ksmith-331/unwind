@@ -30,7 +30,7 @@ type ContentDetailPresentationProps = {
     percentProgress?: number;
   };
   contentType: 'Pattern' | 'Tutorial';
-  layoutVariant?: 'standard' | 'in-progress';
+  layoutVariant?: 'standard' | 'compact-pattern';
   onOpenDescription: () => void;
   onOpenReviews: () => void;
 };
@@ -61,7 +61,7 @@ export function ContentDetailPresentation({
       bounces={false}
       contentContainerStyle={[
         styles.content,
-        layoutVariant === 'in-progress' && styles.inProgressContent,
+        layoutVariant === 'compact-pattern' && styles.compactPatternContent,
       ]}
       onContentSizeChange={(_, height) => setContentHeight(height)}
       onLayout={handleBodyLayout}
@@ -74,7 +74,7 @@ export function ContentDetailPresentation({
         style={[
           styles.preview,
           contentType === 'Tutorial' && styles.tutorialPreview,
-          layoutVariant === 'in-progress' && styles.inProgressPreview,
+          layoutVariant === 'compact-pattern' && styles.compactPatternPreview,
         ]}>
         {detail.media === 'placeholder' ? (
           <View
@@ -96,7 +96,7 @@ export function ContentDetailPresentation({
         )}
         {contentType === 'Pattern' &&
         detail.percentProgress !== undefined &&
-        layoutVariant !== 'in-progress' ? (
+        layoutVariant !== 'compact-pattern' ? (
           <View
             accessible
             accessibilityLabel={`Progress: ${detail.percentProgress}%`}
@@ -117,7 +117,7 @@ export function ContentDetailPresentation({
       <View
         style={[
           styles.metadataRow,
-          layoutVariant === 'in-progress' && styles.inProgressMetadataRow,
+          layoutVariant === 'compact-pattern' && styles.compactPatternMetadataRow,
         ]}>
         <View style={styles.metadata}>
           <AppText variant="body">
@@ -144,7 +144,7 @@ export function ContentDetailPresentation({
             </View>
           </View>
         </View>
-        {(contentType === 'Tutorial' || layoutVariant === 'in-progress') &&
+        {(contentType === 'Tutorial' || layoutVariant === 'compact-pattern') &&
         detail.percentProgress !== undefined ? (
           <View
             accessible
@@ -153,7 +153,7 @@ export function ContentDetailPresentation({
               styles.progressBadge,
               contentType === 'Tutorial'
                 ? styles.tutorialProgressBadge
-                : styles.inProgressProgressBadge,
+                : styles.compactPatternProgressBadge,
               {
                 backgroundColor:
                   theme.colors[getProgressColor(detail.percentProgress)],
@@ -173,7 +173,7 @@ export function ContentDetailPresentation({
         style={({ pressed }) => [
           styles.previewRow,
           contentType === 'Tutorial' && styles.tutorialDescriptionRow,
-          layoutVariant === 'in-progress' && styles.inProgressDescriptionRow,
+          layoutVariant === 'compact-pattern' && styles.compactPatternDescriptionRow,
           pressed && styles.pressed,
         ]}>
         <View style={styles.rowCopy}>
@@ -199,7 +199,7 @@ export function ContentDetailPresentation({
           styles.previewRow,
           contentType === 'Tutorial' && styles.tutorialReviewsRow,
           contentType === 'Tutorial' && styles.tutorialReviewsGap,
-          layoutVariant === 'in-progress' && styles.inProgressReviewsRow,
+          layoutVariant === 'compact-pattern' && styles.compactPatternReviewsRow,
           pressed && styles.pressed,
         ]}>
         <View style={styles.rowCopy}>
@@ -211,15 +211,13 @@ export function ContentDetailPresentation({
             <RatingStars
               rating={detail.aggregateRating}
               size={
-                contentType === 'Tutorial' || layoutVariant === 'in-progress'
+                contentType === 'Tutorial' || layoutVariant === 'compact-pattern'
                   ? 17.5
                   : 15
               }
             />
             <AppText style={styles.reviewCount} variant="caption">
-              {contentType === 'Tutorial' || layoutVariant === 'in-progress'
-                ? `(${detail.reviewCount})`
-                : `${detail.aggregateRating.toFixed(1)} (${detail.reviewCount})`}
+              ({detail.reviewCount})
             </AppText>
           </View>
         </View>
@@ -242,7 +240,7 @@ const styles = StyleSheet.create({
     paddingBottom: theme.spacing[5],
     paddingTop: theme.spacing[1],
   },
-  inProgressContent: {
+  compactPatternContent: {
     gap: 0,
   },
   preview: {
@@ -258,7 +256,7 @@ const styles = StyleSheet.create({
   tutorialPreview: {
     aspectRatio: 294 / 230.588,
   },
-  inProgressPreview: {
+  compactPatternPreview: {
     aspectRatio: 294 / 230.588,
     marginBottom: theme.spacing[4],
   },
@@ -284,10 +282,10 @@ const styles = StyleSheet.create({
     position: 'relative',
     top: 0,
   },
-  inProgressMetadataRow: {
+  compactPatternMetadataRow: {
     marginBottom: theme.spacing[4],
   },
-  inProgressProgressBadge: {
+  compactPatternProgressBadge: {
     left: undefined,
     marginLeft: theme.spacing[2],
     marginTop: theme.spacing[2],
@@ -354,7 +352,7 @@ const styles = StyleSheet.create({
   tutorialDescriptionRow: {
     minHeight: 72,
   },
-  inProgressDescriptionRow: {
+  compactPatternDescriptionRow: {
     marginBottom: theme.spacing[6],
     minHeight: 72,
   },
@@ -365,7 +363,7 @@ const styles = StyleSheet.create({
   tutorialReviewsGap: {
     marginTop: theme.spacing[5],
   },
-  inProgressReviewsRow: {
+  compactPatternReviewsRow: {
     minHeight: 49,
     paddingVertical: 5,
   },

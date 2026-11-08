@@ -1,6 +1,7 @@
 import type { PatternDetail } from '@/types/pattern-detail';
 import { patternHeartsReviews } from '@/mocks/pattern-hearts-reviews';
 import { patternChevronReviews } from '@/mocks/pattern-chevron-reviews';
+import { patternStuffedBunnyReviews } from '@/mocks/pattern-stuffed-bunny-reviews';
 
 // Development-only detail data; this is not fetched or persisted.
 export const patternDetails: Record<string, PatternDetail> = {
@@ -36,5 +37,21 @@ export const patternDetails: Record<string, PatternDetail> = {
     isInToDo: false,
     isOwnedByCurrentUser: false,
     percentProgress: 12,
+  },
+  'community-stuffed-bunny': {
+    patternId: 'community-stuffed-bunny',
+    title: 'Stuffed Bunny',
+    creator: 'loopedbylena',
+    type: 'Crochet Amigurumi',
+    difficulty: 4,
+    description:
+      'Crochet a soft little bunny with shaped ears and simple finishing details.',
+    reviews: patternStuffedBunnyReviews,
+    aggregateRating: 4.5,
+    reviewCount: 36,
+    media: 'placeholder',
+    status: 'not-started',
+    isInToDo: false,
+    isOwnedByCurrentUser: false,
   },
 };

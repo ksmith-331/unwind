@@ -27,28 +27,37 @@ const ACTION_ICONS: Record<
   duplicate: { ios: 'doc.on.doc', android: 'content_copy', web: 'content_copy' },
 };
 
+const ACTION_PRESENTATION_OVERRIDES: Partial<
+  Record<DetailActionId, { label: string; accessibilityLabel: string }>
+> = {
+  'add-to-do': { label: 'To-Do', accessibilityLabel: 'Add to To-Do' },
+};
+
 export function DetailActionBar({ actions, onAction }: DetailActionBarProps) {
   return (
     <View style={styles.bar}>
-      {actions.map((action) => (
-        <Pressable
-          accessibilityLabel={action.label}
-          accessibilityRole="button"
-          key={action.id}
-          onPress={() => onAction(action)}
-          style={({ pressed }) => [styles.action, pressed && styles.pressed]}>
-          <SymbolView
-            accessibilityElementsHidden
-            importantForAccessibility="no-hide-descendants"
-            name={ACTION_ICONS[action.id]}
-            size={24}
-            tintColor={theme.colors.textOnDark}
-          />
-          <AppText color="textOnDark" style={styles.label} variant="caption">
-            {action.label}
-          </AppText>
-        </Pressable>
-      ))}
+      {actions.map((action) => {
+        const presentation = ACTION_PRESENTATION_OVERRIDES[action.id];
+        return (
+          <Pressable
+            accessibilityLabel={presentation?.accessibilityLabel ?? action.label}
+            accessibilityRole="button"
+            key={action.id}
+            onPress={() => onAction(action)}
+            style={({ pressed }) => [styles.action, pressed && styles.pressed]}>
+            <SymbolView
+              accessibilityElementsHidden
+              importantForAccessibility="no-hide-descendants"
+              name={ACTION_ICONS[action.id]}
+              size={24}
+              tintColor={theme.colors.textOnDark}
+            />
+            <AppText color="textOnDark" style={styles.label} variant="caption">
+              {presentation?.label ?? action.label}
+            </AppText>
+          </Pressable>
+        );
+      })}
     </View>
   );
 }

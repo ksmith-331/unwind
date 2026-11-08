@@ -184,10 +184,14 @@ Numeric ratings remain unchanged as source data. Render full, half, and empty
 stars by rounding only the visual value to the nearest half star. Full stars
 are solid filled, half stars are visibly half-filled, and empty stars are
 unfilled or muted. Expose a rating row as one accessible value that
-communicates the unrounded rating.
+communicates the unrounded rating. The Main detail Reviews preview shows the
+visual stars and review count, not the numeric average; the average remains
+available to accessibility.
 Detail action bars are compact, centered, single-row groups whose width grows
 with their action count without exceeding the available content width. Keep
 touch targets comfortable while compacting visual spacing.
+The Add To-Do action may use the compact visible label “To-Do” while retaining
+its explicit action identity and accessible label “Add to To-Do”.
 
 ## Accessibility
 

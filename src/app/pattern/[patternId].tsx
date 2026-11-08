@@ -36,17 +36,19 @@ export default function PatternDetailRoute() {
     0,
     width - 2 * (theme.spacing[2] + theme.spacing[5]),
   );
-  const isInProgress = pattern?.status === 'in-progress';
+  const usesCompactPatternLayout =
+    pattern?.status === 'in-progress' ||
+    (pattern?.status === 'not-started' && !pattern.isInToDo);
   const previewHeight =
-    popupInternalWidth * ((isInProgress ? 230.588 : 220) / 294);
+    popupInternalWidth * ((usesCompactPatternLayout ? 230.588 : 220) / 294);
   const preferredHeight =
     56 +
     theme.spacing[1] +
     previewHeight +
     3 * theme.spacing[5] +
     80 +
-    (isInProgress ? 72 : 68) +
-    (isInProgress ? 49 : 68) +
+    (usesCompactPatternLayout ? 72 : 68) +
+    (usesCompactPatternLayout ? 49 : 68) +
     theme.spacing[4] +
     theme.spacing[3] +
     64 +
@@ -141,7 +143,7 @@ export default function PatternDetailRoute() {
         <ContentDetailPresentation
           contentType="Pattern"
           detail={pattern}
-          layoutVariant={isInProgress ? 'in-progress' : 'standard'}
+          layoutVariant={usesCompactPatternLayout ? 'compact-pattern' : 'standard'}
           onOpenDescription={() => setPage('description')}
           onOpenReviews={() => setPage('reviews')}
         />
