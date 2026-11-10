@@ -12,6 +12,7 @@ import {
 
 import { AppText } from '@/components/app-text';
 import { RatingStars } from '@/components/rating-stars';
+import type { PatternPublicationStatus } from '@/types/pattern-detail';
 import type { DifficultyLevel } from '@/types/pattern-preview';
 import type { Review } from '@/types/review';
 import { theme } from '@/theme';
@@ -19,15 +20,22 @@ import { getProgressColor } from '@/utils/progress-color';
 
 type ContentDetailPresentationProps = {
   detail: {
-    creator: string;
+    creator?: string;
     difficulty: DifficultyLevel;
     description: string;
     reviews: readonly Review[];
     aggregateRating: number;
     reviewCount: number;
     media: 'placeholder' | number;
+    mediaCrop?: {
+      width: number;
+      height: number;
+      left: number;
+      top: number;
+    };
     type?: string;
     percentProgress?: number;
+    publicationStatus?: PatternPublicationStatus;
   };
   contentType: 'Pattern' | 'Tutorial';
   layoutVariant?: 'standard' | 'compact-pattern';
@@ -39,6 +47,12 @@ const CHEVRON_ICON: ComponentProps<typeof SymbolView>['name'] = {
   ios: 'chevron.right',
   android: 'chevron_right',
   web: 'chevron_right',
+};
+
+const PUBLICATION_CHECK_ICON: ComponentProps<typeof SymbolView>['name'] = {
+  ios: 'checkmark.circle',
+  android: 'check_circle',
+  web: 'check_circle',
 };
 
 export function ContentDetailPresentation({
@@ -69,7 +83,9 @@ export function ContentDetailPresentation({
       scrollEnabled={contentHeight > bodyHeight + theme.spacing[2]}
       showsVerticalScrollIndicator={false}>
       <View
-        accessibilityLabel={`${contentType} preview placeholder`}
+        accessibilityLabel={`${contentType} preview${
+          detail.media === 'placeholder' ? ' placeholder' : ''
+        }`}
         accessibilityRole="image"
         style={[
           styles.preview,
@@ -91,7 +107,20 @@ export function ContentDetailPresentation({
             importantForAccessibility="no-hide-descendants"
             resizeMode="cover"
             source={detail.media}
-            style={styles.previewImage}
+            style={[
+              styles.previewImage,
+              detail.mediaCrop
+                ? [
+                    styles.croppedPreviewImage,
+                    {
+                      height: `${detail.mediaCrop.height}%`,
+                      left: `${detail.mediaCrop.left}%`,
+                      top: `${detail.mediaCrop.top}%`,
+                      width: `${detail.mediaCrop.width}%`,
+                    },
+                  ]
+                : null,
+            ]}
           />
         )}
         {contentType === 'Pattern' &&
@@ -120,10 +149,12 @@ export function ContentDetailPresentation({
           layoutVariant === 'compact-pattern' && styles.compactPatternMetadataRow,
         ]}>
         <View style={styles.metadata}>
-          <AppText variant="body">
-            {contentType} By:{' '}
-            <AppText color="primaryText">{detail.creator}</AppText>
-          </AppText>
+          {detail.creator ? (
+            <AppText variant="body">
+              {contentType} By:{' '}
+              <AppText color="primaryText">{detail.creator}</AppText>
+            </AppText>
+          ) : null}
           {detail.type ? (
             <AppText variant="body">
               Type: <AppText color="primaryText">{detail.type}</AppText>
@@ -143,6 +174,32 @@ export function ContentDetailPresentation({
               ))}
             </View>
           </View>
+          {detail.publicationStatus ? (
+            <View
+              accessible
+              accessibilityLabel={`Pattern Status: ${
+                detail.publicationStatus === 'published' ? 'Published' : 'Draft'
+              }`}
+              style={styles.publicationStatusRow}>
+              <AppText variant="body">
+                Pattern Status:{' '}
+                <AppText color="primaryText">
+                  {detail.publicationStatus === 'published'
+                    ? 'Published'
+                    : 'Draft'}
+                </AppText>
+              </AppText>
+              {detail.publicationStatus === 'published' ? (
+                <SymbolView
+                  accessibilityElementsHidden
+                  importantForAccessibility="no-hide-descendants"
+                  name={PUBLICATION_CHECK_ICON}
+                  size={20}
+                  tintColor={theme.colors.navigation}
+                />
+              ) : null}
+            </View>
+          ) : null}
         </View>
         {(contentType === 'Tutorial' || layoutVariant === 'compact-pattern') &&
         detail.percentProgress !== undefined ? (
@@ -264,6 +321,9 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
+  croppedPreviewImage: {
+    position: 'absolute',
+  },
   metadataRow: {
     alignItems: 'flex-start',
     flexDirection: 'row',
@@ -318,6 +378,11 @@ const styles = StyleSheet.create({
   metadata: {
     flex: 1,
     gap: theme.spacing[1],
+  },
+  publicationStatusRow: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   difficultyRow: {
     alignItems: 'center',

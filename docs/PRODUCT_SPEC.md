@@ -38,6 +38,10 @@ in supported contexts, marked complete while in progress, bookmarked or
 removed from To Do, or removed from In Progress. Pattern Edit is not limited
 to user-created patterns.
 
+**Delete** permanently deletes a user-owned Pattern. **Remove** only removes a
+Pattern from To Do or In Progress and does not delete the Pattern. Delete and
+To-Do mutations remain non-functional until persistence is implemented.
+
 Tutorials can be viewed with their description and reviews, started or
 continued, marked complete while in progress, bookmarked or removed from To
 Do, or removed from In Progress. Editing is available for user-owned

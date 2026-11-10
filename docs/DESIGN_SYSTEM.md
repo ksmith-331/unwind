@@ -119,6 +119,10 @@ completion belongs to an individual History occurrence and remains recorded
 after a restart. These are separate concepts; one shared completion boolean
 must not drive both.
 
+Publication status is distinct from current or historical completion. When a
+publication status is shown with an icon, its text label must also be visible
+and accessible. A published check indicator is not a content-completion check.
+
 ## Shared StreakCard
 
 The same visual StreakCard is used on Landing and Stats. Its streak value is

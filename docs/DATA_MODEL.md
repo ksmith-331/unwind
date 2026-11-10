@@ -7,8 +7,10 @@ in words to avoid prescribing a storage technology.
 ## Content
 
 - **Pattern:** `patternID`, project type, optional project subtype,
-  `patternName`, `patternDescription`, `createdBy`, `createdOn`, associated
-  reviews, and pattern details.
+  `patternName`, `patternDescription`, `createdBy`, `createdOn`, optional
+  publication status (`DRAFT` or `PUBLISHED`), associated reviews, and pattern
+  details. Publication status describes the Pattern's publication state, not a
+  user's current or historical completion.
 - **Tutorial:** `tutorialID`, project type, optional project subtype,
   `tutorialName`, `tutorialDescription`, `createdBy`, `createdOn`, associated
   reviews, and tutorial details.

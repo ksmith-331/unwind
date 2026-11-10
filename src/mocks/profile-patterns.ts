@@ -5,7 +5,7 @@ export const profilePatterns = [
   {
     id: 'profile-simple-poinsettia',
     title: 'Simple Poinsettia',
-    difficulty: 2,
+    difficulty: 3,
     thumbnail: 'placeholder',
   },
   {

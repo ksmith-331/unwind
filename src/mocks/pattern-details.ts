@@ -1,10 +1,33 @@
 import type { PatternDetail } from '@/types/pattern-detail';
 import { patternHeartsReviews } from '@/mocks/pattern-hearts-reviews';
 import { patternChevronReviews } from '@/mocks/pattern-chevron-reviews';
+import { patternPoinsettiaReviews } from '@/mocks/pattern-poinsettia-reviews';
 import { patternStuffedBunnyReviews } from '@/mocks/pattern-stuffed-bunny-reviews';
 
 // Development-only detail data; this is not fetched or persisted.
 export const patternDetails: Record<string, PatternDetail> = {
+  'profile-simple-poinsettia': {
+    patternId: 'profile-simple-poinsettia',
+    title: 'Simple Poinsettia',
+    type: 'Alpha Friendship Bracelet',
+    difficulty: 3,
+    description:
+      'Keywords: flowers, alpha, tricolor, Christmas. Happy Holidays!',
+    reviews: patternPoinsettiaReviews,
+    aggregateRating: 4.8,
+    reviewCount: 74,
+    media: require('../../assets/images/simple-poinsettia-pattern-preview.jpg'),
+    mediaCrop: {
+      width: 145.68,
+      height: 185.64,
+      left: -47.02,
+      top: -8.68,
+    },
+    status: 'not-started',
+    isInToDo: false,
+    isOwnedByCurrentUser: true,
+    publicationStatus: 'published',
+  },
   'pattern-hearts': {
     patternId: 'pattern-hearts',
     title: 'Hearts',
