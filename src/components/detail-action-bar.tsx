@@ -21,7 +21,7 @@ const ACTION_ICONS: Record<
   complete: { ios: 'checkmark.circle', android: 'check_circle', web: 'check_circle' },
   remove: { ios: 'trash', android: 'delete', web: 'delete' },
   'add-to-do': { ios: 'bookmark', android: 'bookmark', web: 'bookmark' },
-  'remove-to-do': { ios: 'bookmark.slash', android: 'bookmark_remove', web: 'bookmark_remove' },
+  'remove-to-do': { ios: 'trash', android: 'delete', web: 'delete' },
   restart: { ios: 'arrow.counterclockwise', android: 'restart_alt', web: 'restart_alt' },
   delete: { ios: 'trash', android: 'delete', web: 'delete' },
   duplicate: { ios: 'doc.on.doc', android: 'content_copy', web: 'content_copy' },
@@ -31,6 +31,10 @@ const ACTION_PRESENTATION_OVERRIDES: Partial<
   Record<DetailActionId, { label: string; accessibilityLabel: string }>
 > = {
   'add-to-do': { label: 'To-Do', accessibilityLabel: 'Add to To-Do' },
+  'remove-to-do': {
+    label: 'Remove',
+    accessibilityLabel: 'Remove from To Do',
+  },
 };
 
 export function DetailActionBar({ actions, onAction }: DetailActionBarProps) {

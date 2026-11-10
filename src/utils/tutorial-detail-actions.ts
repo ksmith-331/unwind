@@ -29,7 +29,7 @@ export function resolveTutorialDetailActions(
             ? [{ id: 'edit', label: 'Edit' } satisfies DetailAction]
             : []),
           tutorial.isInToDo
-            ? { id: 'remove-to-do', label: 'Remove To-Do' }
+            ? { id: 'remove-to-do', label: 'Remove' }
             : { id: 'add-to-do', label: 'Add To-Do' },
         ],
       };
