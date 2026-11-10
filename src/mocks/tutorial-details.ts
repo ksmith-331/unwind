@@ -1,9 +1,25 @@
 import { tutorialAlphaReviews } from '@/mocks/tutorial-alpha-reviews';
 import { tutorialMacrameEndingReviews } from '@/mocks/tutorial-macrame-ending-reviews';
+import { tutorialStartEndingLoopsReviews } from '@/mocks/tutorial-start-ending-loops-reviews';
 import type { TutorialDetail } from '@/types/tutorial-detail';
 
 // Development-only detail data; this is not fetched or persisted.
 export const tutorialDetails: Record<string, TutorialDetail> = {
+  'community-start-ending-loops': {
+    tutorialId: 'community-start-ending-loops',
+    title: 'Start + Ending Loops',
+    creator: 'woven.willow',
+    difficulty: 2,
+    description:
+      'Learn to create neat starting and ending loops for a polished bracelet finish.',
+    aggregateRating: 4.7,
+    reviewCount: 48,
+    reviews: tutorialStartEndingLoopsReviews,
+    media: 'placeholder',
+    status: 'not-started',
+    isInToDo: false,
+    isOwnedByCurrentUser: false,
+  },
   'tutorial-macrame-ending': {
     tutorialId: 'tutorial-macrame-ending',
     title: 'Macrame Ending Tutorial',
