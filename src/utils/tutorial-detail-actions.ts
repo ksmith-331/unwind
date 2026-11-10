@@ -26,7 +26,10 @@ export function resolveTutorialDetailActions(
         actions: [
           { id: 'start', label: 'Start' },
           ...(tutorial.isOwnedByCurrentUser
-            ? [{ id: 'edit', label: 'Edit' } satisfies DetailAction]
+            ? [
+                { id: 'edit', label: 'Edit' } satisfies DetailAction,
+                { id: 'delete', label: 'Delete' } satisfies DetailAction,
+              ]
             : []),
           tutorial.isInToDo
             ? { id: 'remove-to-do', label: 'Remove' }

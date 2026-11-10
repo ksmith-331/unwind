@@ -1,9 +1,9 @@
 import type { DifficultyLevel, PatternPreview } from '@/types/pattern-preview';
 import type { DetailActionId } from '@/types/detail-action';
+import type { PublicationStatus } from '@/types/publication-status';
 import type { Review } from '@/types/review';
 
 export type PatternDetailStatus = 'not-started' | 'in-progress' | 'completed';
-export type PatternPublicationStatus = 'published' | 'draft';
 
 export type PatternDetail = {
   patternId: string;
@@ -25,7 +25,7 @@ export type PatternDetail = {
   status: PatternDetailStatus;
   isInToDo: boolean;
   isOwnedByCurrentUser: boolean;
-  publicationStatus?: PatternPublicationStatus;
+  publicationStatus?: PublicationStatus;
   percentProgress?: number;
 };
 

@@ -38,9 +38,9 @@ in supported contexts, marked complete while in progress, bookmarked or
 removed from To Do, or removed from In Progress. Pattern Edit is not limited
 to user-created patterns.
 
-**Delete** permanently deletes a user-owned Pattern. **Remove** only removes a
-Pattern from To Do or In Progress and does not delete the Pattern. Delete and
-To-Do mutations remain non-functional until persistence is implemented.
+**Delete** permanently deletes a user-owned Pattern or Tutorial. **Remove**
+only removes content from To Do or In Progress and does not delete it. Delete
+and To-Do mutations remain non-functional until persistence is implemented.
 
 Tutorials can be viewed with their description and reviews, started or
 continued, marked complete while in progress, bookmarked or removed from To
@@ -49,6 +49,12 @@ tutorials.
 In-progress Tutorial detail offers Continue, Restart, Complete, and Remove.
 Until shared persistence is implemented, only Continue navigates; Restart,
 Complete, and Remove are non-mutating placeholders.
+
+User-created Patterns and Tutorials share a publication lifecycle with Draft
+and Published states. Published owned content may show its publication status
+in detail. Publication status is separate from visibility, which may be Public
+or Private. Publishing, unpublishing, and visibility controls are not yet
+implemented.
 
 ## Content detail overlays
 

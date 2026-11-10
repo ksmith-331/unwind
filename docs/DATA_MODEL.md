@@ -7,13 +7,18 @@ in words to avoid prescribing a storage technology.
 ## Content
 
 - **Pattern:** `patternID`, project type, optional project subtype,
-  `patternName`, `patternDescription`, `createdBy`, `createdOn`, optional
-  publication status (`DRAFT` or `PUBLISHED`), associated reviews, and pattern
-  details. Publication status describes the Pattern's publication state, not a
-  user's current or historical completion.
+  `patternName`, `patternDescription`, `createdBy`, `createdOn`, publication
+  status (`DRAFT` or `PUBLISHED`), visibility (`PUBLIC` or `PRIVATE`),
+  associated reviews, and pattern details.
 - **Tutorial:** `tutorialID`, project type, optional project subtype,
   `tutorialName`, `tutorialDescription`, `createdBy`, `createdOn`, associated
-  reviews, and tutorial details.
+  reviews, publication status (`DRAFT` or `PUBLISHED`), visibility (`PUBLIC`
+  or `PRIVATE`), and tutorial details.
+- Publication status describes lifecycle/readiness; visibility describes who
+  can access the content. They are separate concepts and may be combined, for
+  example a draft/Private item or a published/Public or published/Private
+  item. Publication and visibility do not describe a user's current or
+  historical completion.
 - **ProjectType:** `projectType`, `projectTypeName`.
 - **ProjectSubType:** `projectSubType`, its parent project type, and subtype
   name.

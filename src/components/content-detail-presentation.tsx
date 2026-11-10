@@ -12,8 +12,8 @@ import {
 
 import { AppText } from '@/components/app-text';
 import { RatingStars } from '@/components/rating-stars';
-import type { PatternPublicationStatus } from '@/types/pattern-detail';
 import type { DifficultyLevel } from '@/types/pattern-preview';
+import type { PublicationStatus } from '@/types/publication-status';
 import type { Review } from '@/types/review';
 import { theme } from '@/theme';
 import { getProgressColor } from '@/utils/progress-color';
@@ -33,9 +33,10 @@ type ContentDetailPresentationProps = {
       left: number;
       top: number;
     };
+    isOwnedByCurrentUser: boolean;
     type?: string;
     percentProgress?: number;
-    publicationStatus?: PatternPublicationStatus;
+    publicationStatus?: PublicationStatus;
   };
   contentType: 'Pattern' | 'Tutorial';
   layoutVariant?: 'standard' | 'compact-pattern';
@@ -149,7 +150,7 @@ export function ContentDetailPresentation({
           layoutVariant === 'compact-pattern' && styles.compactPatternMetadataRow,
         ]}>
         <View style={styles.metadata}>
-          {detail.creator ? (
+          {detail.creator && !detail.isOwnedByCurrentUser ? (
             <AppText variant="body">
               {contentType} By:{' '}
               <AppText color="primaryText">{detail.creator}</AppText>
@@ -177,12 +178,12 @@ export function ContentDetailPresentation({
           {detail.publicationStatus ? (
             <View
               accessible
-              accessibilityLabel={`Pattern Status: ${
+              accessibilityLabel={`${contentType} Status: ${
                 detail.publicationStatus === 'published' ? 'Published' : 'Draft'
               }`}
               style={styles.publicationStatusRow}>
               <AppText variant="body">
-                Pattern Status:{' '}
+                {contentType} Status:{' '}
                 <AppText color="primaryText">
                   {detail.publicationStatus === 'published'
                     ? 'Published'

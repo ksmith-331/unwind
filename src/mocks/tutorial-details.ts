@@ -1,10 +1,26 @@
 import { tutorialAlphaReviews } from '@/mocks/tutorial-alpha-reviews';
 import { tutorialMacrameEndingReviews } from '@/mocks/tutorial-macrame-ending-reviews';
+import { tutorialCrochetLeafBorderReviews } from '@/mocks/tutorial-crochet-leaf-border-reviews';
 import { tutorialStartEndingLoopsReviews } from '@/mocks/tutorial-start-ending-loops-reviews';
 import type { TutorialDetail } from '@/types/tutorial-detail';
 
 // Development-only detail data; this is not fetched or persisted.
 export const tutorialDetails: Record<string, TutorialDetail> = {
+  'profile-crochet-leaf-border': {
+    tutorialId: 'profile-crochet-leaf-border',
+    title: 'Crochet Leaf Border',
+    difficulty: 2,
+    description:
+      'Add a delicate leaf border to your crochet project with this step-by-step tutorial.',
+    aggregateRating: 4.8,
+    reviewCount: 24,
+    reviews: tutorialCrochetLeafBorderReviews,
+    media: 'placeholder',
+    status: 'not-started',
+    isInToDo: false,
+    isOwnedByCurrentUser: true,
+    publicationStatus: 'published',
+  },
   'community-start-ending-loops': {
     tutorialId: 'community-start-ending-loops',
     title: 'Start + Ending Loops',
