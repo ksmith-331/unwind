@@ -83,6 +83,15 @@ from the originating screen. Patterns may offer Edit for community and
 user-created content where the applicable action set allows it. Tutorial
 Edit is available only for user-created tutorials.
 
+Inventory detail presents paired item photos and structured Brand, Color,
+Type, Size, SKU, and Stocked At/vendor information, followed by bounded Notes
+and Restock previews. Vendor labels are informational. Notes and Restock open
+local pages within the same overlay. Inventory detail offers Duplicate, Edit,
+and Delete; these actions remain non-mutating placeholders until supported
+creation, editing, and persistence flows exist. Deleting an Inventory item
+must not be confused with removing a Pattern or Tutorial from To Do or
+In Progress.
+
 ## Discover
 
 ### Create

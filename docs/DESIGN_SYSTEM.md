@@ -155,8 +155,9 @@ opacity over the still-mounted origin. The scrim covers the app content,
 SubTabs, FAB, MainNavigationBar, and bottom safe area; nothing beneath it is
 interactive while the overlay is open.
 
-The detail card rises from the bottom and uses a plain/light surface, rounded
-top corners, and an appropriate shadow/elevation. Do not use the ordinary
+The detail card rises from the bottom and uses the UnWind Gray
+(`theme.colors.mutedSurface`, `#F0EFEF`) surface, rounded top corners, and an
+appropriate shadow/elevation. Do not use the ordinary
 textile background texture inside the popup. Keep the header and contextual
 action bar fixed around the body. Main detail prefers a bounded, non-scrolling
 body; use bounded media, up to two title lines with ellipsis, and truncated
@@ -183,6 +184,18 @@ region. Switching between Main, Description, and Reviews does not resize or
 reposition the card; the fixed header and reserved footer remain in place,
 while each page scrolls only within the shared body region when its content
 overflows.
+
+Inventory detail uses a dedicated body presentation: a horizontal pair of
+equal-width, rounded photos; a compact structured metadata surface; wrapping,
+informational vendor chips; and pressable Notes and Restock preview cards.
+Inventory metadata, photos, and preview cards use white surfaces with a
+subtle drop shadow. Vendor chips use the UnWind Light Blue, Orange, and Yellow
+tokens in the Figma sequence.
+Main, Notes, and Restock retain the same popup height, fixed header, and
+reserved action-bar region. The Inventory body scrolls only when its measured
+content overflows; internal Notes and Restock pages scroll independently when
+needed. Keep Inventory-specific content out of the Pattern/Tutorial rating,
+review, and progress presentation.
 
 Numeric ratings remain unchanged as source data. Render full, half, and empty
 stars by rounding only the visual value to the nearest half star. Full stars

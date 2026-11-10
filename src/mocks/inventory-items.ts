@@ -44,8 +44,11 @@ export const inventoryItems = [
   },
   {
     id: 'peach-embroidery-thread',
-    name: 'Peach embroidery thread',
-    thumbnail: { state: 'placeholder', color: '#D98C68', strandColor: '#F7D0AD' },
+    name: 'Terracotta Floss - DMC 922',
+    thumbnail: {
+      state: 'image',
+      source: require('../../assets/images/terracotta-floss-dmc-922.png'),
+    },
   },
   {
     id: 'cherry-cotton-yarn',

@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.overlay,
   },
   card: {
-    backgroundColor: theme.colors.appBackground,
+    backgroundColor: theme.colors.mutedSurface,
     borderTopLeftRadius: theme.radii.extraLarge,
     borderTopRightRadius: theme.radii.extraLarge,
     elevation: 18,
