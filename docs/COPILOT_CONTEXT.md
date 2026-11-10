@@ -43,6 +43,9 @@ normal implementation work should use the synchronized Markdown documents.
 - Pattern, Tutorial, and Inventory details use transparent modal overlays over
   the exact originating screen; see `PRODUCT_SPEC.md`, `NAVIGATION.md`, and
   `DESIGN_SYSTEM.md`.
+- Auth UI/navigation is implemented without real authentication; the Sign In
+  screen contains the sole `__DEV__` Landing bypass until Supabase Auth
+  integration.
 
 Expo Router routes live under `src/app`. Do not create a second root app
 directory. Consult the authority documents above before implementation.

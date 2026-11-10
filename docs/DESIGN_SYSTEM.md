@@ -61,6 +61,20 @@ Do not use the texture on Pattern detail, Tutorial detail, Inventory detail,
 tracking workspaces, or editing workspaces unless a future specific design
 explicitly overrides this rule.
 
+## Authentication surfaces
+
+The woven texture persists across the public Welcome, Sign In, Register, and
+Forgot Password flow. Welcome and auth forms use independent, decorative
+brand-color shapes; keep decoration out of accessibility traversal. The UnWind
+logo stays in a consistent fixed bottom region across these surfaces. Auth
+forms use visible labels above inputs, white input/card surfaces, navy text,
+and shared Manrope typography. Use keyboard-aware scrolling on forms so
+focused fields and actions remain reachable on small screens.
+
+Secondary auth navigation uses small, underlined, left-aligned text links with
+comfortable touch targets. The development-only Sign In bypass is visually
+secondary to production actions and must not imply real authentication.
+
 ## MainNavigationBar
 
 The bar has three equal-width sections in Projects, Discover, Profile order.

@@ -12,11 +12,22 @@ crafting community.
 
 ## Authentication and Landing
 
-- The application always displays its splash screen while loading.
-- An authenticated user proceeds from Splash to the authenticated Landing.
-- An unauthenticated user proceeds to the Welcome/sign-in/register flow.
-- Successful sign-in or registration proceeds to Landing. Registration may
-  include email verification and new-user setup before Landing.
+- The application always displays the native splash screen while loading.
+- In the current visual/navigation-only milestone, app startup proceeds from
+  Splash to Welcome. Welcome links to Sign In and Register. These forms accept
+  local text input, but account services are not connected and submissions do
+  not authenticate, register, or navigate to success/verification/setup
+  screens.
+- A single `__DEV__`-only, navigation-only shortcut on Sign In may replace the
+  route with Landing for development testing. It creates no user, session, or
+  authentication state and is not production navigation.
+- Forgot Password remains an informational placeholder until password
+  recovery is implemented. Verify Email and New User Setup remain available
+  routes but are deferred until real authentication is defined.
+- Future production behavior resolves a real session while the native Splash
+  is held: an authenticated user proceeds to Landing; an unauthenticated user
+  proceeds to Welcome. Successful real sign-in or registration will proceed
+  to Landing, with verification and new-user setup as required.
 - Landing is outside the selectable main-tab group. It displays the shared
   bottom navigation with no active tab and is not normally revisited after
   entering the main application.

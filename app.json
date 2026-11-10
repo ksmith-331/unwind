@@ -28,9 +28,9 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#208AEF",
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 76
+          "backgroundColor": "#FCFCFC",
+          "image": "./assets/images/brand/unwind-logo.png",
+          "imageWidth": 180
         }
       ],
       "expo-font",

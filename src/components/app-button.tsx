@@ -1,7 +1,7 @@
 import { ActivityIndicator, Pressable, StyleSheet, type StyleProp, type ViewStyle } from 'react-native';
 
 import { AppText } from '@/components/app-text';
-import { theme, type SemanticColor } from '@/theme';
+import { theme, type SemanticColor, type TypographyVariant } from '@/theme';
 
 export type AppButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'destructive';
 
@@ -14,6 +14,7 @@ export interface AppButtonProps {
   fullWidth?: boolean;
   accessibilityLabel?: string;
   textColor?: SemanticColor;
+  textVariant?: TypographyVariant;
   style?: StyleProp<ViewStyle>;
 }
 
@@ -42,6 +43,7 @@ export function AppButton({
   fullWidth = false,
   accessibilityLabel,
   textColor: textColorOverride,
+  textVariant = 'button',
   style,
 }: AppButtonProps) {
   const isDisabled = disabled || loading;
@@ -65,7 +67,7 @@ export function AppButton({
       {loading ? (
         <ActivityIndicator color={theme.colors[textColor]} size="small" />
       ) : (
-        <AppText color={textColor} variant="button">
+        <AppText color={textColor} variant={textVariant}>
           {label}
         </AppText>
       )}

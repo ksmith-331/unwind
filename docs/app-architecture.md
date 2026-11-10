@@ -20,10 +20,10 @@ This document inventories the major mobile app screens present on the Figma page
 
 | Screen / frame name | Node ID | Size | Purpose |
 | --- | --- | --- | --- |
-| Login | `1898:1192` | `375 x 842` | Primary sign-in screen for returning users. |
-| Login | `2119:1494` | `375 x 842` | Duplicate/alternate login mock variant. |
-| Login - Sign In | `1923:1459` | `375 x 842` | More explicit sign-in form state for email/password entry. |
-| Landing Page | `1898:1211` | `375 x 842` | Intro/landing experience before authentication or app entry. |
+| Login - Opening | `1898:1192` | `375 x 842` | Welcome screen with Sign In and Register choices. |
+| Login - Splash | `2119:1494` | `375 x 842` | Branded native launch-splash visual reference. |
+| Login - Sign In | `1923:1459` | `375 x 842` | Sign In form with email, password, and Forgot Password. |
+| Landing Page | `1898:1211` | `375 x 842` | Authenticated Landing with streak, resume action, and main navigation. |
 
 ### Home
 
@@ -82,8 +82,8 @@ This document inventories the major mobile app screens present on the Figma page
 The page clearly contains multiple screens that are not fully separate routes but alternate versions of the same concept:
 
 - Authentication variants
-  - `Login` (`1898:1192`)
-  - `Login` (`2119:1494`)
+  - `Login - Opening` (`1898:1192`) — Welcome / auth choices
+  - `Login - Splash` (`2119:1494`) — branded launch splash
   - `Login - Sign In` (`1923:1459`)
 
 - Project tracking variants
@@ -169,8 +169,8 @@ The app seems designed around a repeated pattern-detail and project-detail model
 
 Priority screen IDs for follow-up work:
 
-1. `1898:1192` — Login
-2. `1898:1211` — Landing Page
+1. `1898:1192` — Welcome / Login - Opening
+2. `1898:1211` — Authenticated Landing Page
 3. `1898:1303` — Projects Tab - In Progress
 4. `1898:1261` — Projects Tab - To Do
 5. `1898:1984` — Projects Tab - Tracking

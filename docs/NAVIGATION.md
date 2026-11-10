@@ -4,10 +4,20 @@ This document is authoritative for route hierarchy and navigation behavior.
 
 ## Public flow
 
-- The splash screen is shown while the application loads.
-- Unauthenticated users continue to Welcome, Sign In, or Register.
-- Registration may continue through Verify Email and New User Setup.
-- Successful authentication enters Landing.
+- The native splash is shown while the application loads. In the current
+  pre-authentication milestone, `/` routes to `/welcome` without creating or
+  inferring authentication state.
+- Welcome navigates to `/sign-in` or `/register`. Sign In navigates to
+  `/forgot-password`; Register offers a link back to Sign In. Back from
+  Sign In or Register returns to Welcome, and Forgot Password returns to
+  Sign In. Android Back follows the same public route stack.
+- Sign In and Register submissions are not connected to account services.
+  Verify Email and New User Setup remain unconnected placeholders.
+- A development-only shortcut on Sign In may replace the route with `/landing`.
+  This is navigation-only and is not a valid production authentication path.
+- In the future, a root/session boundary resolves loading, authenticated, or
+  unauthenticated status before allowing navigation into `(app)` or `(public)`.
+  Real authenticated users enter Landing; unauthenticated users enter Welcome.
 
 ## Authenticated entry and main tabs
 

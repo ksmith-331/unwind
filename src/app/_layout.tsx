@@ -8,6 +8,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { manropeFontFamilies } from '@/components/app-text';
 
+const minimumNativeSplashDurationMs = 850;
+const nativeSplashStartedAt = Date.now();
+
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -19,8 +22,18 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (fontsLoaded || fontError) {
-      SplashScreen.hideAsync();
+      const remainingDuration = Math.max(
+        0,
+        minimumNativeSplashDurationMs - (Date.now() - nativeSplashStartedAt),
+      );
+      const timeout = setTimeout(() => {
+        void SplashScreen.hideAsync();
+      }, remainingDuration);
+
+      return () => clearTimeout(timeout);
     }
+
+    return undefined;
   }, [fontsLoaded, fontError]);
 
   if (!fontsLoaded && !fontError) {

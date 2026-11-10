@@ -48,6 +48,24 @@ The current UI milestone defers:
 Do not infer that a planned product action is functional before its
 implementation milestone.
 
+## Temporary authentication UI development
+
+The current public authentication screens are visual/navigation-only. Keep
+exactly one development shortcut, gated by `__DEV__`, on Sign In. It may
+navigate to the existing Landing route but must never create a user, session,
+token, or persisted authenticated flag. Remove the shortcut when real
+authentication routing is added.
+
+Future Supabase integration belongs at a centralized root/session boundary.
+Resolve loading, authenticated, or unauthenticated state there before routing
+into the authenticated or public route group; do not make individual forms
+simulate or own session state. The native splash currently has a small
+850-millisecond minimum presentation duration for development/UI completeness,
+concurrent with font loading. This is not a replacement for future session
+loading: resolve the Supabase session under the same native splash hold, then
+revisit or remove the artificial minimum once real session loading exists.
+Do not add a separate React splash screen.
+
 ## Known development issue: Expo Router Web SSR
 
 During development with Expo SDK 58, Expo Router web server-side rendering
