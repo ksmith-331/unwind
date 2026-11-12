@@ -1,28 +1,10 @@
-import { Image, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { StyleSheet, View, useWindowDimensions } from 'react-native';
 
 import { theme } from '@/theme';
 
 type AuthDecorationsProps = {
   variant: 'welcome' | 'form';
 };
-
-export function AuthBackground() {
-  return (
-    <View
-      accessibilityElementsHidden
-      importantForAccessibility="no-hide-descendants"
-      pointerEvents="none"
-      style={styles.textureLayer}>
-      <Image
-        accessible={false}
-        importantForAccessibility="no-hide-descendants"
-        resizeMode="repeat"
-        source={require('../../assets/images/brand/background-texture.png')}
-        style={styles.texture}
-      />
-    </View>
-  );
-}
 
 export function AuthDecorations({ variant }: AuthDecorationsProps) {
   const { height, width } = useWindowDimensions();
@@ -77,17 +59,8 @@ export function AuthDecorations({ variant }: AuthDecorationsProps) {
 }
 
 const styles = StyleSheet.create({
-  textureLayer: {
-    ...StyleSheet.absoluteFill,
-    backgroundColor: theme.colors.appBackground,
-  },
-  texture: {
-    ...StyleSheet.absoluteFill,
-    opacity: 0.2,
-  },
   decorations: {
     ...StyleSheet.absoluteFill,
-    overflow: 'hidden',
   },
   ellipse: {
     borderRadius: 999,

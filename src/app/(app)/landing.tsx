@@ -23,79 +23,86 @@ export default function LandingRoute() {
     availableContentHeight * 0.44,
   );
   const illustrationWidth = illustrationHeight * (750 / 666);
+  const topPadding = compact ? theme.spacing[2] : theme.spacing[4];
 
   return (
-    <Screen
-      edges={['top']}
-      contentContainerStyle={styles.screenContent}>
-      <View style={styles.page}>
-        <Image
-          accessible={false}
-          importantForAccessibility="no-hide-descendants"
-          pointerEvents="none"
-          resizeMode="repeat"
-          source={require('../../../assets/images/brand/background-texture.png')}
-          style={styles.backgroundTexture}
-        />
-        <View
-          accessibilityElementsHidden
-          importantForAccessibility="no-hide-descendants"
-          pointerEvents="none"
-          style={styles.ellipses}>
+    <View style={styles.root}>
+      <View
+        accessibilityElementsHidden
+        importantForAccessibility="no-hide-descendants"
+        pointerEvents="none"
+        style={styles.decorations}>
+        <View style={styles.ellipses}>
           <View style={[styles.ellipse, styles.yellowEllipse]} />
           <View style={[styles.ellipse, styles.orangeEllipse]} />
           <View style={[styles.ellipse, styles.blueEllipse]} />
         </View>
+      </View>
+      <Screen
+        edges={['top']}
+        contentContainerStyle={styles.screenContent}
+        style={styles.transparentScreen}>
+        <View style={styles.page}>
+          <View
+            style={[
+              styles.main,
+              {
+                paddingBottom: navigationHeight,
+                paddingTop: topPadding,
+              },
+            ]}>
+            <Image
+              accessible={false}
+              accessibilityElementsHidden
+              importantForAccessibility="no-hide-descendants"
+              pointerEvents="none"
+              resizeMode="contain"
+              source={require('../../../assets/images/brand/knitting-illustration.png')}
+              style={[
+                styles.knittingIllustration,
+                { height: illustrationHeight, width: illustrationWidth },
+              ]}
+            />
+            <View style={styles.contentColumn}>
+              <StreakCard
+                accessibilityLabel={`Daily streak: ${userStatsPreview.dailyStreak} days. ${getStreakMessage(userStatsPreview.dailyStreak)}`}
+                compact={compact}
+                message={getStreakMessage(userStatsPreview.dailyStreak)}
+                streakCount={userStatsPreview.dailyStreak}
+                style={[styles.streakCard, compact && styles.compactStreakCard]}
+              />
 
-        <View
-          style={[
-            styles.main,
-            {
-              paddingBottom: navigationHeight,
-              paddingTop: compact ? theme.spacing[2] : theme.spacing[4],
-            },
-          ]}>
-          <Image
-            accessible={false}
-            accessibilityElementsHidden
-            importantForAccessibility="no-hide-descendants"
-            pointerEvents="none"
-            resizeMode="contain"
-            source={require('../../../assets/images/brand/knitting-illustration.png')}
-            style={[styles.knittingIllustration, { height: illustrationHeight, width: illustrationWidth }]}
-          />
+              <AppButton
+                accessibilityLabel="Pick up where you left off and open Projects"
+                label="Pick up where you left off"
+                onPress={() => router.push(MOCK_RESUME_DESTINATION)}
+                style={[styles.resumeButton, compact && styles.compactResumeButton]}
+                textColor="textOnDark"
+              />
+            </View>
+          </View>
 
-          <StreakCard
-            accessibilityLabel={`Daily streak: ${userStatsPreview.dailyStreak} days. ${getStreakMessage(userStatsPreview.dailyStreak)}`}
-            compact={compact}
-            message={getStreakMessage(userStatsPreview.dailyStreak)}
-            streakCount={userStatsPreview.dailyStreak}
-            style={[styles.streakCard, compact && styles.compactStreakCard]}
-          />
-
-          <AppButton
-            accessibilityLabel="Pick up where you left off and open Projects"
-            label="Pick up where you left off"
-            onPress={() => router.push(MOCK_RESUME_DESTINATION)}
-            style={[styles.resumeButton, compact && styles.compactResumeButton]}
-            textColor="textOnDark"
+          <MainNavigationBar
+            activeTab={null}
+            bottomInset={insets.bottom}
+            onDiscoverPress={() => router.push('/discover')}
+            onProfilePress={() => router.push('/profile')}
+            onProjectsPress={() => router.push('/projects')}
+            style={styles.navigation}
           />
         </View>
-
-        <MainNavigationBar
-          activeTab={null}
-          bottomInset={insets.bottom}
-          onDiscoverPress={() => router.push('/discover')}
-          onProfilePress={() => router.push('/profile')}
-          onProjectsPress={() => router.push('/projects')}
-          style={styles.navigation}
-        />
-      </View>
-    </Screen>
+      </Screen>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+  },
+  transparentScreen: {
+    backgroundColor: 'transparent',
+  },
   screenContent: {
     flex: 1,
     paddingHorizontal: 0,
@@ -105,13 +112,11 @@ const styles = StyleSheet.create({
     position: 'relative',
     width: '100%',
   },
-  backgroundTexture: {
+  decorations: {
     ...StyleSheet.absoluteFill,
-    opacity: 0.2,
   },
   ellipses: {
     ...StyleSheet.absoluteFill,
-    overflow: 'hidden',
   },
   ellipse: {
     borderRadius: 999,
@@ -142,9 +147,15 @@ const styles = StyleSheet.create({
   knittingIllustration: {
     aspectRatio: 750 / 666,
   },
+  contentColumn: {
+    alignItems: 'center',
+    maxWidth: 360,
+    width: '100%',
+  },
   streakCard: {
     marginTop: theme.spacing[7],
-    width: '81%',
+    maxWidth: 303,
+    width: '84%',
   },
   compactStreakCard: {
     marginTop: theme.spacing[4],
@@ -156,7 +167,7 @@ const styles = StyleSheet.create({
     marginTop: theme.spacing[7] + theme.spacing[5],
     maxWidth: 308,
     minHeight: 50,
-    width: '82%',
+    width: '86%',
   },
   compactResumeButton: {
     marginTop: theme.spacing[5],

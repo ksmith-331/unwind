@@ -16,12 +16,6 @@ export type TutorialDetail = {
   reviewCount: number;
   reviews: readonly Review[];
   media: TutorialPreview['thumbnail'] | number;
-  mediaCrop?: {
-    width: number;
-    height: number;
-    left: number;
-    top: number;
-  };
   status: TutorialDetailStatus;
   percentProgress?: number;
   isInToDo: boolean;

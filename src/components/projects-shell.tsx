@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Animated, Easing, Image, StyleSheet, View } from 'react-native';
+import { Animated, Easing, StyleSheet, View } from 'react-native';
 import { router, Stack, useFocusEffect, usePathname, type Href } from 'expo-router';
 
 import { FloatingActionTray } from '@/components/floating-action-tray';
@@ -7,6 +7,7 @@ import { Screen } from '@/components/screen';
 import { SubTabs, type SubTabDefinition } from '@/components/sub-tabs';
 import { useReducedMotion } from '@/hooks/use-reduced-motion';
 import { useActiveSubTab } from '@/hooks/use-active-subtab';
+import { useSubTabSwipe } from '@/hooks/use-subtab-swipe';
 import { theme } from '@/theme';
 
 const PROJECT_TABS: readonly [SubTabDefinition, SubTabDefinition] = [
@@ -35,7 +36,6 @@ export function ProjectsShell() {
     { ...PROJECT_TABS[0], active: !isTodoActive },
     { ...PROJECT_TABS[1], active: isTodoActive },
   ];
-
   useEffect(() => {
     if (pathname.startsWith('/workspace/')) {
       setIsActionTrayOpen(false);
@@ -45,7 +45,10 @@ export function ProjectsShell() {
   useFocusEffect(
     useCallback(
       () => () => {
-        if (!currentPathname.current.startsWith('/pattern/')) {
+        if (
+          !currentPathname.current.startsWith('/pattern/') &&
+          !currentPathname.current.startsWith('/tutorial/')
+        ) {
           setIsActionTrayOpen(false);
         }
         isNavigatingBetweenTabs.current = false;
@@ -87,6 +90,7 @@ export function ProjectsShell() {
     },
     [collectionOpacity, reduceMotion],
   );
+  const swipeResponder = useSubTabSwipe(tabs, navigateToTab);
 
   const showActiveCollection = useCallback(() => {
     if (reduceMotion) {
@@ -107,17 +111,11 @@ export function ProjectsShell() {
   }, [collectionOpacity, reduceMotion]);
 
   return (
-    <Screen edges={['top']} contentContainerStyle={styles.screenContent}>
-      <View style={styles.page}>
-        <Image
-          accessible={false}
-          accessibilityElementsHidden
-          importantForAccessibility="no-hide-descendants"
-          pointerEvents="none"
-          resizeMode="repeat"
-          source={require('../../assets/images/brand/background-texture.png')}
-          style={styles.backgroundTexture}
-        />
+    <Screen
+      edges={['top']}
+      contentContainerStyle={styles.screenContent}
+      style={styles.transparentScreen}>
+      <View {...swipeResponder.panHandlers} style={styles.page}>
         <SubTabs tabs={tabs} onNavigate={navigateToTab} />
 
         <View style={styles.collectionRegion}>
@@ -164,17 +162,15 @@ export function ProjectsShell() {
 }
 
 const styles = StyleSheet.create({
+  transparentScreen: {
+    backgroundColor: 'transparent',
+  },
   screenContent: {
     flex: 1,
     paddingHorizontal: 0,
   },
   page: {
-    backgroundColor: theme.colors.appBackground,
     flex: 1,
-  },
-  backgroundTexture: {
-    ...StyleSheet.absoluteFill,
-    opacity: 0.2,
   },
   collectionRegion: {
     flex: 1,

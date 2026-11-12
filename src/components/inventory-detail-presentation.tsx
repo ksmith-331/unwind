@@ -17,14 +17,6 @@ const VENDOR_COLORS = [
   theme.colors.highlight,
 ] as const;
 
-const CARD_SHADOW = {
-  elevation: 4,
-  shadowColor: theme.colors.overlay,
-  shadowOffset: { width: 0, height: 4 },
-  shadowOpacity: 0.25,
-  shadowRadius: 4,
-} as const;
-
 export function InventoryDetailPresentation({
   detail,
   onOpenNotes,
@@ -147,7 +139,7 @@ const styles = StyleSheet.create({
     gap: theme.spacing[5],
   },
   image: {
-    ...CARD_SHADOW,
+    ...theme.shadows.neutral,
     backgroundColor: theme.colors.surface,
     borderRadius: theme.radii.medium,
     flex: 1,
@@ -155,7 +147,7 @@ const styles = StyleSheet.create({
     width: 0,
   },
   metadata: {
-    ...CARD_SHADOW,
+    ...theme.shadows.neutral,
     backgroundColor: theme.colors.surface,
     borderRadius: theme.radii.medium,
     gap: theme.spacing[1],
@@ -189,7 +181,7 @@ const styles = StyleSheet.create({
     paddingVertical: theme.spacing[1],
   },
   previewCard: {
-    ...CARD_SHADOW,
+    ...theme.shadows.neutral,
     backgroundColor: theme.colors.surface,
     borderRadius: theme.radii.medium,
     gap: theme.spacing[1],

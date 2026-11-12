@@ -104,6 +104,7 @@ export function SearchInput({
 
 const styles = StyleSheet.create({
   container: {
+    ...theme.shadows.neutral,
     alignItems: 'center',
     backgroundColor: theme.colors.mutedSurface,
     borderRadius: theme.radii.pill,

@@ -1,6 +1,7 @@
 import { router } from 'expo-router';
 import { SymbolView } from 'expo-symbols';
-import { Image, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { AppText } from '@/components/app-text';
 import { ProfileMenuCard } from '@/components/profile-menu-card';
@@ -33,19 +34,20 @@ const PROFILE_ICON = {
 } as const;
 
 export default function ProfileHomeRoute() {
+  const insets = useSafeAreaInsets();
+
   return (
-    <Screen edges={['top']} contentContainerStyle={styles.screenContent}>
+    <Screen
+      edges={['top']}
+      contentContainerStyle={styles.screenContent}
+      style={styles.transparentScreen}>
       <View style={styles.page}>
-        <Image
-          accessible={false}
+        <View
           accessibilityElementsHidden
+          accessible={false}
           importantForAccessibility="no-hide-descendants"
           pointerEvents="none"
-          resizeMode="repeat"
-          source={require('../../../../../assets/images/brand/background-texture.png')}
-          style={styles.backgroundTexture}
-        />
-        <View accessible={false} pointerEvents="none" style={styles.decorations}>
+          style={[styles.decorations, { top: -insets.top }]}>
           <View style={styles.orangeEllipse} />
           <View style={styles.yellowEllipse} />
           <View style={styles.lightBlueEllipse} />
@@ -91,18 +93,16 @@ export default function ProfileHomeRoute() {
 }
 
 const styles = StyleSheet.create({
+  transparentScreen: {
+    backgroundColor: 'transparent',
+  },
   screenContent: {
     flex: 1,
     paddingHorizontal: 0,
   },
   page: {
-    backgroundColor: theme.colors.appBackground,
     flex: 1,
-    overflow: 'hidden',
-  },
-  backgroundTexture: {
-    ...StyleSheet.absoluteFill,
-    opacity: 0.2,
+    position: 'relative',
   },
   decorations: {
     ...StyleSheet.absoluteFill,
@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   avatar: {
+    ...theme.shadows.neutral,
     alignItems: 'center',
     backgroundColor: theme.colors.secondaryAction,
     borderRadius: theme.radii.pill,

@@ -46,6 +46,7 @@ export function HistoryPreviewCard({ item, accent }: HistoryPreviewCardProps) {
       }
       difficulty={item.difficulty}
       href={href}
+      thumbnail={item.thumbnail}
       title={item.title}
     />
   );

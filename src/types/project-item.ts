@@ -1,6 +1,9 @@
+import type { ContentMediaSource } from '@/types/content-media';
+
 type ProjectItemBase = {
   id: string;
   title: string;
+  thumbnail: ContentMediaSource;
 };
 
 type ProjectItemKind = 'pattern' | 'tutorial';

@@ -1,4 +1,5 @@
 import type { PatternPreview } from '@/types/pattern-preview';
+import { getPatternMedia } from '@/mocks/content-media';
 
 // Development-only examples; these are not fetched or persisted.
 export const communityPatterns = [
@@ -6,7 +7,7 @@ export const communityPatterns = [
     id: 'community-stuffed-bunny',
     title: 'Stuffed Bunny',
     difficulty: 4,
-    thumbnail: 'placeholder',
+    thumbnail: getPatternMedia('community-stuffed-bunny'),
   },
   {
     id: 'community-interlocking-diamonds',
@@ -29,6 +30,12 @@ export const communityPatterns = [
 ] satisfies readonly PatternPreview[];
 
 export const myPatterns = [
+  {
+    id: 'profile-simple-poinsettia',
+    title: 'Simple Poinsettia',
+    difficulty: 3,
+    thumbnail: getPatternMedia('profile-simple-poinsettia'),
+  },
   {
     id: 'mine-seaside-stripes',
     title: 'Seaside Stripes',

@@ -1,5 +1,6 @@
 import { useCallback, useRef } from 'react';
-import { Animated, Easing, Image, StyleSheet, View } from 'react-native';
+import { Animated, Easing, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   router,
   Stack,
@@ -8,6 +9,7 @@ import {
 } from 'expo-router';
 
 import { useActiveSubTab } from '@/hooks/use-active-subtab';
+import { useSubTabSwipe } from '@/hooks/use-subtab-swipe';
 import { useReducedMotion } from '@/hooks/use-reduced-motion';
 import { Screen } from '@/components/screen';
 import { SubTabs, type SubTabDefinition } from '@/components/sub-tabs';
@@ -19,6 +21,7 @@ const STATS_HISTORY_TABS = [
 ] as const satisfies readonly Omit<SubTabDefinition, 'active'>[];
 
 export function ProfileStatsHistoryShell() {
+  const insets = useSafeAreaInsets();
   const reduceMotion = useReducedMotion();
   const isNavigatingBetweenTabs = useRef(false);
   const contentOpacity = useRef(new Animated.Value(1)).current;
@@ -35,7 +38,6 @@ export function ProfileStatsHistoryShell() {
     { ...STATS_HISTORY_TABS[0], active: !isHistoryActive },
     { ...STATS_HISTORY_TABS[1], active: isHistoryActive },
   ];
-
   useFocusEffect(
     useCallback(
       () => () => {
@@ -77,6 +79,7 @@ export function ProfileStatsHistoryShell() {
     },
     [contentOpacity, reduceMotion],
   );
+  const swipeResponder = useSubTabSwipe(tabs, navigateToTab);
 
   const showActiveContent = useCallback(() => {
     if (reduceMotion) {
@@ -97,17 +100,22 @@ export function ProfileStatsHistoryShell() {
   }, [contentOpacity, reduceMotion]);
 
   return (
-    <Screen edges={['top']} contentContainerStyle={styles.screenContent}>
-      <View style={styles.page}>
-        <Image
-          accessible={false}
-          accessibilityElementsHidden
-          importantForAccessibility="no-hide-descendants"
-          pointerEvents="none"
-          resizeMode="repeat"
-          source={require('../../assets/images/brand/background-texture.png')}
-          style={styles.backgroundTexture}
-        />
+    <Screen
+      edges={['top']}
+      contentContainerStyle={styles.screenContent}
+      style={styles.transparentScreen}>
+      <View {...swipeResponder.panHandlers} style={styles.page}>
+        {!isHistoryActive && (
+          <View
+            accessibilityElementsHidden
+            importantForAccessibility="no-hide-descendants"
+            pointerEvents="none"
+            style={[styles.decorations, { top: -insets.top }]}>
+            <View style={[styles.ellipse, styles.yellowEllipse]} />
+            <View style={[styles.ellipse, styles.orangeEllipse]} />
+            <View style={[styles.ellipse, styles.blueEllipse]} />
+          </View>
+        )}
         <SubTabs onNavigate={navigateToTab} tabs={tabs} />
         <View style={styles.contentRegion}>
           <Animated.View style={[styles.contentStack, { opacity: contentOpacity }]}>
@@ -141,17 +149,41 @@ export function ProfileStatsHistoryShell() {
 }
 
 const styles = StyleSheet.create({
+  transparentScreen: {
+    backgroundColor: 'transparent',
+  },
   screenContent: {
     flex: 1,
     paddingHorizontal: 0,
   },
   page: {
-    backgroundColor: theme.colors.appBackground,
     flex: 1,
+    position: 'relative',
   },
-  backgroundTexture: {
+  decorations: {
     ...StyleSheet.absoluteFill,
-    opacity: 0.2,
+  },
+  ellipse: {
+    borderRadius: 999,
+    height: '45%',
+    opacity: 0.42,
+    position: 'absolute',
+    width: '86%',
+  },
+  yellowEllipse: {
+    backgroundColor: theme.colors.highlight,
+    right: '-38%',
+    top: 0,
+  },
+  orangeEllipse: {
+    backgroundColor: theme.colors.primaryAction,
+    left: '-45%',
+    top: '29%',
+  },
+  blueEllipse: {
+    backgroundColor: theme.colors.secondaryAction,
+    right: '-44%',
+    top: '65%',
   },
   contentRegion: {
     flex: 1,

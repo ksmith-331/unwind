@@ -85,9 +85,11 @@ const styles = StyleSheet.create({
     borderRadius: theme.radii.medium,
   },
   primary: {
+    ...theme.shadows.neutral,
     backgroundColor: theme.colors.primaryAction,
   },
   secondary: {
+    ...theme.shadows.neutral,
     backgroundColor: theme.colors.secondaryAction,
   },
   outline: {
@@ -99,6 +101,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   destructive: {
+    ...theme.shadows.neutral,
     backgroundColor: theme.colors.primaryAction,
   },
   fullWidth: {

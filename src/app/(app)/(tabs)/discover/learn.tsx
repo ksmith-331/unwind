@@ -1,5 +1,6 @@
+import { router } from 'expo-router';
 import { useMemo, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { AppCard } from '@/components/app-card';
 import { AppText } from '@/components/app-text';
@@ -11,8 +12,8 @@ import {
   continueTutorials,
   myTutorials,
 } from '@/mocks/discover-tutorials';
-import type { TutorialPreview } from '@/types/tutorial-preview';
 import { theme } from '@/theme';
+import type { TutorialPreview } from '@/types/tutorial-preview';
 import { getPreviewAccent } from '@/utils/preview-accent';
 
 const SEARCH_ACTIONS: readonly SearchInputAction[] = [
@@ -26,12 +27,25 @@ type TutorialStripProps = {
   title: string;
   tutorials: readonly TutorialPreview[];
   accentOffset: number;
+  destination: '/profile/library/tutorials' | '/projects';
+  accessibilityLabel: string;
 };
 
-function TutorialStrip({ title, tutorials, accentOffset }: TutorialStripProps) {
+function TutorialStrip({
+  title,
+  tutorials,
+  accentOffset,
+  destination,
+  accessibilityLabel,
+}: TutorialStripProps) {
   return (
     <AppCard style={styles.tutorialSection}>
-      <View style={styles.sectionHeader}>
+      <Pressable
+        accessibilityLabel={accessibilityLabel}
+        accessibilityRole="button"
+        hitSlop={{ bottom: 6, top: 6 }}
+        onPress={() => router.push(destination)}
+        style={({ pressed }) => [styles.sectionHeader, pressed && styles.pressed]}>
         <AppText variant="bodySmallStrong">{title}</AppText>
         <View
           accessibilityElementsHidden
@@ -41,7 +55,7 @@ function TutorialStrip({ title, tutorials, accentOffset }: TutorialStripProps) {
             ›
           </AppText>
         </View>
-      </View>
+      </Pressable>
       <ScrollView
         contentContainerStyle={styles.thumbnailList}
         horizontal
@@ -96,11 +110,15 @@ export default function DiscoverLearnRoute() {
         <>
           <TutorialStrip
             accentOffset={0}
+            accessibilityLabel="View tutorials in progress"
+            destination="/projects"
             title="Continue . . ."
             tutorials={continueTutorials}
           />
           <TutorialStrip
             accentOffset={1}
+            accessibilityLabel="View my Tutorials"
+            destination="/profile/library/tutorials"
             title="My Tutorials"
             tutorials={myTutorials}
           />
@@ -141,13 +159,14 @@ const styles = StyleSheet.create({
     paddingBottom: theme.spacing[7],
   },
   tutorialSection: {
-    padding: theme.spacing[4],
+    paddingVertical: theme.spacing[2],
   },
   sectionHeader: {
     alignItems: 'center',
     flexDirection: 'row',
+    minHeight: 32,
     justifyContent: 'space-between',
-    marginBottom: theme.spacing[2],
+    marginBottom: 0,
   },
   chevron: {
     alignItems: 'center',
@@ -172,5 +191,8 @@ const styles = StyleSheet.create({
   emptyMessage: {
     paddingHorizontal: theme.spacing[1],
     paddingVertical: theme.spacing[3],
+  },
+  pressed: {
+    opacity: 0.7,
   },
 });

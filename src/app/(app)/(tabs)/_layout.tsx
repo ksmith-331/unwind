@@ -1,4 +1,5 @@
 import { router, Tabs, type Href } from 'expo-router';
+import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import {
@@ -29,59 +30,68 @@ export default function TabsLayout() {
   const navigationBarHeight = getMainNavigationBarHeight(insets.bottom);
 
   return (
-    <Tabs
-      tabBar={({ state, navigateToTab, insets: tabBarInsets }) => {
-        const activeTab = getMainTab(state.routes[state.index]?.name);
-        const navigateTo = (tab: MainTab) => {
-          const route = state.routes.find((candidate) => candidate.name === tab);
-          if (!route) {
-            return;
-          }
+    <View style={styles.container}>
+      <Tabs
+        tabBar={({ state, navigateToTab, insets: tabBarInsets }) => {
+          const activeTab = getMainTab(state.routes[state.index]?.name);
+          const navigateTo = (tab: MainTab) => {
+            const route = state.routes.find((candidate) => candidate.name === tab);
+            if (!route) {
+              return;
+            }
 
-          if (route.key === state.routes[state.index]?.key) {
-            router.dismissTo(MAIN_TAB_ROOTS[tab]);
-          } else {
-            navigateToTab(route.key);
-          }
-        };
+            if (route.key === state.routes[state.index]?.key) {
+              router.dismissTo(MAIN_TAB_ROOTS[tab]);
+            } else {
+              navigateToTab(route.key);
+            }
+          };
 
-        return (
-          <MainNavigationBar
-            accessibilityRole="tab"
-            activeTab={activeTab}
-            bottomInset={tabBarInsets.bottom}
-            onDiscoverPress={() => navigateTo('discover')}
-            onProfilePress={() => navigateTo('profile')}
-            onProjectsPress={() => navigateTo('projects')}
-          />
-        );
-      }}
-      screenOptions={{
-        headerShown: false,
-        tabBarShowLabel: false,
-        tabBarStyle: { height: navigationBarHeight },
-      }}>
-      <Tabs.Screen
-        name="projects"
-        options={{
-          title: 'Projects',
-          tabBarAccessibilityLabel: 'Projects',
+          return (
+            <MainNavigationBar
+              accessibilityRole="tab"
+              activeTab={activeTab}
+              bottomInset={tabBarInsets.bottom}
+              onDiscoverPress={() => navigateTo('discover')}
+              onProfilePress={() => navigateTo('profile')}
+              onProjectsPress={() => navigateTo('projects')}
+            />
+          );
         }}
-      />
-      <Tabs.Screen
-        name="discover"
-        options={{
-          title: 'Discover',
-          tabBarAccessibilityLabel: 'Discover',
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: 'Profile',
-          tabBarAccessibilityLabel: 'Profile',
-        }}
-      />
-    </Tabs>
+        screenOptions={{
+          headerShown: false,
+          sceneStyle: { backgroundColor: 'transparent' },
+          tabBarShowLabel: false,
+          tabBarStyle: { height: navigationBarHeight },
+        }}>
+        <Tabs.Screen
+          name="projects"
+          options={{
+            title: 'Projects',
+            tabBarAccessibilityLabel: 'Projects',
+          }}
+        />
+        <Tabs.Screen
+          name="discover"
+          options={{
+            title: 'Discover',
+            tabBarAccessibilityLabel: 'Discover',
+          }}
+        />
+        <Tabs.Screen
+          name="profile"
+          options={{
+            title: 'Profile',
+            tabBarAccessibilityLabel: 'Profile',
+          }}
+        />
+      </Tabs>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

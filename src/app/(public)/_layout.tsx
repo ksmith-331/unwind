@@ -1,13 +1,20 @@
-import { Stack } from 'expo-router';
+import { Stack, usePathname } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
-import { AuthBackground } from '@/components/auth-background';
-import { theme } from '@/theme';
+import { AuthDecorations } from '@/components/auth-background';
 
 export default function PublicLayout() {
+  const pathname = usePathname();
+  const decorationVariant =
+    pathname === '/welcome'
+      ? 'welcome'
+      : ['/sign-in', '/register', '/forgot-password'].includes(pathname)
+        ? 'form'
+        : null;
+
   return (
     <View style={styles.container}>
-      <AuthBackground />
+      {decorationVariant ? <AuthDecorations variant={decorationVariant} /> : null}
       <Stack
         screenOptions={{
           contentStyle: { backgroundColor: 'transparent' },
@@ -26,7 +33,6 @@ export default function PublicLayout() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: theme.colors.appBackground,
     flex: 1,
   },
 });

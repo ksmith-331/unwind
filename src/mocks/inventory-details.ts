@@ -1,4 +1,5 @@
 import type { InventoryDetail } from '@/types/inventory-detail';
+import { inventoryMediaById } from '@/mocks/content-media';
 
 export const inventoryDetails: Readonly<Record<string, InventoryDetail>> = {
   'peach-embroidery-thread': {
@@ -18,7 +19,7 @@ export const inventoryDetails: Readonly<Record<string, InventoryDetail>> = {
     restockPreview: 'Find a store near me . . .',
     restockDetails:
       'This restock reminder will help you find stores that may carry this item. Store search is not available yet.',
-    primaryMedia: require('../../assets/images/terracotta-floss-dmc-922.png'),
-    secondaryMedia: require('../../assets/images/terracotta-floss-dmc-922-detail.jpg'),
+    primaryMedia: inventoryMediaById['peach-embroidery-thread'].primary,
+    secondaryMedia: inventoryMediaById['peach-embroidery-thread'].secondary,
   },
 };

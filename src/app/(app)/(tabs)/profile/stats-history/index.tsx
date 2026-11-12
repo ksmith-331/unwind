@@ -25,15 +25,6 @@ export default function ProfileStatsRoute() {
 
   return (
     <View style={styles.page}>
-      <View
-        accessibilityElementsHidden
-        importantForAccessibility="no-hide-descendants"
-        pointerEvents="none"
-        style={styles.decorations}>
-        <View style={[styles.ellipse, styles.yellowEllipse]} />
-        <View style={[styles.ellipse, styles.orangeEllipse]} />
-        <View style={[styles.ellipse, styles.blueEllipse]} />
-      </View>
       <ScrollView
         contentContainerStyle={styles.content}
         showsVerticalScrollIndicator={false}>
@@ -69,32 +60,6 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'relative',
   },
-  decorations: {
-    ...StyleSheet.absoluteFill,
-    overflow: 'hidden',
-  },
-  ellipse: {
-    borderRadius: 999,
-    height: '45%',
-    opacity: 0.42,
-    position: 'absolute',
-    width: '86%',
-  },
-  yellowEllipse: {
-    backgroundColor: theme.colors.highlight,
-    right: '-38%',
-    top: 0,
-  },
-  orangeEllipse: {
-    backgroundColor: theme.colors.primaryAction,
-    left: '-45%',
-    top: '29%',
-  },
-  blueEllipse: {
-    backgroundColor: theme.colors.secondaryAction,
-    right: '-44%',
-    top: '65%',
-  },
   content: {
     alignItems: 'center',
     flexGrow: 1,
@@ -108,32 +73,24 @@ const styles = StyleSheet.create({
     width: '82%',
   },
   longestStreak: {
+    ...theme.shadows.neutral,
     alignItems: 'center',
     backgroundColor: theme.colors.surface,
     borderRadius: theme.radii.medium,
-    elevation: 3,
     marginBottom: theme.spacing[6],
     paddingHorizontal: theme.spacing[2],
     paddingVertical: theme.spacing[2],
-    shadowColor: theme.colors.overlay,
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
   },
   sectionHeading: {
+    ...theme.shadows.neutral,
     alignItems: 'center',
     backgroundColor: theme.colors.surface,
     borderBottomColor: theme.colors.navigation,
     borderBottomWidth: 2,
     borderRadius: theme.radii.medium,
-    elevation: 3,
     marginBottom: theme.spacing[4],
     paddingHorizontal: theme.spacing[6],
     paddingVertical: theme.spacing[2],
-    shadowColor: theme.colors.overlay,
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
     width: '56%',
   },
   statsList: {

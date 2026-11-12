@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react';
-import { Animated, Easing, Image, StyleSheet, View } from 'react-native';
+import { Animated, Easing, StyleSheet, View } from 'react-native';
 import { router, Stack, useFocusEffect, type Href } from 'expo-router';
 
 import { FloatingActionTray } from '@/components/floating-action-tray';
@@ -7,6 +7,7 @@ import { Screen } from '@/components/screen';
 import { SubTabs, type SubTabDefinition } from '@/components/sub-tabs';
 import { useReducedMotion } from '@/hooks/use-reduced-motion';
 import { useActiveSubTab } from '@/hooks/use-active-subtab';
+import { useSubTabSwipe } from '@/hooks/use-subtab-swipe';
 import { theme } from '@/theme';
 
 const DISCOVER_TABS: readonly [SubTabDefinition, SubTabDefinition] = [
@@ -35,7 +36,6 @@ export function DiscoverShell() {
     { ...DISCOVER_TABS[0], active: !isLearnActive },
     { ...DISCOVER_TABS[1], active: isLearnActive },
   ];
-
   useFocusEffect(
     useCallback(
       () => () => {
@@ -79,6 +79,7 @@ export function DiscoverShell() {
     },
     [contentOpacity, reduceMotion],
   );
+  const swipeResponder = useSubTabSwipe(tabs, navigateToTab);
 
   const showActiveContent = useCallback(() => {
     if (reduceMotion) {
@@ -99,17 +100,11 @@ export function DiscoverShell() {
   }, [contentOpacity, reduceMotion]);
 
   return (
-    <Screen edges={['top']} contentContainerStyle={styles.screenContent}>
-      <View style={styles.page}>
-        <Image
-          accessible={false}
-          accessibilityElementsHidden
-          importantForAccessibility="no-hide-descendants"
-          pointerEvents="none"
-          resizeMode="repeat"
-          source={require('../../assets/images/brand/background-texture.png')}
-          style={styles.backgroundTexture}
-        />
+    <Screen
+      edges={['top']}
+      contentContainerStyle={styles.screenContent}
+      style={styles.transparentScreen}>
+      <View {...swipeResponder.panHandlers} style={styles.page}>
         <SubTabs
           onNavigate={navigateToTab}
           tabs={tabs}
@@ -157,17 +152,15 @@ export function DiscoverShell() {
 }
 
 const styles = StyleSheet.create({
+  transparentScreen: {
+    backgroundColor: 'transparent',
+  },
   screenContent: {
     flex: 1,
     paddingHorizontal: 0,
   },
   page: {
-    backgroundColor: theme.colors.appBackground,
     flex: 1,
-  },
-  backgroundTexture: {
-    ...StyleSheet.absoluteFill,
-    opacity: 0.2,
   },
   contentRegion: {
     flex: 1,

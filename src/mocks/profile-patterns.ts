@@ -1,4 +1,5 @@
 import type { PatternPreview } from '@/types/pattern-preview';
+import { getPatternMedia } from '@/mocks/content-media';
 
 // Development-only examples; these are not fetched or persisted.
 export const profilePatterns = [
@@ -6,7 +7,7 @@ export const profilePatterns = [
     id: 'profile-simple-poinsettia',
     title: 'Simple Poinsettia',
     difficulty: 3,
-    thumbnail: 'placeholder',
+    thumbnail: getPatternMedia('profile-simple-poinsettia'),
   },
   {
     id: 'profile-wave-diagonal',

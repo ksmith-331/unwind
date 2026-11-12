@@ -17,6 +17,7 @@ export function PatternThumbnail({ pattern, accent }: PatternThumbnailProps) {
         params: { patternId: pattern.id },
       }}
       title={pattern.title}
+      thumbnail={pattern.thumbnail}
     />
   );
 }

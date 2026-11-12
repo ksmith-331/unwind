@@ -16,12 +16,6 @@ export type PatternDetail = {
   aggregateRating: number;
   reviewCount: number;
   media: PatternPreview['thumbnail'] | number;
-  mediaCrop?: {
-    width: number;
-    height: number;
-    left: number;
-    top: number;
-  };
   status: PatternDetailStatus;
   isInToDo: boolean;
   isOwnedByCurrentUser: boolean;

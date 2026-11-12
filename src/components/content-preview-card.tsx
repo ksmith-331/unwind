@@ -1,8 +1,13 @@
 import type { ReactNode } from 'react';
 import { router, type Href } from 'expo-router';
+import { Image } from 'expo-image';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { AppText } from '@/components/app-text';
+import {
+  CONTENT_THUMBNAIL_CONTENT_FIT,
+  type ContentMediaSource,
+} from '@/types/content-media';
 import type { DifficultyLevel } from '@/types/pattern-preview';
 import { theme } from '@/theme';
 import type { PreviewAccent } from '@/utils/preview-accent';
@@ -12,6 +17,7 @@ type ContentPreviewCardProps = {
   difficulty: DifficultyLevel;
   accent: PreviewAccent;
   href: Href;
+  thumbnail: ContentMediaSource;
   accessibilityLabel?: string;
   accessory?: ReactNode;
 };
@@ -21,6 +27,7 @@ export function ContentPreviewCard({
   difficulty,
   accent,
   href,
+  thumbnail,
   accessibilityLabel,
   accessory,
 }: ContentPreviewCardProps) {
@@ -37,11 +44,21 @@ export function ContentPreviewCard({
         importantForAccessibility="no-hide-descendants"
         pointerEvents="none"
         style={styles.thumbnail}>
-        <View style={styles.motif}>
-          <View style={[styles.thread, { backgroundColor: theme.colors[accent] }]} />
-          <View style={[styles.thread, styles.blueThread]} />
-          <View style={[styles.thread, styles.yellowThread]} />
-        </View>
+        {thumbnail === 'placeholder' ? (
+          <View style={styles.motif}>
+            <View style={[styles.thread, { backgroundColor: theme.colors[accent] }]} />
+            <View style={[styles.thread, styles.blueThread]} />
+            <View style={[styles.thread, styles.yellowThread]} />
+          </View>
+        ) : (
+          <Image
+            accessible={false}
+            contentFit={CONTENT_THUMBNAIL_CONTENT_FIT}
+            contentPosition="center"
+            source={thumbnail}
+            style={StyleSheet.absoluteFill}
+          />
+        )}
       </View>
       <View style={styles.information}>
         <AppText
@@ -98,6 +115,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     overflow: 'hidden',
     width: '31%',
+    position: 'relative',
   },
   motif: {
     alignItems: 'center',

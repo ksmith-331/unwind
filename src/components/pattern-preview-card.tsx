@@ -17,6 +17,7 @@ export function PatternPreviewCard({ pattern, accent }: PatternPreviewCardProps)
         pathname: '/pattern/[patternId]',
         params: { patternId: pattern.id },
       }}
+      thumbnail={pattern.thumbnail}
       title={pattern.title}
     />
   );

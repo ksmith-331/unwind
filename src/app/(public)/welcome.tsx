@@ -4,7 +4,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { AppButton } from '@/components/app-button';
 import { AppText } from '@/components/app-text';
-import { AuthDecorations } from '@/components/auth-background';
 import { AuthBrandFooter } from '@/components/auth-brand-footer';
 import { Screen } from '@/components/screen';
 import { theme } from '@/theme';
@@ -25,7 +24,6 @@ export default function WelcomeRoute() {
       contentContainerStyle={styles.screenContent}
       style={styles.transparentScreen}>
       <View style={styles.page}>
-        <AuthDecorations variant="welcome" />
         <ScrollView
           contentContainerStyle={styles.content}
           style={styles.scrollView}
@@ -79,7 +77,6 @@ const styles = StyleSheet.create({
   },
   page: {
     flex: 1,
-    overflow: 'hidden',
   },
   scrollView: {
     flex: 1,
@@ -93,19 +90,15 @@ const styles = StyleSheet.create({
     maxWidth: '110%',
   },
   intro: {
+    ...theme.shadows.neutral,
     alignItems: 'center',
     backgroundColor: theme.colors.navigation,
     borderRadius: theme.radii.medium,
-    elevation: 3,
     justifyContent: 'center',
     maxWidth: 340,
     minHeight: 52,
     marginTop: theme.spacing[9],
     paddingHorizontal: theme.spacing[4],
-    shadowColor: theme.colors.overlay,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
     width: '78%',
   },
   introText: {
@@ -120,14 +113,10 @@ const styles = StyleSheet.create({
     width: '70%',
   },
   actionButton: {
-    elevation: 3,
+    ...theme.shadows.neutral,
     flex: 1,
     minHeight: 48,
     paddingHorizontal: theme.spacing[2],
-    shadowColor: theme.colors.overlay,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
   },
   signInButton: {
     backgroundColor: theme.colors.secondaryAction,

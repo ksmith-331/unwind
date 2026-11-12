@@ -16,6 +16,7 @@ export function TutorialPreviewCard({ tutorial, accent }: TutorialPreviewCardPro
         pathname: '/tutorial/[tutorialId]',
         params: { tutorialId: tutorial.id },
       }}
+      thumbnail={tutorial.thumbnail}
       title={tutorial.title}
     />
   );

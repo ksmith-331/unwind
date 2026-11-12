@@ -1,29 +1,25 @@
 import type { ContinueTutorialPreview, TutorialPreview } from '@/types/tutorial-preview';
+import { getTutorialMedia } from '@/mocks/content-media';
+import {
+  guideToAlphaPatterns,
+  tutorialDetails,
+} from '@/mocks/tutorial-details';
 
 // Development-only examples; these are not associated with a real account.
-export const continueTutorials = [
-  {
-    id: 'continue-tapestry-basics',
-    title: 'Tapestry Basics',
-    difficulty: 2,
-    thumbnail: 'placeholder',
-    progress: 35,
-  },
-  {
-    id: 'continue-amigurumi-shaping',
-    title: 'Amigurumi Shaping',
-    difficulty: 3,
-    thumbnail: 'placeholder',
-    progress: 68,
-  },
-  {
-    id: 'continue-colorwork-motifs',
-    title: 'Colorwork Motifs',
-    difficulty: 4,
-    thumbnail: 'placeholder',
-    progress: 12,
-  },
-] satisfies readonly ContinueTutorialPreview[];
+export const continueTutorials = Object.values(tutorialDetails).flatMap(
+  (tutorial) =>
+    tutorial.status === 'in-progress' && tutorial.percentProgress !== undefined
+      ? [
+          {
+            id: tutorial.tutorialId,
+            title: tutorial.title,
+            difficulty: tutorial.difficulty,
+            thumbnail: tutorial.media,
+            progress: tutorial.percentProgress,
+          },
+        ]
+      : [],
+) satisfies readonly ContinueTutorialPreview[];
 
 export const myTutorials = [
   {
@@ -44,20 +40,26 @@ export const myTutorials = [
     difficulty: 2,
     thumbnail: 'placeholder',
   },
+  {
+    id: 'profile-crochet-leaf-border',
+    title: 'Crochet Leaf Border',
+    difficulty: 2,
+    thumbnail: getTutorialMedia('profile-crochet-leaf-border'),
+  },
 ] satisfies readonly TutorialPreview[];
 
 export const communityTutorials = [
   {
-    id: 'community-guide-alpha-patterns',
-    title: 'Guide to Alpha Patterns',
-    difficulty: 2,
-    thumbnail: 'placeholder',
+    id: guideToAlphaPatterns.tutorialId,
+    title: guideToAlphaPatterns.title,
+    difficulty: guideToAlphaPatterns.difficulty,
+    thumbnail: guideToAlphaPatterns.media,
   },
   {
     id: 'community-start-ending-loops',
     title: 'Start + Ending Loops',
     difficulty: 2,
-    thumbnail: 'placeholder',
+    thumbnail: getTutorialMedia('community-start-ending-loops'),
   },
   {
     id: 'community-crochet-crop-top',

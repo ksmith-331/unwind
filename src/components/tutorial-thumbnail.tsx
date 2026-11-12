@@ -16,6 +16,7 @@ export function TutorialThumbnail({ tutorial, accent }: TutorialThumbnailProps) 
         params: { tutorialId: tutorial.id },
       }}
       title={tutorial.title}
+      thumbnail={tutorial.thumbnail}
     />
   );
 }

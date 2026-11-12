@@ -88,16 +88,12 @@ const styles = StyleSheet.create({
     zIndex: 20,
   },
   fab: {
+    ...theme.shadows.neutral,
     alignItems: 'center',
     backgroundColor: theme.colors.secondaryAction,
     borderRadius: theme.radii.pill,
-    elevation: 3,
     height: 52,
     justifyContent: 'center',
-    shadowColor: theme.colors.overlay,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
     width: 52,
   },
   fabLabel: {

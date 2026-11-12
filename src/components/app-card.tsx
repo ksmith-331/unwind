@@ -32,6 +32,7 @@ export function AppCard({ children, onPress, accessibilityLabel, style }: AppCar
 
 const styles = StyleSheet.create({
   card: {
+    ...theme.shadows.neutral,
     padding: theme.spacing[5],
     backgroundColor: theme.colors.surface,
     borderColor: theme.colors.border,

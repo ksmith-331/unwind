@@ -59,7 +59,15 @@ export const radii = {
   pill: 999,
 } as const;
 
-export const shadows = {} as const;
+export const shadows = {
+  neutral: {
+    elevation: 6,
+    shadowColor: brandColors.overlay,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.32,
+    shadowRadius: 5,
+  },
+} as const;
 
 export const theme = {
   brandColors,

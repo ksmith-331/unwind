@@ -3,6 +3,7 @@ import { patternHeartsReviews } from '@/mocks/pattern-hearts-reviews';
 import { patternChevronReviews } from '@/mocks/pattern-chevron-reviews';
 import { patternPoinsettiaReviews } from '@/mocks/pattern-poinsettia-reviews';
 import { patternStuffedBunnyReviews } from '@/mocks/pattern-stuffed-bunny-reviews';
+import { getPatternMedia } from '@/mocks/content-media';
 
 // Development-only detail data; this is not fetched or persisted.
 export const patternDetails: Record<string, PatternDetail> = {
@@ -16,13 +17,7 @@ export const patternDetails: Record<string, PatternDetail> = {
     reviews: patternPoinsettiaReviews,
     aggregateRating: 4.8,
     reviewCount: 74,
-    media: require('../../assets/images/simple-poinsettia-pattern-preview.jpg'),
-    mediaCrop: {
-      width: 145.68,
-      height: 185.64,
-      left: -47.02,
-      top: -8.68,
-    },
+    media: getPatternMedia('profile-simple-poinsettia'),
     status: 'not-started',
     isInToDo: false,
     isOwnedByCurrentUser: true,
@@ -39,7 +34,7 @@ export const patternDetails: Record<string, PatternDetail> = {
     reviews: patternHeartsReviews,
     aggregateRating: 4.7,
     reviewCount: 57,
-    media: 'placeholder',
+    media: getPatternMedia('pattern-hearts'),
     status: 'not-started',
     isInToDo: true,
     isOwnedByCurrentUser: false,
@@ -55,7 +50,7 @@ export const patternDetails: Record<string, PatternDetail> = {
     reviews: patternChevronReviews,
     aggregateRating: 4,
     reviewCount: 200,
-    media: require('../../assets/images/chevron-pattern-preview.png'),
+    media: getPatternMedia('pattern-harbor-chevron'),
     status: 'in-progress',
     isInToDo: false,
     isOwnedByCurrentUser: false,
@@ -72,7 +67,7 @@ export const patternDetails: Record<string, PatternDetail> = {
     reviews: patternStuffedBunnyReviews,
     aggregateRating: 4.5,
     reviewCount: 36,
-    media: 'placeholder',
+    media: getPatternMedia('community-stuffed-bunny'),
     status: 'not-started',
     isInToDo: false,
     isOwnedByCurrentUser: false,

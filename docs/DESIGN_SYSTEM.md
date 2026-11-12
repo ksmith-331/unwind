@@ -57,6 +57,16 @@ Ordinary textured app screens use
 never stretched. Opacity belongs only to the texture layer and must not fade
 foreground content.
 
+The status area uses the actual screen background: navy SubTabs surfaces
+continue behind the system status icons, while textured screens continue their
+woven/decorative treatment behind the status area. Full-window decorative
+layers may extend behind status areas and beyond foreground bounds; keep
+foreground content within its normal safe-area insets. The root app shell owns
+one mounted textile texture beneath public auth, Landing, and authenticated
+routes, so it remains stable through those route transitions. Profile Home,
+Inventory, Patterns, Tutorials, Stats, and History are textured; Settings and
+intentionally plain/light screens paint their own untextured surfaces.
+
 Do not use the texture on Pattern detail, Tutorial detail, Inventory detail,
 tracking workspaces, or editing workspaces unless a future specific design
 explicitly overrides this rule.
@@ -64,12 +74,14 @@ explicitly overrides this rule.
 ## Authentication surfaces
 
 The woven texture persists across the public Welcome, Sign In, Register, and
-Forgot Password flow. Welcome and auth forms use independent, decorative
-brand-color shapes; keep decoration out of accessibility traversal. The UnWind
-logo stays in a consistent fixed bottom region across these surfaces. Auth
-forms use visible labels above inputs, white input/card surfaces, navy text,
-and shared Manrope typography. Use keyboard-aware scrolling on forms so
-focused fields and actions remain reachable on small screens.
+Forgot Password flow and remains mounted when moving from auth into Landing.
+Welcome and auth forms use independent, full-window decorative brand-color
+shapes; keep decoration out of accessibility traversal and do not clip it to
+safe-area content. The UnWind logo stays in a consistent fixed bottom region
+across these surfaces. Auth forms use visible labels above inputs, white
+input/card surfaces, navy text, and shared Manrope typography. Use
+keyboard-aware scrolling on forms so focused fields and actions remain
+reachable on small screens.
 
 Secondary auth navigation uses small, underlined, left-aligned text links with
 comfortable touch targets. The development-only Sign In bypass is visually
@@ -84,6 +96,9 @@ The bar has three equal-width sections in Projects, Discover, Profile order.
 - Active Discover: Orange fill and black icon.
 - Active Profile: Yellow fill and black icon.
 - Landing uses the same bar with no active section.
+- Each active segment's fill continues through its own share of the actual
+  bottom safe-area inset; inactive segments remain navy through that inset.
+- Keep icons centered in the 48 px visible interaction region above the inset.
 
 ## SubTabs and persistent shells
 
@@ -98,6 +113,17 @@ Groups:
 - Discover: Create / Learn
 - Profile Library: Inventory / Patterns / Tutorials
 - Profile Stats + History: Stats / History
+
+Active SubTab labels retain their semibold weight; inactive labels are regular
+weight. The main navigation bar's visible colored body is compact (48 px);
+device bottom safe-area inset is additional and remains separate.
+
+Use the shared neutral elevation treatment for raised neutral surfaces:
+`shadowOpacity: 0.32`, `shadowRadius: 5`, and Android `elevation: 6`, with a
+black shadow and a 3 px vertical offset. It should remain soft and visible
+against the woven background. Components with intentional solid colored
+offset shadows retain those shadows and do not receive the neutral treatment
+as a second shadow.
 
 ## SearchInput
 
@@ -124,6 +150,17 @@ by current visible list position, starting at index zero:
 Recalculate the sequence after search or filtering so the first visible result
 always uses Orange. Never store this accent on Pattern, Tutorial, HistoryItem,
 or other domain data.
+
+## Media and crop behavior
+
+Preserve original image sources and meaningful source composition; never
+stretch or distort them. Pattern and Tutorial thumbnails use one centered
+`cover` fit in their viewport, preserving source aspect ratio and cropping
+only as needed to fill the container. Avoid additional scaling or crop logic
+in thumbnail presentations. Detail presentation remains unchanged. The same
+stable content ID uses the same underlying media across detail, list, compact,
+project, Discover, Profile, and History appearances. Future user-defined
+focal-point/crop controls are deferred.
 
 ## Completion indicators
 

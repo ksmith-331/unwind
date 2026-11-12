@@ -1,4 +1,5 @@
 import type { TutorialPreview } from '@/types/tutorial-preview';
+import { getTutorialMedia } from '@/mocks/content-media';
 
 // Development-only examples; these are not associated with a real account.
 export const profileTutorials = [
@@ -6,7 +7,7 @@ export const profileTutorials = [
     id: 'profile-crochet-leaf-border',
     title: 'Crochet Leaf Border',
     difficulty: 2,
-    thumbnail: 'placeholder',
+    thumbnail: getTutorialMedia('profile-crochet-leaf-border'),
   },
   {
     id: 'profile-woven-wall-hanging',

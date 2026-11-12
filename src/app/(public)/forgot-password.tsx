@@ -1,10 +1,8 @@
 import { router } from 'expo-router';
-import { ScrollView, StyleSheet, View } from 'react-native';
-
-import { AppBackHeader } from '@/components/app-back-header';
+import { SymbolView } from 'expo-symbols';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { AppText } from '@/components/app-text';
 import { AuthBrandFooter } from '@/components/auth-brand-footer';
-import { AuthDecorations } from '@/components/auth-background';
 import { Screen } from '@/components/screen';
 import { theme } from '@/theme';
 
@@ -15,16 +13,23 @@ export default function ForgotPasswordRoute() {
       contentContainerStyle={styles.screenContent}
       style={styles.transparentScreen}>
       <View style={styles.page}>
-        <AuthDecorations variant="form" />
+        <Pressable
+          accessibilityLabel="Back to Sign In"
+          accessibilityRole="button"
+          onPress={() => router.replace('/sign-in')}
+          style={({ pressed }) => [styles.backButton, pressed && styles.pressed]}>
+          <SymbolView
+            accessibilityElementsHidden
+            importantForAccessibility="no-hide-descendants"
+            name={{ ios: 'chevron.left', android: 'arrow_back', web: 'arrow_back' }}
+            size={22}
+            tintColor={theme.colors.navigation}
+          />
+        </Pressable>
         <ScrollView
           contentContainerStyle={styles.content}
           style={styles.scrollView}
           showsVerticalScrollIndicator={false}>
-          <AppBackHeader
-            backAccessibilityLabel="Back to Sign In"
-            onBack={() => router.replace('/sign-in')}
-            title="Forgot Password"
-          />
           <View style={styles.message}>
             <AppText variant="body">
               Account recovery is not connected yet. You can return to Sign In.
@@ -55,22 +60,30 @@ const styles = StyleSheet.create({
   content: {
     flexGrow: 1,
     paddingHorizontal: theme.spacing[5],
-    paddingTop: theme.spacing[5],
+    paddingTop: theme.spacing[7] * 2,
   },
   message: {
+    ...theme.shadows.neutral,
     alignSelf: 'center',
     backgroundColor: theme.colors.surface,
     borderColor: '#D9D9D9',
     borderRadius: theme.radii.small,
     borderWidth: 1,
-    elevation: 3,
-    marginTop: theme.spacing[7],
     maxWidth: 480,
     padding: theme.spacing[5],
-    shadowColor: theme.colors.overlay,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
     width: '100%',
+  },
+  backButton: {
+    alignItems: 'center',
+    height: 48,
+    justifyContent: 'center',
+    left: theme.spacing[5],
+    position: 'absolute',
+    top: theme.spacing[2],
+    width: 48,
+    zIndex: 1,
+  },
+  pressed: {
+    opacity: 0.7,
   },
 });

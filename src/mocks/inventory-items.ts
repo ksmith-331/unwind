@@ -1,4 +1,5 @@
 import type { InventoryPreview } from '@/types/inventory-preview';
+import { inventoryMediaById } from '@/mocks/content-media';
 
 // Development-only examples; these are not fetched or persisted.
 export const inventoryItems = [
@@ -47,7 +48,7 @@ export const inventoryItems = [
     name: 'Terracotta Floss - DMC 922',
     thumbnail: {
       state: 'image',
-      source: require('../../assets/images/terracotta-floss-dmc-922.png'),
+      source: inventoryMediaById['peach-embroidery-thread'].thumbnail,
     },
   },
   {

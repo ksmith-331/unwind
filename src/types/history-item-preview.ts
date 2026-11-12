@@ -1,4 +1,5 @@
-import type { DifficultyLevel, PatternPreview } from '@/types/pattern-preview';
+import type { DifficultyLevel } from '@/types/pattern-preview';
+import type { ContentMediaSource } from '@/types/content-media';
 
 export type HistoryItemKind = 'pattern' | 'tutorial';
 
@@ -9,5 +10,5 @@ export type HistoryItemPreview = {
   title: string;
   difficulty: DifficultyLevel;
   isComplete: boolean;
-  thumbnail: PatternPreview['thumbnail'];
+  thumbnail: ContentMediaSource;
 };

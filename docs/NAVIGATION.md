@@ -15,6 +15,9 @@ This document is authoritative for route hierarchy and navigation behavior.
   Verify Email and New User Setup remain unconnected placeholders.
 - A development-only shortcut on Sign In may replace the route with `/landing`.
   This is navigation-only and is not a valid production authentication path.
+- The root app shell keeps one woven texture mounted beneath public auth,
+  Landing, and authenticated routes; intentionally plain screens cover it
+  with their own light surface.
 - In the future, a root/session boundary resolves loading, authenticated, or
   unauthenticated status before allowing navigation into `(app)` or `(public)`.
   Real authenticated users enter Landing; unauthenticated users enter Welcome.
@@ -51,6 +54,24 @@ Pressing the already-active main tab returns to that tab's root:
 - **Profile Stats + History:** Stats, History
 
 Subtabs are sibling views within their persistent main-section shell.
+SubTabs support both label taps and horizontal swipes: swipe left advances to
+the next tab, swipe right returns to the previous tab, and neither end wraps.
+Vertical scrolling and ordinary control taps remain unaffected.
+
+Projects In Progress and To Do each support local title search; changing the
+query filters the current list and does not change routing. Opening and
+dismissing a detail overlay preserves the originating query.
+
+Discover section controls navigate independently of their individual
+pressable previews:
+
+- My Patterns -> `/profile/library/patterns`
+- My Tutorials -> `/profile/library/tutorials`
+- Continue -> `/projects` (In Progress)
+
+Continue currently includes Guide to Alpha Patterns (`community-guide-alpha-patterns`),
+an in-progress Tutorial at 71%. A future Continue destination may filter
+In Progress to Tutorials; the current destination does not apply that filter.
 
 ## Profile destinations
 

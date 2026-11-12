@@ -68,12 +68,9 @@ export function InventoryTile({ item, size, onPress }: InventoryTileProps) {
 
 const styles = StyleSheet.create({
   shadow: {
+    ...theme.shadows.neutral,
+    backgroundColor: theme.colors.surface,
     borderRadius: theme.radii.medium,
-    elevation: 3,
-    shadowColor: theme.colors.overlay,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.22,
-    shadowRadius: 3,
   },
   tile: {
     borderRadius: theme.radii.medium,

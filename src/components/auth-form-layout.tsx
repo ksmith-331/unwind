@@ -12,7 +12,6 @@ import { SymbolView } from 'expo-symbols';
 
 import { AppText } from '@/components/app-text';
 import { AuthBrandFooter } from '@/components/auth-brand-footer';
-import { AuthDecorations } from '@/components/auth-background';
 import { Screen } from '@/components/screen';
 import { theme } from '@/theme';
 
@@ -39,7 +38,6 @@ export function AuthFormLayout({
       contentContainerStyle={styles.screenContent}
       style={styles.transparentScreen}>
       <View style={styles.page}>
-        <AuthDecorations variant="form" />
         <Pressable
           accessibilityLabel={backAccessibilityLabel}
           accessibilityRole="button"
@@ -162,17 +160,13 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   titleCard: {
+    ...theme.shadows.neutral,
     alignItems: 'center',
     backgroundColor: theme.colors.navigation,
     borderRadius: theme.radii.medium,
-    elevation: 3,
     justifyContent: 'center',
     minHeight: 52,
     paddingHorizontal: theme.spacing[4],
-    shadowColor: theme.colors.overlay,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
     maxWidth: 480,
     width: '100%',
   },
@@ -180,19 +174,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   formCard: {
+    ...theme.shadows.neutral,
     backgroundColor: theme.colors.surface,
     borderColor: '#D9D9D9',
     borderRadius: theme.radii.small,
     borderWidth: 1,
-    elevation: 3,
     gap: theme.spacing[5],
     maxWidth: 480,
     marginTop: theme.spacing[8],
     padding: theme.spacing[5],
-    shadowColor: theme.colors.overlay,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
     width: '100%',
   },
   pressed: {

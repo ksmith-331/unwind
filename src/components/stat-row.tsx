@@ -27,18 +27,14 @@ export function StatRow({ label, value, accessibilityLabel }: StatRowProps) {
 
 const styles = StyleSheet.create({
   row: {
+    ...theme.shadows.neutral,
     alignItems: 'center',
     backgroundColor: theme.colors.surface,
     borderRadius: theme.radii.medium,
-    elevation: 3,
     flexDirection: 'row',
     justifyContent: 'space-between',
     minHeight: 36,
     paddingHorizontal: theme.spacing[2],
-    shadowColor: theme.colors.overlay,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
     width: '100%',
   },
   label: {

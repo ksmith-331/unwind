@@ -13,6 +13,7 @@ import {
 import { AppText } from '@/components/app-text';
 import { RatingStars } from '@/components/rating-stars';
 import type { DifficultyLevel } from '@/types/pattern-preview';
+import type { ContentMediaSource } from '@/types/content-media';
 import type { PublicationStatus } from '@/types/publication-status';
 import type { Review } from '@/types/review';
 import { theme } from '@/theme';
@@ -26,13 +27,7 @@ type ContentDetailPresentationProps = {
     reviews: readonly Review[];
     aggregateRating: number;
     reviewCount: number;
-    media: 'placeholder' | number;
-    mediaCrop?: {
-      width: number;
-      height: number;
-      left: number;
-      top: number;
-    };
+    media: ContentMediaSource;
     isOwnedByCurrentUser: boolean;
     type?: string;
     percentProgress?: number;
@@ -108,20 +103,7 @@ export function ContentDetailPresentation({
             importantForAccessibility="no-hide-descendants"
             resizeMode="cover"
             source={detail.media}
-            style={[
-              styles.previewImage,
-              detail.mediaCrop
-                ? [
-                    styles.croppedPreviewImage,
-                    {
-                      height: `${detail.mediaCrop.height}%`,
-                      left: `${detail.mediaCrop.left}%`,
-                      top: `${detail.mediaCrop.top}%`,
-                      width: `${detail.mediaCrop.width}%`,
-                    },
-                  ]
-                : null,
-            ]}
+            style={styles.previewImage}
           />
         )}
         {contentType === 'Pattern' &&
@@ -322,9 +304,6 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
-  croppedPreviewImage: {
-    position: 'absolute',
-  },
   metadataRow: {
     alignItems: 'flex-start',
     flexDirection: 'row',
@@ -401,19 +380,15 @@ const styles = StyleSheet.create({
     width: 12,
   },
   previewRow: {
+    ...theme.shadows.neutral,
     alignItems: 'center',
     backgroundColor: theme.colors.surface,
     borderRadius: theme.radii.medium,
-    elevation: 3,
     flexDirection: 'row',
     justifyContent: 'space-between',
     minHeight: 68,
     paddingHorizontal: theme.spacing[3],
     paddingVertical: theme.spacing[2],
-    shadowColor: theme.colors.overlay,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
   },
   tutorialDescriptionRow: {
     minHeight: 72,

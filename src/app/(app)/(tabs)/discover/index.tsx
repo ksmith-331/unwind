@@ -1,5 +1,6 @@
+import { router } from 'expo-router';
 import { useMemo, useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { AppCard } from '@/components/app-card';
 import { AppText } from '@/components/app-text';
@@ -53,7 +54,12 @@ export default function DiscoverCreateRoute() {
 
       {!isSearching && (
         <AppCard style={styles.myPatternsCard}>
-          <View style={styles.myPatternsHeader}>
+          <Pressable
+            accessibilityLabel="View my Patterns"
+            accessibilityRole="button"
+            hitSlop={{ bottom: 6, top: 6 }}
+            onPress={() => router.push('/profile/library/patterns')}
+            style={({ pressed }) => [styles.myPatternsHeader, pressed && styles.pressed]}>
             <AppText variant="bodySmallStrong">My Patterns</AppText>
             <View
               accessibilityElementsHidden
@@ -63,7 +69,7 @@ export default function DiscoverCreateRoute() {
                 ›
               </AppText>
             </View>
-          </View>
+          </Pressable>
           <ScrollView
             contentContainerStyle={styles.thumbnailList}
             horizontal
@@ -113,13 +119,14 @@ const styles = StyleSheet.create({
     paddingBottom: theme.spacing[7],
   },
   myPatternsCard: {
-    padding: theme.spacing[4],
+    paddingVertical: theme.spacing[2],
   },
   myPatternsHeader: {
     alignItems: 'center',
     flexDirection: 'row',
+    minHeight: 32,
     justifyContent: 'space-between',
-    marginBottom: theme.spacing[2],
+    marginBottom: 0,
   },
   chevron: {
     alignItems: 'center',
@@ -144,5 +151,8 @@ const styles = StyleSheet.create({
   emptyMessage: {
     paddingHorizontal: theme.spacing[1],
     paddingVertical: theme.spacing[3],
+  },
+  pressed: {
+    opacity: 0.7,
   },
 });

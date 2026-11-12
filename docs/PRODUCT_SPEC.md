@@ -38,10 +38,17 @@ crafting community.
 
 Projects contains the user's patterns and tutorials in two views:
 
-- **In Progress** contains active work and displays its progress.
+- **In Progress** contains both in-progress Patterns and Tutorials and
+  displays their progress.
 - **To Do** contains bookmarked content that has not been started. It does
   not show artificial 0% progress. Starting an item conceptually moves it to
   In Progress.
+- Both views support case-insensitive local search by title. Clearing the
+  query restores the full list; no matches show `No projects found.` Search
+  does not alter routing.
+- Guide to Alpha Patterns (`community-guide-alpha-patterns`) currently
+  represents an in-progress Tutorial at 71% and appears in Projects In
+  Progress.
 
 Pattern actions depend on ownership and current state. A pattern can be viewed
 with its description and reviews, started or continued in tracking, edited
@@ -108,7 +115,7 @@ In Progress.
 ### Create
 
 - Shows community patterns and a separate **My Patterns** subsection for
-  patterns created by the current user.
+  Patterns created by the current user. My Patterns links to Profile Patterns.
 - With an empty search query, shows My Patterns, a neutral **Patterns**
   heading, and the combined community and personal pattern results.
 - During active search, hides My Patterns and the Patterns heading and shows
@@ -123,9 +130,14 @@ In Progress.
 ### Learn
 
 - Shows community tutorials, **Continue**, and **My Tutorials** subsections.
-- **Continue** means tutorials currently in progress.
-- **My Tutorials** means tutorials created by the current user; it is not an
+- **Continue** means Tutorials currently in progress for the current user.
+  Guide to Alpha Patterns (`community-guide-alpha-patterns`) is currently
+  included at 71%. Continue links to Projects In Progress; a future version
+  may filter that destination to Tutorials, but the current destination does
+  not apply a filter.
+- **My Tutorials** means Tutorials created by the current user; it is not an
   in-progress list.
+- My Tutorials links to Profile Tutorials.
 - With an empty search query, shows Continue, My Tutorials, a neutral
   **Tutorials** heading, and the combined community and personal tutorial
   results. Continue tutorials are not included in the search result dataset.
@@ -143,6 +155,8 @@ In Progress.
 Profile Home includes the user's profile photo/avatar, username, email,
 Inventory, Patterns, Tutorials, Stats + History, and Settings. There is no
 separate My Account destination; account management belongs under Settings.
+Profile Home, Inventory, Patterns, Tutorials, Stats, and History use the woven
+textile background; Settings remains intentionally plain and light.
 
 The Profile Library contains exactly **Inventory**, **Patterns**, and
 **Tutorials**. Tutorials are an intentional production addition even though
@@ -196,9 +210,16 @@ applicable.
 
 ## Search
 
-Text search is case-insensitive. Search presentation is consistent throughout
-the application. Filtering is a future capability; there is no production
-microphone or voice-search feature.
+Text search is case-insensitive. Projects In Progress and To Do, Discover
+Create and Learn, Profile library lists, and History use local title filtering
+where implemented. The filter button remains a future capability; there is no
+production microphone or voice-search feature.
+
+## Media identity
+
+Detail, list, compact subsection, project, Discover, Profile, and History
+appearances for one stable content ID use the same underlying source media.
+Different image containers may display different centered cover crops.
 
 ## Floating action button
 

@@ -1,10 +1,11 @@
 import { useCallback, useRef, useState } from 'react';
-import { Animated, Easing, Image, StyleSheet, View } from 'react-native';
+import { Animated, Easing, StyleSheet, View } from 'react-native';
 import { router, Stack, useFocusEffect, type Href } from 'expo-router';
 
 import { FloatingActionTray } from '@/components/floating-action-tray';
 import { useReducedMotion } from '@/hooks/use-reduced-motion';
 import { useActiveSubTab } from '@/hooks/use-active-subtab';
+import { useSubTabSwipe } from '@/hooks/use-subtab-swipe';
 import { Screen } from '@/components/screen';
 import { SubTabs, type SubTabDefinition } from '@/components/sub-tabs';
 import { theme } from '@/theme';
@@ -51,7 +52,6 @@ export function ProfileLibraryShell() {
     { ...LIBRARY_TABS[1], active: activeSection === LIBRARY_TABS[1].label },
     { ...LIBRARY_TABS[2], active: activeSection === LIBRARY_TABS[2].label },
   ];
-
   useFocusEffect(
     useCallback(
       () => () => {
@@ -95,6 +95,7 @@ export function ProfileLibraryShell() {
     },
     [contentOpacity, reduceMotion],
   );
+  const swipeResponder = useSubTabSwipe(tabs, navigateToTab);
 
   const showActiveContent = useCallback(() => {
     if (reduceMotion) {
@@ -115,17 +116,11 @@ export function ProfileLibraryShell() {
   }, [contentOpacity, reduceMotion]);
 
   return (
-    <Screen edges={['top']} contentContainerStyle={styles.screenContent}>
-      <View style={styles.page}>
-        <Image
-          accessible={false}
-          accessibilityElementsHidden
-          importantForAccessibility="no-hide-descendants"
-          pointerEvents="none"
-          resizeMode="repeat"
-          source={require('../../assets/images/brand/background-texture.png')}
-          style={styles.backgroundTexture}
-        />
+    <Screen
+      edges={['top']}
+      contentContainerStyle={styles.screenContent}
+      style={styles.transparentScreen}>
+      <View {...swipeResponder.panHandlers} style={styles.page}>
         <SubTabs onNavigate={navigateToTab} tabs={tabs} />
         <View style={styles.contentRegion}>
           <Animated.View style={[styles.contentStack, { opacity: contentOpacity }]}>
@@ -184,17 +179,15 @@ export function ProfileLibraryShell() {
 }
 
 const styles = StyleSheet.create({
+  transparentScreen: {
+    backgroundColor: 'transparent',
+  },
   screenContent: {
     flex: 1,
     paddingHorizontal: 0,
   },
   page: {
-    backgroundColor: theme.colors.appBackground,
     flex: 1,
-  },
-  backgroundTexture: {
-    ...StyleSheet.absoluteFill,
-    opacity: 0.2,
   },
   contentRegion: {
     flex: 1,

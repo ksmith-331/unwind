@@ -1,4 +1,5 @@
 import type { HistoryItemPreview } from '@/types/history-item-preview';
+import { getContentMedia } from '@/mocks/content-media';
 
 // Development-only occurrence examples; entries are intentionally not deduplicated.
 export const historyItems = [
@@ -9,7 +10,7 @@ export const historyItems = [
     title: 'Stuffed Bunny',
     difficulty: 4,
     isComplete: true,
-    thumbnail: 'placeholder',
+    thumbnail: getContentMedia('pattern', 'community-stuffed-bunny'),
   },
   {
     historyId: 'history-bird-alpha-001',
@@ -18,7 +19,7 @@ export const historyItems = [
     title: 'Bird Alpha',
     difficulty: 3,
     isComplete: false,
-    thumbnail: 'placeholder',
+    thumbnail: getContentMedia('pattern', 'profile-bird-alpha'),
   },
   {
     historyId: 'history-mushroom-plush-001',
@@ -27,7 +28,7 @@ export const historyItems = [
     title: 'Mushroom Plush',
     difficulty: 2,
     isComplete: true,
-    thumbnail: 'placeholder',
+    thumbnail: getContentMedia('tutorial', 'community-mushroom-plush'),
   },
   {
     historyId: 'history-wave-diagonal-001',
@@ -36,7 +37,7 @@ export const historyItems = [
     title: 'Wave Diagonal',
     difficulty: 1,
     isComplete: true,
-    thumbnail: 'placeholder',
+    thumbnail: getContentMedia('pattern', 'profile-wave-diagonal'),
   },
   {
     historyId: 'history-crochet-leaf-border-001',
@@ -45,7 +46,7 @@ export const historyItems = [
     title: 'Crochet Leaf Border',
     difficulty: 2,
     isComplete: false,
-    thumbnail: 'placeholder',
+    thumbnail: getContentMedia('tutorial', 'profile-crochet-leaf-border'),
   },
   {
     historyId: 'history-stuffed-bunny-002',
@@ -54,7 +55,7 @@ export const historyItems = [
     title: 'Stuffed Bunny',
     difficulty: 4,
     isComplete: false,
-    thumbnail: 'placeholder',
+    thumbnail: getContentMedia('pattern', 'community-stuffed-bunny'),
   },
   {
     historyId: 'history-colorwork-pouch-001',
@@ -63,7 +64,7 @@ export const historyItems = [
     title: 'Colorwork Pouch',
     difficulty: 3,
     isComplete: false,
-    thumbnail: 'placeholder',
+    thumbnail: getContentMedia('tutorial', 'profile-colorwork-pouch'),
   },
   {
     historyId: 'history-stuffed-bunny-003',
@@ -72,7 +73,7 @@ export const historyItems = [
     title: 'Stuffed Bunny',
     difficulty: 4,
     isComplete: true,
-    thumbnail: 'placeholder',
+    thumbnail: getContentMedia('pattern', 'community-stuffed-bunny'),
   },
   {
     historyId: 'history-mini-macrame-planter-001',
@@ -81,7 +82,7 @@ export const historyItems = [
     title: 'Mini Macrame Planter',
     difficulty: 1,
     isComplete: true,
-    thumbnail: 'placeholder',
+    thumbnail: getContentMedia('tutorial', 'profile-mini-macrame-planter'),
   },
   {
     historyId: 'history-wave-diagonal-002',
@@ -90,7 +91,7 @@ export const historyItems = [
     title: 'Wave Diagonal',
     difficulty: 1,
     isComplete: false,
-    thumbnail: 'placeholder',
+    thumbnail: getContentMedia('pattern', 'profile-wave-diagonal'),
   },
   {
     historyId: 'history-tapestry-basics-001',
@@ -99,7 +100,7 @@ export const historyItems = [
     title: 'Tapestry Basics',
     difficulty: 2,
     isComplete: false,
-    thumbnail: 'placeholder',
+    thumbnail: getContentMedia('tutorial', 'continue-tapestry-basics'),
   },
   {
     historyId: 'history-winter-house-001',
@@ -108,6 +109,6 @@ export const historyItems = [
     title: 'Winter House',
     difficulty: 2,
     isComplete: true,
-    thumbnail: 'placeholder',
+    thumbnail: getContentMedia('pattern', 'profile-winter-house'),
   },
 ] satisfies readonly HistoryItemPreview[];

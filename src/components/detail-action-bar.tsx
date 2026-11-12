@@ -68,6 +68,7 @@ export function DetailActionBar({ actions, onAction }: DetailActionBarProps) {
 
 const styles = StyleSheet.create({
   bar: {
+    ...theme.shadows.neutral,
     alignItems: 'stretch',
     alignSelf: 'center',
     backgroundColor: theme.colors.navigation,

@@ -40,17 +40,13 @@ export function StreakCard({
 
 const styles = StyleSheet.create({
   card: {
+    ...theme.shadows.neutral,
     alignItems: 'center',
     backgroundColor: theme.colors.navigation,
     borderRadius: theme.radii.large,
     borderWidth: 0,
-    elevation: 4,
     maxWidth: 303,
     padding: theme.spacing[5],
-    shadowColor: theme.colors.overlay,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
     width: '100%',
   },
   compactCard: {
